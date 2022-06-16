@@ -295,3 +295,5 @@ router.put('/extra-image/:filename/:name/:productID', adminAuth, async (req, res
     console.log(error);
   }
 });
+
+module.exports = router;

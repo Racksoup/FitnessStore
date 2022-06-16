@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminDashboard.scss';
-import { selectIsAuthenticated, logout } from '../../../Redux/adminSlice';
+import { selectIsAuthenticated, logout, loadAdmin } from '../../../Redux/adminSlice';
+import CreateProduct from './CreateProduct/CreateProduct.jsx';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
@@ -9,6 +10,10 @@ const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadAdmin());
+  }, []);
 
   if (!isAuthenticated) {
     return <Navigate to='/admin-login' />;
@@ -37,36 +42,13 @@ const AdminDashboard = () => {
         )}
         {view !== 'viewProducts' ? (
           <div className='Item' onClick={() => setView('viewProducts')}>
-            View Product
+            View Products
           </div>
         ) : (
           <div className='SelectedItem'>View Products</div>
         )}
       </div>
-      {view === 'createProduct' && (
-        <div className='CreateProduct'>
-          <div className='Row'>
-            <label>Name</label>
-            <input type='text' />
-          </div>
-          <div className='Row'>
-            <label>Category</label>
-            <input type='text' />
-          </div>
-          <div className='Row'>
-            <label>Description</label>
-            <input type='text' />
-          </div>
-          <div className='Row'>
-            <label>Price</label>
-            <input type='text' />
-          </div>
-          <div className='Row'>
-            <label>Image</label>
-            <input type='file' />
-          </div>
-        </div>
-      )}
+      {view === 'createProduct' && <CreateProduct />}
     </div>
   );
 };

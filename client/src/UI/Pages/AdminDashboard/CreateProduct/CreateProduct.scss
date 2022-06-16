@@ -1,0 +1,50 @@
+@import '../../../../App.scss';
+
+.CreateProduct {
+  width: 40rem;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .Row {
+    margin: 0.4rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+
+    input {
+      width: 25rem;
+      padding: 0 0 0 0.5rem;
+      border-radius: 0.2rem;
+      height: 2.2rem;
+      color: black;
+      background-color: white;
+    }
+
+    .ExtraImagesBox {
+      display: flex;
+      flex-direction: column;
+      width: 25rem;
+      margin-bottom: 0.8rem;
+
+      .ExtraImage {
+        display: flex;
+        align-items: center;
+        margin-top: 0.2rem;
+        .Icon {
+          color: red;
+          cursor: pointer;
+          margin-right: 0.4rem;
+          svg {
+            cursor: pointer;
+          }
+          path {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

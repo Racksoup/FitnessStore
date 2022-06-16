@@ -60,6 +60,20 @@ export const productSlice = createSlice({
   },
 });
 
+export const {
+  setCurrProduct,
+  gotAllProducts,
+  gotOneProduct,
+  productCreated,
+  productUpdated,
+  productRemoved,
+  extraProductImgCreated,
+  gotExtraProductImages,
+  extraProductImageDeleted,
+  extraProductImageUpdated,
+  gotSearch,
+} = productSlice.actions;
+
 export const createProduct = (product, file, files) => async (dispatch) => {
   let data = new FormData();
   if (file) {
@@ -80,7 +94,7 @@ export const createProduct = (product, file, files) => async (dispatch) => {
       },
     };
     const res = await axios.post('api/product', data, config);
-    dispatch(createExtraImages(files, res.data));
+    dispatch(createExtraProductImages(files, res.data));
     dispatch(productCreated(res.data));
   } catch (err) {
     console.log(err);
@@ -173,9 +187,11 @@ export const createExtraProductImages = (files, product) => async (dispatch) => 
   let data = new FormData();
   if (files) {
     files.map((v) => {
-      data.append('file', v.file, v.name);
+      console.log(v);
+      data.append('file', v, v.name);
     });
   }
+  console.log('hit');
   const config = {
     headers: {
       accept: 'application/json',
@@ -253,5 +269,4 @@ export const getExtraProductImagesData = (productID) => async (dispatch) => {
   }
 };
 
-export const { setCurrProduct } = productSlice.actions;
 export default productSlice.reducer;
