@@ -97,7 +97,7 @@ router.post('/', [adminAuth, primaryUpload.single('file')], async (req, res) => 
 //
 //
 // Update Product
-router.put('/', [adminAuth, primaryUpload.single('file')], async (req, res) => {
+router.put('/:id', [adminAuth, primaryUpload.single('file')], async (req, res) => {
   const { name, description, category, price, details, image_filename } = req.body;
   const postItem = {
     name,
@@ -106,19 +106,21 @@ router.put('/', [adminAuth, primaryUpload.single('file')], async (req, res) => {
     price,
     image_filename,
   };
-  postItem.details = JSON.parse(details);
+  if (details) {
+    postItem.details = JSON.parse(details);
+  }
   if (req.file) {
     postItem.image_filename = req.file.filename;
   }
 
   try {
-    const product = await Product.findByIdAndUpdate({ _id: req.params._id }, postItem, {
+    const product = await Product.findByIdAndUpdate({ _id: req.params.id }, postItem, {
       new: true,
     });
     // primary image is already uploaded. so if it was, delete the old one.
     if (req.file) {
       const x = await primaryImageBucket.find({ filename: image_filename }).toArray();
-      await primaryImageBucket.delete(x);
+      await primaryImageBucket.delete(x[0]._id);
     }
     await product.save();
     res.json(product);
