@@ -117,7 +117,7 @@ router.put('/', [adminAuth, primaryUpload.single('file')], async (req, res) => {
     });
     // primary image is already uploaded. so if it was, delete the old one.
     if (req.file) {
-      await primaryImageBucket.findOneAndDelete({ filename: image_filename });
+      await primaryImageBucket.deleteOne({ filename: image_filename });
     }
     await product.save();
     res.json(product);
@@ -134,8 +134,11 @@ router.delete('/:_id', adminAuth, async (req, res) => {
   try {
     // Need to delete Product, primary image and all extra images
     const product = await Product.findOneAndDelete({ _id: req.params._id });
-    await primaryImageBucket.findOneAndDelete({ filename: product.image_filename });
-    const extraImgs = await extraImageBucket.find({ 'metadata.blogID': req.params._id }).toArray();
+    const image = await primaryImageBucket.find({ filename: product.image_filename }).toArray();
+    await primaryImageBucket.delete(image[0]._id);
+    const extraImgs = await extraImageBucket
+      .find({ 'metadata.productID': req.params._id })
+      .toArray();
     extraImgs.map(async (img) => {
       await extraImageBucket.delete(img._id);
     });
@@ -152,6 +155,16 @@ router.delete('/:_id', adminAuth, async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
+    res.json(product);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send;
+  }
+});
+// Get All Items
+router.get('/', async (req, res) => {
+  try {
+    const product = await Product.find();
     res.json(product);
   } catch (error) {
     console.error(error.message);
@@ -248,7 +261,7 @@ router.get('/extra-images/data/:productID', async (req, res) => {
 // Delete one product extra image
 router.delete('/extra-image/:filename', adminAuth, async (req, res) => {
   try {
-    const img = await extraImageBucket.findOneAndDelete({ filename: req.params.filename });
+    const img = await extraImageBucket.deleteOne({ filename: req.params.filename });
     res.json(img);
   } catch (error) {
     console.error(err.message);

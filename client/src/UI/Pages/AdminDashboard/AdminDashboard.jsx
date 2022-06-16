@@ -5,14 +5,17 @@ import CreateProduct from './CreateProduct/CreateProduct.jsx';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
+import { getAllProducts, selectProducts, removeProduct } from '../../../Redux/productSlice';
 
 const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const products = useSelector(selectProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadAdmin());
+    dispatch(getAllProducts());
   }, []);
 
   if (!isAuthenticated) {
@@ -49,6 +52,27 @@ const AdminDashboard = () => {
         )}
       </div>
       {view === 'createProduct' && <CreateProduct />}
+      {view === 'viewProducts' && products && (
+        <div className='ViewProducts'>
+          {products.map((v, i) => (
+            <div className='Product' key={i}>
+              <img src={`/api/product/primary-image/${v.image_filename}`} alt='Product Image' />
+              <div className='Info'>
+                <p className='InfoItem'>{v.name}</p>
+                <p className='InfoItem'>{v.category}</p>
+                <p className='InfoItem'>{v.price}</p>
+                <p className='InfoItem'>{v.description}</p>
+              </div>
+              <div className='Btns'>
+                <button className='Btn'>Update</button>
+                <button className='Btn' onClick={() => dispatch(removeProduct(v._id))}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

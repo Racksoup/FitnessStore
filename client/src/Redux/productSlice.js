@@ -9,6 +9,7 @@ const initialState = {
 
 export const selectProducts = (state) => state.product.products;
 export const selectProduct = (state) => state.product.product;
+export const selectExtraProductImages = (state) => state.product.extraProductImages;
 
 export const productSlice = createSlice({
   name: 'product',
@@ -135,9 +136,9 @@ export const updateProduct = (product, file) => async (dispatch) => {
   }
 };
 
-export const removeProduct = (product) => async (dispatch) => {
+export const removeProduct = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/api/product/${product._id}`);
+    const res = await axios.delete(`/api/product/${id}`);
     dispatch(productRemoved(res.data));
   } catch (err) {
     console.log(err);
@@ -187,11 +188,9 @@ export const createExtraProductImages = (files, product) => async (dispatch) => 
   let data = new FormData();
   if (files) {
     files.map((v) => {
-      console.log(v);
       data.append('file', v, v.name);
     });
   }
-  console.log('hit');
   const config = {
     headers: {
       accept: 'application/json',
