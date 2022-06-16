@@ -2,31 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './AdminDashboard.scss';
 import { selectIsAuthenticated, logout, loadAdmin } from '../../../Redux/adminSlice';
 import CreateProduct from './CreateProduct/CreateProduct.jsx';
-import UpdateProduct from './UpdateProduct/UpdateProduct.jsx';
+import ViewProducts from './ViewProducts/ViewProducts';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
-import { getAllProducts, selectProducts, removeProduct } from '../../../Redux/productSlice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
-  const [updateModal, toggleUpdateModal] = useState(false);
-  const [currProduct, setCurrProduct] = useState(null);
+
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const products = useSelector(selectProducts);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadAdmin());
-    dispatch(getAllProducts());
   }, []);
-
-  const updateClicked = (product) => {
-    setCurrProduct(product);
-    toggleUpdateModal(true);
-  };
 
   if (!isAuthenticated) {
     return <Navigate to='/admin-login' />;
@@ -34,7 +24,6 @@ const AdminDashboard = () => {
 
   return (
     <div className='AdminDashboard'>
-      {updateModal && <UpdateProduct toggleModal={toggleUpdateModal} currProduct={currProduct} />}
       <div className='PageHeader'>
         <Link className='Link' to='/'>
           <button className='Btn'>Home</button>
@@ -63,29 +52,7 @@ const AdminDashboard = () => {
         )}
       </div>
       {view === 'createProduct' && <CreateProduct />}
-      {view === 'viewProducts' && products && (
-        <div className='ViewProducts'>
-          {products.map((v, i) => (
-            <div className='Product' key={i}>
-              <img src={`/api/product/primary-image/${v.image_filename}`} alt='Product Image' />
-              <div className='Info'>
-                <p className='InfoItem'>Name: {v.name}</p>
-                <p className='InfoItem'>Category: {v.category}</p>
-                <p className='InfoItem'>Price: {v.price}</p>
-                <p className='InfoItem'>Description: {v.description}</p>
-              </div>
-              <div className='Btns'>
-                <button className='Btn-1' onClick={() => updateClicked(v)}>
-                  Update
-                </button>
-                <button className='Btn-2' onClick={() => dispatch(removeProduct(v._id))}>
-                  <FontAwesomeIcon icon={faX} className='Icon' />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      {view === 'viewProducts' && <ViewProducts />}
     </div>
   );
 };
