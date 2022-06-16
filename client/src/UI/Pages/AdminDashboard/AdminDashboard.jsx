@@ -7,6 +7,8 @@ import UpdateProduct from './UpdateProduct/UpdateProduct.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { getAllProducts, selectProducts, removeProduct } from '../../../Redux/productSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
@@ -67,17 +69,17 @@ const AdminDashboard = () => {
             <div className='Product' key={i}>
               <img src={`/api/product/primary-image/${v.image_filename}`} alt='Product Image' />
               <div className='Info'>
-                <p className='InfoItem'>{v.name}</p>
-                <p className='InfoItem'>{v.category}</p>
-                <p className='InfoItem'>{v.price}</p>
-                <p className='InfoItem'>{v.description}</p>
+                <p className='InfoItem'>Name: {v.name}</p>
+                <p className='InfoItem'>Category: {v.category}</p>
+                <p className='InfoItem'>Price: {v.price}</p>
+                <p className='InfoItem'>Description: {v.description}</p>
               </div>
               <div className='Btns'>
                 <button className='Btn-1' onClick={() => updateClicked(v)}>
                   Update
                 </button>
                 <button className='Btn-2' onClick={() => dispatch(removeProduct(v._id))}>
-                  Delete
+                  <FontAwesomeIcon icon={faX} className='Icon' />
                 </button>
               </div>
             </div>

@@ -15,6 +15,7 @@ app.use(express.json({ extend: false }));
 app.use('/api/admin', require('./routes/api/admin'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/product', require('./routes/api/product'));
+app.use('/api/category', require('./routes/api/category'));
 
 // production
 if (process.env.NODE_ENV === 'production') {
