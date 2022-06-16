@@ -43,7 +43,7 @@ export const productSlice = createSlice({
     },
     extraProductImageDeleted: (state, action) => {
       state.extraProductImages = state.extraProductImages.filter(
-        (img) => img.filename !== action.payload.filename
+        (img) => img.filename !== action.payload[0].filename
       );
     },
     extraProductImageUpdated: (state, action) => {
@@ -219,7 +219,7 @@ export const createExtraProductImage = (img, name, productID) => async (dispatch
   data.append('file', img, name);
 
   try {
-    const res = await axios.post(`/api/product/content-image/${productID}`, data, config);
+    const res = await axios.post(`/api/product/extra-image/${productID}`, data, config);
     dispatch(extraProductImgCreated(res.data));
   } catch (error) {
     console.log(error);
@@ -240,7 +240,7 @@ export const updateImageName = (img, name, productID) => async (dispatch) => {
 
   try {
     const res = await axios.put(
-      `/api/product/extra-image/${img.filename}/${name}/${productID}`,
+      `/api/product/extra-image/name/${img.filename}/${name}/${productID}`,
       data,
       config
     );
@@ -250,9 +250,9 @@ export const updateImageName = (img, name, productID) => async (dispatch) => {
   }
 };
 
-export const deleteExtraProductImage = (img) => async (dispatch) => {
+export const deleteExtraProductImage = (filename) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/api/product/content-image/${img.filename}`);
+    const res = await axios.delete(`/api/product/extra-image/${filename}`);
     dispatch(extraProductImageDeleted(res.data));
   } catch (error) {
     console.log(error);
@@ -261,7 +261,7 @@ export const deleteExtraProductImage = (img) => async (dispatch) => {
 
 export const getExtraProductImagesData = (productID) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/product/content-images/data/${productID}`);
+    const res = await axios.get(`/api/product/extra-images/data/${productID}`);
     dispatch(gotExtraProductImages(res.data));
   } catch (error) {
     console.log(error);

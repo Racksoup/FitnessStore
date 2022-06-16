@@ -45,7 +45,7 @@ const CreateProduct = () => {
         <input type='number' onChange={(e) => setProduct({ ...product, price: e.target.value })} />
       </div>
       <div className='Row'>
-        <label>Image</label>
+        <label>Main Image</label>
         <input type='file' onChange={(e) => setFile(e.target.files[0])} />
       </div>
       <div className='Row'>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './AdminDashboard.scss';
 import { selectIsAuthenticated, logout, loadAdmin } from '../../../Redux/adminSlice';
 import CreateProduct from './CreateProduct/CreateProduct.jsx';
+import UpdateProduct from './UpdateProduct/UpdateProduct.jsx';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
@@ -9,6 +10,8 @@ import { getAllProducts, selectProducts, removeProduct } from '../../../Redux/pr
 
 const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
+  const [updateModal, toggleUpdateModal] = useState(false);
+  const [currProduct, setCurrProduct] = useState(null);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const products = useSelector(selectProducts);
   const dispatch = useDispatch();
@@ -18,12 +21,18 @@ const AdminDashboard = () => {
     dispatch(getAllProducts());
   }, []);
 
+  const updateClicked = (product) => {
+    setCurrProduct(product);
+    toggleUpdateModal(true);
+  };
+
   if (!isAuthenticated) {
     return <Navigate to='/admin-login' />;
   }
 
   return (
     <div className='AdminDashboard'>
+      {updateModal && <UpdateProduct toggleModal={toggleUpdateModal} currProduct={currProduct} />}
       <div className='PageHeader'>
         <Link className='Link' to='/'>
           <button className='Btn'>Home</button>
@@ -64,8 +73,10 @@ const AdminDashboard = () => {
                 <p className='InfoItem'>{v.description}</p>
               </div>
               <div className='Btns'>
-                <button className='Btn'>Update</button>
-                <button className='Btn' onClick={() => dispatch(removeProduct(v._id))}>
+                <button className='Btn-1' onClick={() => updateClicked(v)}>
+                  Update
+                </button>
+                <button className='Btn-2' onClick={() => dispatch(removeProduct(v._id))}>
                   Delete
                 </button>
               </div>

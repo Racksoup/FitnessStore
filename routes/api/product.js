@@ -117,7 +117,8 @@ router.put('/', [adminAuth, primaryUpload.single('file')], async (req, res) => {
     });
     // primary image is already uploaded. so if it was, delete the old one.
     if (req.file) {
-      await primaryImageBucket.deleteOne({ filename: image_filename });
+      const x = await primaryImageBucket.find({ filename: image_filename }).toArray();
+      await primaryImageBucket.delete(x);
     }
     await product.save();
     res.json(product);
@@ -261,10 +262,11 @@ router.get('/extra-images/data/:productID', async (req, res) => {
 // Delete one product extra image
 router.delete('/extra-image/:filename', adminAuth, async (req, res) => {
   try {
-    const img = await extraImageBucket.deleteOne({ filename: req.params.filename });
+    const img = await extraImageBucket.find({ filename: req.params.filename }).toArray();
+    await extraImageBucket.delete(img[0]._id);
     res.json(img);
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
     res.status(500).send;
   }
 });
@@ -294,7 +296,7 @@ router.post(
 //
 //
 // Update metadata.imgName
-router.put('/extra-image/:filename/:name/:productID', adminAuth, async (req, res) => {
+router.put('/extra-image/name/:filename/:name/:productID', adminAuth, async (req, res) => {
   const postItem = {
     $set: { metadata: { imgName: req.params.name, productID: req.params.productID } },
   };
