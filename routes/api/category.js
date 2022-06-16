@@ -9,6 +9,8 @@ const router = express.Router();
 //
 // Post one
 router.post('/', adminAuth, async (req, res) => {
+  console.log(req.body);
+
   try {
     const category = new Category({ category: req.body.category });
     await category.save();
@@ -23,7 +25,7 @@ router.post('/', adminAuth, async (req, res) => {
 // Delete one
 router.delete('/:id', adminAuth, async (req, res) => {
   try {
-    const category = await Category.findByIdAndDelete(id);
+    const category = await Category.findByIdAndDelete(req.params.id);
     res.json(category);
   } catch (error) {
     console.log(error);

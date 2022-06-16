@@ -46,4 +46,48 @@
       text-align: center;
     }
   }
+
+  .UpdateCategories {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .Btn-1 {
+      margin: 1rem 0;
+    }
+
+    .CategoriesView {
+      width: 14rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 0.4rem 0 1.5rem 0;
+
+      .Category {
+        width: 100%;
+        height: 1.5rem;
+        border: solid 0.1rem rgb(200, 200, 200);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+          margin-left: 0.5rem;
+        }
+
+        .Icon {
+          cursor: pointer;
+          margin-right: 0.5rem;
+
+          svg {
+            cursor: pointer;
+          }
+          path {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
 }

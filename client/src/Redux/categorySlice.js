@@ -23,15 +23,16 @@ export const categorySlice = createSlice({
   },
 });
 
-export const {} = categorySlice.actions;
+export const { categoryCreated, categoryDeleted, gotCategories } = categorySlice.actions;
 
-export const createCategory = (category) => async (dispatch) => {
+export const createCategory = (item) => async (dispatch) => {
+  console.log(item);
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSONstringify({ category });
+  const body = JSON.stringify({ category: item.category });
 
   try {
     const res = await axios.post('/api/category/', body, config);
