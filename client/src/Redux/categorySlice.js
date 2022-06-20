@@ -26,7 +26,6 @@ export const categorySlice = createSlice({
 export const { categoryCreated, categoryDeleted, gotCategories } = categorySlice.actions;
 
 export const createCategory = (item) => async (dispatch) => {
-  console.log(item);
   const config = {
     headers: {
       'Content-Type': 'application/json',

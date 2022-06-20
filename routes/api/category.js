@@ -9,8 +9,6 @@ const router = express.Router();
 //
 // Post one
 router.post('/', adminAuth, async (req, res) => {
-  console.log(req.body);
-
   try {
     const category = new Category({ category: req.body.category });
     await category.save();

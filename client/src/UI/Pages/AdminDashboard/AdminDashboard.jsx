@@ -4,17 +4,31 @@ import { selectIsAuthenticated, logout, loadAdmin } from '../../../Redux/adminSl
 import CreateProduct from './CreateProduct/CreateProduct.jsx';
 import ViewProducts from './ViewProducts/ViewProducts';
 import UpdateCategories from './UpdateCategories/UpdateCategories';
+import CreateFileModal from '../../Components/Modals/CreateFileModal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
+
+import {
+  createHeaderImage,
+  deleteHeaderImage,
+  getHeaderImages,
+  selectHeaderImages,
+} from '../../../Redux/headerImageSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
 
+  const headerImages = useSelector(selectHeaderImages);
+  const [createHeaderImgModal, toggleCreateHeaderImgModal] = useState(false);
+
   useEffect(() => {
     dispatch(loadAdmin());
+    dispatch(getHeaderImages());
   }, []);
 
   if (!isAuthenticated) {
@@ -23,6 +37,13 @@ const AdminDashboard = () => {
 
   return (
     <div className='AdminDashboard'>
+      {createHeaderImgModal && (
+        <CreateFileModal
+          toggleModal={toggleCreateHeaderImgModal}
+          func={createHeaderImage}
+          title='Create Header Image'
+        />
+      )}
       <div className='PageHeader'>
         <Link className='Link' to='/'>
           <button className='Btn'>Home</button>
@@ -56,10 +77,38 @@ const AdminDashboard = () => {
         ) : (
           <div className='SelectedItem'>Update Categories</div>
         )}
+        {view !== 'updateImages' ? (
+          <div className='Item' onClick={() => setView('updateImages')}>
+            Update Images
+          </div>
+        ) : (
+          <div className='SelectedItem'>Update Images</div>
+        )}
       </div>
       {view === 'createProduct' && <CreateProduct />}
       {view === 'viewProducts' && <ViewProducts />}
       {view === 'updateCategories' && <UpdateCategories />}
+      {view === 'updateImages' && (
+        <div className='UpdateImages'>
+          <div className='Half'>
+            <h2>Update Header Images</h2>
+            <button className='Btn-1' onClick={() => toggleCreateHeaderImgModal(true)}>
+              Create Header Image
+            </button>
+            <div className='ViewImages'>
+              {headerImages &&
+                headerImages.map((img) => (
+                  <div className='ImageBox'>
+                    <button className='Btn-3' onClick={() => deleteHeaderImage(img.filename)}>
+                      <FontAwesomeIcon icon={faX} />
+                    </button>
+                    <img src={`api/header-images/${img.filename}`} alt='Header Image' />
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

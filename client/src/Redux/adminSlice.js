@@ -23,7 +23,6 @@ export const adminSlice = createSlice({
       state.admin = action.payload;
     },
     loginSuccess: (state, action) => {
-      console.log(action);
       localStorage.setItem('adminToken', action.payload.token);
       state.isAuthenticated = true;
       state.loading = false;

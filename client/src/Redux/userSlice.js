@@ -73,7 +73,6 @@ export const login = (form) => async (dispatch, getState) => {
 };
 
 export const createUser = (user) => async (dispatch, getState) => {
-  console.log('hit');
   const config = {
     headers: {
       'Content-Type': 'application/json',
