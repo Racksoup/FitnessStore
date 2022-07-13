@@ -15,7 +15,9 @@ export const headerImagesSlice = createSlice({
       state.headerImages.push(action.payload);
     },
     headerImageDeleted: (state, action) => {
-      state.headerImages = state.headerImages.filter((img) => img._id !== action.payload._id);
+      state.headerImages = state.headerImages.filter(
+        (img) => img.filename !== action.payload[0].filename
+      );
     },
     gotHeaderImages: (state, action) => {
       state.headerImages = action.payload;
@@ -56,7 +58,7 @@ export const deleteHeaderImage = (filename) => async (dispatch) => {
 
 export const getHeaderImages = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/header-images');
+    const res = await axios.get('/api/header-images/data/data');
     dispatch(gotHeaderImages(res.data));
   } catch (error) {
     console.log(error);

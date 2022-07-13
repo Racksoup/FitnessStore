@@ -54,7 +54,15 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
-      <div className='Bottom'></div>
+      <div className='Bottom'>
+        <button className='Button'>All</button>
+        <button className='Button'>Weights</button>
+        <button className='Button'>Gym Systems</button>
+        <button className='Button'>Plate Loaded</button>
+        <button className='Button'>Cardio</button>
+        <button className='Button'>Accessories</button>
+        <button className='Button'>Bicycles</button>
+      </div>
     </div>
   );
 };

@@ -46,6 +46,18 @@ connect.once('open', () => {
 //
 //
 //
+// Get all header images
+router.get('/data/data', async (req, res) => {
+  try {
+    const items = await headerBucket.find().toArray();
+    res.json(items);
+  } catch (error) {
+    console.log(error);
+  }
+});
+//
+//
+//
 // Read Image
 router.get('/:filename', async (req, res) => {
   headerBucket.find({ filename: req.params.filename }).toArray((err, files) => {
@@ -64,18 +76,6 @@ router.get('/:filename', async (req, res) => {
       });
     }
   });
-});
-//
-//
-//
-// Get all header images
-router.get('/data', async (req, res) => {
-  try {
-    const items = await headerBucket.find().toArray();
-    res.json(items);
-  } catch (error) {
-    console.log(error);
-  }
 });
 //
 //

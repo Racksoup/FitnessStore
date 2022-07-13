@@ -75,9 +75,11 @@
         .ImageBox {
           margin: 0.2rem;
           width: 7rem;
-          height: 7rem;
           display: flex;
           flex-direction: column;
+          border: solid 0.1rem grey;
+          border-radius: 0.2rem;
+          padding: 0.1rem;
 
           .Btn-3 {
             align-self: end;

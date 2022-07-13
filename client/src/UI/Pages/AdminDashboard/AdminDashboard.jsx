@@ -50,7 +50,7 @@ const AdminDashboard = () => {
         </Link>
         <h1 className='Title'>Admin Dashboard</h1>
         <Link className='Link' to='/admin-login'>
-          <button className='Btn' onClick={() => logout()}>
+          <button className='Btn' onClick={() => dispatch(logout())}>
             Logout
           </button>
         </Link>
@@ -97,9 +97,12 @@ const AdminDashboard = () => {
             </button>
             <div className='ViewImages'>
               {headerImages &&
-                headerImages.map((img) => (
-                  <div className='ImageBox'>
-                    <button className='Btn-3' onClick={() => deleteHeaderImage(img.filename)}>
+                headerImages.map((img, i) => (
+                  <div className='ImageBox' key={i}>
+                    <button
+                      className='Btn-3'
+                      onClick={() => dispatch(deleteHeaderImage(img.filename))}
+                    >
                       <FontAwesomeIcon icon={faX} />
                     </button>
                     <img src={`api/header-images/${img.filename}`} alt='Header Image' />
