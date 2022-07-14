@@ -74,6 +74,7 @@ connect.once('open', () => {
 //
 // Create Product
 router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
+  console.log(req.files);
   const { name, category, price, details, tech_details, about, main_file } = req.body;
   const postItem = {
     name,
@@ -85,6 +86,7 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
   postItem.about = JSON.parse(about);
   // Set one of the images as the main image
   const files = req.files.map((file) => {
+    console.log(file.originalname, main_file);
     if (file.originalname === main_file) {
       let data = {
         main: true,
@@ -100,7 +102,6 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
     }
   });
   postItem.image_filenames = files;
-  console.log(postItem);
 
   try {
     const product = new Product(postItem);

@@ -15,7 +15,7 @@ const CreateProduct = () => {
     price: '',
     details: [{ key: '', value: '' }],
     tech_details: [{ key: '', value: '' }],
-    about: [],
+    about: [''],
   });
   const dispatch = useDispatch();
 
@@ -56,8 +56,6 @@ const CreateProduct = () => {
     e.preventDefault();
     setProduct({ ...product, about: [...product.about, ''] });
   };
-
-  console.log(product);
 
   return (
     <form className='CreateProduct' onSubmit={(e) => onSubmit(e)}>

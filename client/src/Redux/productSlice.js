@@ -77,17 +77,18 @@ export const {
 
 export const createProduct = (product, file, files) => async (dispatch) => {
   console.log(file);
-
   let data = new FormData();
-  files.push(file);
   data.append('name', product.name);
   data.append('category', product.category);
   data.append('price', product.price);
   data.append('details', JSON.stringify(product.details));
   data.append('tech_details', JSON.stringify(product.tech_details));
   data.append('about', JSON.stringify(product.about));
-  data.append('main_file', file.filename);
-  data.append('files', files);
+  data.append('main_file', file.name);
+  data.append('file', file);
+  files.map((v) => {
+    data.append('file', v);
+  });
 
   try {
     const config = {
