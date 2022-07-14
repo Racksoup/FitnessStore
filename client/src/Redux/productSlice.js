@@ -76,15 +76,18 @@ export const {
 } = productSlice.actions;
 
 export const createProduct = (product, file, files) => async (dispatch) => {
+  console.log(file);
+
   let data = new FormData();
-  if (file) {
-    data.append('file', file);
-  }
+  files.push(file);
   data.append('name', product.name);
-  data.append('description', product.description);
   data.append('category', product.category);
   data.append('price', product.price);
   data.append('details', JSON.stringify(product.details));
+  data.append('tech_details', JSON.stringify(product.tech_details));
+  data.append('about', JSON.stringify(product.about));
+  data.append('main_file', file.filename);
+  data.append('files', files);
 
   try {
     const config = {
@@ -95,7 +98,7 @@ export const createProduct = (product, file, files) => async (dispatch) => {
       },
     };
     const res = await axios.post('api/product', data, config);
-    dispatch(createExtraProductImages(files, res.data));
+    //dispatch(createExtraProductImages(files, res.data));
     dispatch(productCreated(res.data));
   } catch (err) {
     console.log(err);

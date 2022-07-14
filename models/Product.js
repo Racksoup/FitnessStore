@@ -5,10 +5,6 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
   category: {
     type: String,
     required: true,
@@ -17,12 +13,21 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     requuired: true,
   },
-  image_filename: {
-    type: String,
+  image_filenames: {
+    type: Array,
     required: true,
   },
   details: {
-    type: Object,
+    type: Array,
+    required: true,
+  },
+  tech_details: {
+    type: Array,
+    required: true,
+  },
+  about: {
+    type: Array,
+    required: true,
   },
 });
 

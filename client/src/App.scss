@@ -90,6 +90,16 @@ a {
   }
 }
 
+.Icon {
+  cursor: pointer;
+  svg {
+    cursor: pointer;
+  }
+  path {
+    cursor: pointer;
+  }
+}
+
 @mixin Section {
   width: 82rem;
   display: flex;

@@ -14,13 +14,66 @@
     justify-content: space-between;
     align-items: start;
 
-    input {
+    .Btn {
+      width: 2.3rem;
+    }
+
+    .Icon {
+      color: black;
+      svg {
+        color: black;
+      }
+      path {
+        color: black;
+      }
+    }
+
+    .MainInput {
       width: 25rem;
       padding: 0 0 0 0.5rem;
       border-radius: 0.2rem;
       height: 2.2rem;
       color: black;
       background-color: white;
+    }
+
+    .DetailsInput {
+      display: flex;
+      flex-direction: column;
+      width: 28rem;
+
+      .DetailsRow {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 0 0.6rem 0;
+
+        .Btn {
+          background-color: red;
+        }
+
+        .InputGroup {
+          width: 25rem;
+          display: flex;
+          justify-content: space-between;
+          .KeyInput {
+            width: 6rem;
+            padding: 0 0 0 0.5rem;
+            border-radius: 0.2rem;
+            height: 2.2rem;
+            color: black;
+            background-color: white;
+          }
+          .ValueInput {
+            width: 17rem;
+            padding: 0 0 0 0.5rem;
+            border-radius: 0.2rem;
+            height: 2.2rem;
+            color: black;
+            background-color: white;
+          }
+        }
+      }
     }
 
     .ExtraImagesBox {

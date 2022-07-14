@@ -13,8 +13,8 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 //
 // --- IMAGE STORAGE & DB CONNECTION ---
 // --- IMAGE STORAGE & DB CONNECTION ---
-// Primary Product Image Storage
-const primaryStorage = new GridFsStorage({
+// Product Image Storage
+const storage = new GridFsStorage({
   url: db,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ const primaryStorage = new GridFsStorage({
         const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-          bucketName: 'primaryProductImages',
+          bucketName: 'productImages',
           //metadata: req.body,
         };
         resolve(fileInfo);
@@ -33,7 +33,7 @@ const primaryStorage = new GridFsStorage({
     });
   },
 });
-const primaryUpload = multer({ storage: primaryStorage });
+const upload = multer({ storage });
 // Extra Product Image Storage
 const extraStorage = new GridFsStorage({
   url: db,
@@ -57,11 +57,11 @@ const extraStorage = new GridFsStorage({
 const extraUpload = multer({ storage: extraStorage });
 // Create a new mongodb connection and once connected save GridFSBucket 'headerImages' to headerImageBucket, 'contentImages' to contentImageBucket
 const connect = mongoose.createConnection(db);
-let primaryImageBucket;
+let imageBucket;
 let extraImageBucket;
 connect.once('open', () => {
-  primaryImageBucket = new mongoose.mongo.GridFSBucket(connect.db, {
-    bucketName: 'primaryProductImages',
+  imageBucket = new mongoose.mongo.GridFSBucket(connect.db, {
+    bucketName: 'productImages',
   });
   extraImageBucket = new mongoose.mongo.GridFSBucket(connect.db, {
     bucketName: 'extraProductImages',
@@ -73,16 +73,34 @@ connect.once('open', () => {
 //
 //
 // Create Product
-router.post('/', [adminAuth, primaryUpload.single('file')], async (req, res) => {
-  const { name, description, category, price, details } = req.body;
+router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
+  const { name, category, price, details, tech_details, about, main_file } = req.body;
   const postItem = {
     name,
-    description,
     category,
     price,
-    image_filename: req.file.filename,
   };
   postItem.details = JSON.parse(details);
+  postItem.tech_details = JSON.parse(tech_details);
+  postItem.about = JSON.parse(about);
+  // Set one of the images as the main image
+  const files = req.files.map((file) => {
+    if (file.originalname === main_file) {
+      let data = {
+        main: true,
+        filename: file.filename,
+      };
+      return data;
+    } else {
+      let data = {
+        main: false,
+        filename: file.filename,
+      };
+      return data;
+    }
+  });
+  postItem.image_filenames = files;
+  console.log(postItem);
 
   try {
     const product = new Product(postItem);
@@ -97,7 +115,7 @@ router.post('/', [adminAuth, primaryUpload.single('file')], async (req, res) => 
 //
 //
 // Update Product
-router.put('/:id', [adminAuth, primaryUpload.single('file')], async (req, res) => {
+router.put('/:id', [adminAuth, upload.single('file')], async (req, res) => {
   const { name, description, category, price, details, image_filename } = req.body;
   const postItem = {
     name,
@@ -119,8 +137,8 @@ router.put('/:id', [adminAuth, primaryUpload.single('file')], async (req, res) =
     });
     // primary image is already uploaded. so if it was, delete the old one.
     if (req.file) {
-      const x = await primaryImageBucket.find({ filename: image_filename }).toArray();
-      await primaryImageBucket.delete(x[0]._id);
+      const x = await imageBucket.find({ filename: image_filename }).toArray();
+      await imageBucket.delete(x[0]._id);
     }
     await product.save();
     res.json(product);
@@ -137,8 +155,8 @@ router.delete('/:_id', adminAuth, async (req, res) => {
   try {
     // Need to delete Product, primary image and all extra images
     const product = await Product.findOneAndDelete({ _id: req.params._id });
-    const image = await primaryImageBucket.find({ filename: product.image_filename }).toArray();
-    await primaryImageBucket.delete(image[0]._id);
+    const image = await imageBucket.find({ filename: product.image_filename }).toArray();
+    await imageBucket.delete(image[0]._id);
     const extraImgs = await extraImageBucket
       .find({ 'metadata.productID': req.params._id })
       .toArray();
@@ -201,7 +219,7 @@ router.get('/search/:search', async (req, res) => {
 // --- PRIMARY IMAGES ---
 // Get
 router.get('/primary-image/:filename', async (req, res) => {
-  primaryImageBucket.find({ filename: req.params.filename }).toArray((err, files) => {
+  imageBucket.find({ filename: req.params.filename }).toArray((err, files) => {
     if (!files[0] || files.length === 0) {
       return res.status(200).json({
         success: false,
@@ -210,7 +228,7 @@ router.get('/primary-image/:filename', async (req, res) => {
     }
 
     if (files[0].contentType === 'image/png' || files[0].contentType === 'image/jpeg') {
-      primaryImageBucket.openDownloadStreamByName(req.params.filename).pipe(res);
+      imageBucket.openDownloadStreamByName(req.params.filename).pipe(res);
     } else {
       res.status(404).json({
         err: 'Not an image',
