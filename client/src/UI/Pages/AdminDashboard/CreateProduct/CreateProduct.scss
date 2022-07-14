@@ -37,12 +37,12 @@
       background-color: white;
     }
 
-    .DetailsInput {
+    .MultiInputWidget {
       display: flex;
       flex-direction: column;
       width: 28rem;
 
-      .DetailsRow {
+      .SingleRow {
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -52,10 +52,11 @@
           background-color: red;
         }
 
-        .InputGroup {
+        .Inputs {
           width: 25rem;
           display: flex;
           justify-content: space-between;
+
           .KeyInput {
             width: 6rem;
             padding: 0 0 0 0.5rem;

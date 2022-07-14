@@ -9,12 +9,11 @@ import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 const CreateProduct = () => {
   const [file, setFile] = useState('');
   const [files, setFiles] = useState([]);
-  const [details, setDetails] = useState([{ key: '', value: '' }]);
   const [product, setProduct] = useState({
     name: '',
     category: '',
     price: '',
-    details: [],
+    details: [{ key: '', value: '' }],
     tech_details: [],
     about: [],
   });
@@ -25,29 +24,29 @@ const CreateProduct = () => {
     dispatch(createProduct(product, file, files));
   };
 
-  const addDetailClicked = (e) => {
+  const addInputRow = (e) => {
     e.preventDefault();
-    setDetails([...details, { key: '', value: '' }]);
+    setProduct({ ...product, details: [...product.details, { key: '', value: '' }] });
   };
 
-  const deleteDetailClicked = (e, i) => {
+  const deleteInputRow = (e, i) => {
     e.preventDefault();
-    setDetails([...details.filter((d, j) => j !== i)]);
+    setProduct({ ...product, details: [...product.details.filter((d, j) => j !== i)] });
   };
 
   const keyChange = (e, i) => {
-    let newArr = [...details];
+    let newArr = [...product.details];
     newArr[i]['key'] = e.target.value;
-    setDetails(newArr);
+    setProduct({ ...product, details: newArr });
   };
 
   const valueChange = (e, i) => {
-    let newArr = [...details];
+    let newArr = [...product.details];
     newArr[i]['value'] = e.target.value;
-    setDetails(newArr);
+    setProduct({ ...product, details: newArr });
   };
 
-  console.log(details);
+  console.log(product.details);
 
   return (
     <form className='CreateProduct' onSubmit={(e) => onSubmit(e)}>
@@ -77,17 +76,17 @@ const CreateProduct = () => {
       </div>
       <div className='Row'>
         <label>Details</label>
-        <button className='Btn' onClick={(e) => addDetailClicked(e)}>
+        <button className='Btn' onClick={(e) => addInputRow(e)}>
           <FontAwesomeIcon icon={faPlus} className='Icon' />
         </button>
-        <div className='DetailsInput'>
-          {details.map((detail, i) => {
+        <div className='MultiInputWidget'>
+          {product.details.map((detail, i) => {
             return (
-              <div className='DetailsRow' key={i}>
-                <button className='Btn' onClick={(e) => deleteDetailClicked(e, i)}>
+              <div className='SingleRow' key={i}>
+                <button className='Btn' onClick={(e) => deleteInputRow(e, i)}>
                   <FontAwesomeIcon icon={faX} className='Icon' />
                 </button>
-                <div className='InputGroup'>
+                <div className='Inputs'>
                   <input
                     className='KeyInput'
                     type='text'
