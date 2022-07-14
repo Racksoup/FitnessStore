@@ -74,7 +74,6 @@ connect.once('open', () => {
 //
 // Create Product
 router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
-  console.log(req.files);
   const { name, category, price, details, tech_details, about, main_file } = req.body;
   const postItem = {
     name,
@@ -154,16 +153,26 @@ router.put('/:id', [adminAuth, upload.single('file')], async (req, res) => {
 // Delete Product
 router.delete('/:_id', adminAuth, async (req, res) => {
   try {
-    // Need to delete Product, primary image and all extra images
+    // Need to delete Product, Images
     const product = await Product.findOneAndDelete({ _id: req.params._id });
-    const image = await imageBucket.find({ filename: product.image_filename }).toArray();
-    await imageBucket.delete(image[0]._id);
-    const extraImgs = await extraImageBucket
-      .find({ 'metadata.productID': req.params._id })
-      .toArray();
-    extraImgs.map(async (img) => {
-      await extraImageBucket.delete(img._id);
+    let images = [];
+    product.image_filenames.map((obj) => {
+      let x = imageBucket.find({ filename: obj.filename }).toArray();
+      images.push(x);
     });
+
+    Promise.all(images).then((results) => {
+      results.map((result) => imageBucket.delete(result[0]._id));
+    });
+
+    // const image = await imageBucket.find({ filename: product.image_filename }).toArray();
+    // await imageBucket.delete(image[0]._id);
+    // const extraImgs = await extraImageBucket
+    //   .find({ 'metadata.productID': req.params._id })
+    //   .toArray();
+    // extraImgs.map(async (img) => {
+    //   await extraImageBucket.delete(img._id);
+    // });
     res.json(product);
   } catch (error) {
     console.error(error.message);

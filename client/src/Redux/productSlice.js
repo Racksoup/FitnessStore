@@ -76,7 +76,6 @@ export const {
 } = productSlice.actions;
 
 export const createProduct = (product, file, files) => async (dispatch) => {
-  console.log(file);
   let data = new FormData();
   data.append('name', product.name);
   data.append('category', product.category);
