@@ -14,6 +14,10 @@
     justify-content: space-between;
     align-items: start;
 
+    label {
+      width: 7rem;
+    }
+
     .Btn {
       width: 2.3rem;
     }
@@ -73,6 +77,15 @@
             color: black;
             background-color: white;
           }
+        }
+
+        .AboutInput {
+          width: 25rem;
+          padding: 0 0 0 0.5rem;
+          border-radius: 0.2rem;
+          height: 2.2rem;
+          color: black;
+          background-color: white;
         }
       }
     }

@@ -14,7 +14,7 @@ const CreateProduct = () => {
     category: '',
     price: '',
     details: [{ key: '', value: '' }],
-    tech_details: [],
+    tech_details: [{ key: '', value: '' }],
     about: [],
   });
   const dispatch = useDispatch();
@@ -24,29 +24,40 @@ const CreateProduct = () => {
     dispatch(createProduct(product, file, files));
   };
 
-  const addInputRow = (e) => {
+  const addInputRow = (e, objName) => {
     e.preventDefault();
-    setProduct({ ...product, details: [...product.details, { key: '', value: '' }] });
+    setProduct({ ...product, [objName]: [...product[objName], { key: '', value: '' }] });
   };
 
-  const deleteInputRow = (e, i) => {
+  const deleteInputRow = (e, i, objName) => {
     e.preventDefault();
-    setProduct({ ...product, details: [...product.details.filter((d, j) => j !== i)] });
+    setProduct({ ...product, [objName]: [...product[objName].filter((d, j) => j !== i)] });
   };
 
-  const keyChange = (e, i) => {
-    let newArr = [...product.details];
+  const keyChange = (e, i, objName) => {
+    let newArr = [...product[objName]];
     newArr[i]['key'] = e.target.value;
-    setProduct({ ...product, details: newArr });
+    setProduct({ ...product, [objName]: newArr });
   };
 
-  const valueChange = (e, i) => {
-    let newArr = [...product.details];
+  const valueChange = (e, i, objName) => {
+    let newArr = [...product[objName]];
     newArr[i]['value'] = e.target.value;
-    setProduct({ ...product, details: newArr });
+    setProduct({ ...product, [objName]: newArr });
   };
 
-  console.log(product.details);
+  const aboutChange = (e, i) => {
+    let newArr = [...product.about];
+    newArr[i] = e.target.value;
+    setProduct({ ...product, about: newArr });
+  };
+
+  const addAboutRow = (e) => {
+    e.preventDefault();
+    setProduct({ ...product, about: [...product.about, ''] });
+  };
+
+  console.log(product);
 
   return (
     <form className='CreateProduct' onSubmit={(e) => onSubmit(e)}>
@@ -76,30 +87,84 @@ const CreateProduct = () => {
       </div>
       <div className='Row'>
         <label>Details</label>
-        <button className='Btn' onClick={(e) => addInputRow(e)}>
+        <button className='Btn' onClick={(e) => addInputRow(e, 'details')}>
           <FontAwesomeIcon icon={faPlus} className='Icon' />
         </button>
         <div className='MultiInputWidget'>
           {product.details.map((detail, i) => {
             return (
               <div className='SingleRow' key={i}>
-                <button className='Btn' onClick={(e) => deleteInputRow(e, i)}>
+                <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'details')}>
                   <FontAwesomeIcon icon={faX} className='Icon' />
                 </button>
                 <div className='Inputs'>
                   <input
                     className='KeyInput'
                     type='text'
-                    onChange={(e) => keyChange(e, i)}
+                    onChange={(e) => keyChange(e, i, 'details')}
                     value={detail.key}
                   />
                   <input
                     className='ValueInput'
                     type='text'
-                    onChange={(e) => valueChange(e, i)}
+                    onChange={(e) => valueChange(e, i, 'details')}
                     value={detail.value}
                   />
                 </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className='Row'>
+        <label>Technical Details</label>
+        <button className='Btn' onClick={(e) => addInputRow(e, 'tech_details')}>
+          <FontAwesomeIcon icon={faPlus} className='Icon' />
+        </button>
+        <div className='MultiInputWidget'>
+          {product.tech_details.map((tech_details, i) => {
+            return (
+              <div className='SingleRow' key={i}>
+                <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'tech_details')}>
+                  <FontAwesomeIcon icon={faX} className='Icon' />
+                </button>
+                <div className='Inputs'>
+                  <input
+                    className='KeyInput'
+                    type='text'
+                    onChange={(e) => keyChange(e, i, 'tech_details')}
+                    value={tech_details.key}
+                  />
+                  <input
+                    className='ValueInput'
+                    type='text'
+                    onChange={(e) => valueChange(e, i, 'tech_details')}
+                    value={tech_details.value}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className='Row'>
+        <label>About</label>
+        <button className='Btn' onClick={(e) => addAboutRow(e)}>
+          <FontAwesomeIcon icon={faPlus} className='Icon' />
+        </button>
+        <div className='MultiInputWidget'>
+          {product.about.map((item, i) => {
+            return (
+              <div className='SingleRow' key={i}>
+                <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'about')}>
+                  <FontAwesomeIcon icon={faX} className='Icon' />
+                </button>
+                <input
+                  className='AboutInput'
+                  type='text'
+                  onChange={(e) => aboutChange(e, i)}
+                  value={item.value}
+                />
               </div>
             );
           })}
