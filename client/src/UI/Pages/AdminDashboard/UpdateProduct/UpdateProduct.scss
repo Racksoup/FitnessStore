@@ -12,23 +12,24 @@
   .Content {
     position: absolute;
     margin: 10rem auto 0 auto;
-    padding: 2rem;
-    width: 40rem;
+    padding: 1rem;
+    width: 42rem;
     color: black;
-    background-color: white;
+    background-color: rgb(27, 38, 41);
     border: solid 0.3rem $color-4;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .Btn-2 {
+    .CloseBtn {
       align-self: end;
     }
 
-    .Btn-1 {
-      align-self: center;
+    .Title {
+      margin-bottom: 1rem;
     }
+
     .Row {
       margin: 0.4rem 0;
       width: 100%;
@@ -37,64 +38,111 @@
       align-items: start;
 
       label {
-        color: black;
+        width: 7rem;
       }
 
-      input {
+      .Btn {
+        width: 2.3rem;
+      }
+
+      .Icon {
+        color: black;
+        svg {
+          color: black;
+        }
+        path {
+          color: black;
+        }
+      }
+
+      .MainInput {
         width: 25rem;
         padding: 0 0 0 0.5rem;
         border-radius: 0.2rem;
-        border: solid 0.1rem grey;
         height: 2.2rem;
         color: black;
         background-color: white;
       }
 
-      .ExtraImagesBox {
+      .MultiInputWidget {
         display: flex;
-        flex-wrap: wrap;
-        width: 25rem;
-        margin-bottom: 0.8rem;
-        color: black;
+        flex-direction: column;
+        width: 28rem;
 
-        .ExtraImage {
-          color: black;
+        .SingleRow {
+          width: 100%;
           display: flex;
-          flex-direction: column;
-          align-items: end;
-          margin: 0.2rem;
-          border: 0.1rem solid grey;
-          border-radius: 0.2rem;
-          overflow: hidden;
+          justify-content: space-between;
+          margin: 0 0 0.6rem 0;
 
-          .Icon {
-            border: black 0.1rem solid;
-            border-radius: 0.2rem;
+          .Btn {
             background-color: red;
-            color: black;
-            cursor: pointer;
-            height: 0.8rem;
-            width: 0.8rem;
-            margin-bottom: 0.05rem;
+          }
 
-            &:hover {
-              border: none;
-              height: 1rem;
-              width: 1rem;
-            }
+          .Inputs {
+            width: 25rem;
+            display: flex;
+            justify-content: space-between;
 
-            svg {
+            .KeyInput {
+              width: 6rem;
+              padding: 0 0 0 0.5rem;
+              border-radius: 0.2rem;
+              height: 2.2rem;
               color: black;
-              cursor: pointer;
+              background-color: white;
             }
-            path {
+            .ValueInput {
+              width: 17rem;
+              padding: 0 0 0 0.5rem;
+              border-radius: 0.2rem;
+              height: 2.2rem;
               color: black;
-              cursor: pointer;
+              background-color: white;
             }
           }
-          img {
-            width: 4rem;
-            height: 2.8rem;
+
+          .AboutInput {
+            width: 25rem;
+            padding: 0 0 0 0.5rem;
+            border-radius: 0.2rem;
+            height: 2.2rem;
+            color: black;
+            background-color: white;
+          }
+        }
+      }
+
+      .ImagesRow {
+        display: flex;
+        width: 100%;
+        margin-bottom: 0.8rem;
+        flex-wrap: wrap;
+
+        .ImageBox {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 0.2rem;
+          width: 10rem;
+          padding: 1rem;
+
+          .Top {
+            display: flex;
+
+            .Input {
+            }
+          }
+
+          .Image {
+            object-fit: cover;
+            width: 100%;
+            height: 5rem;
+          }
+
+          .Text {
+            width: 100%;
+            overflow: hidden;
           }
         }
       }
