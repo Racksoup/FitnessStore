@@ -40,7 +40,7 @@
     }
 
     .Row {
-      margin: 0.4rem 0;
+      margin: 0.5rem 0;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -64,7 +64,7 @@
         width: 37rem;
         padding: 0 0 0 0.5rem;
         border-radius: 0.2rem;
-        height: 2.2rem;
+        height: 1.9rem;
         color: black;
         background-color: white;
       }
@@ -78,7 +78,6 @@
           width: 100%;
           display: flex;
           justify-content: space-between;
-          margin: 0 0 0.6rem 0;
 
           .Btn {
             background-color: red;
@@ -89,34 +88,38 @@
             display: flex;
             justify-content: space-between;
 
-            label {
-              margin-right: 1rem;
-            }
-            .KeyInput {
-              width: 6rem;
-              padding: 0 0 0 0.5rem;
-              border-radius: 0.2rem;
-              height: 2.2rem;
-              color: black;
-              background-color: white;
-            }
-            .ValueInput {
-              width: 23rem;
-              padding: 0 0 0 0.5rem;
-              border-radius: 0.2rem;
-              height: 2.2rem;
-              color: black;
-              background-color: white;
-            }
-          }
+            .InputGroup {
+              display: flex;
 
-          .AboutInput {
-            width: 34.3rem;
-            padding: 0 0 0 0.5rem;
-            border-radius: 0.2rem;
-            height: 2.2rem;
-            color: black;
-            background-color: white;
+              .Label {
+                width: 3.4rem;
+              }
+              .KeyInput {
+                width: 6rem;
+                padding: 0 0 0 0.5rem;
+                border-radius: 0.2rem;
+                height: 1.9rem;
+                color: black;
+                background-color: white;
+              }
+              .ValueInput {
+                width: 23rem;
+                padding: 0 0 0 0.5rem;
+                border-radius: 0.2rem;
+                height: 1.9rem;
+                color: black;
+                background-color: white;
+              }
+
+              .AboutInput {
+                width: 33.65rem;
+                padding: 0 0 0 0.5rem;
+                border-radius: 0.2rem;
+                height: 1.9rem;
+                color: black;
+                background-color: white;
+              }
+            }
           }
         }
       }
@@ -132,7 +135,7 @@
           flex-direction: column;
           align-items: center;
           margin-top: 0.2rem;
-          width: 9.3rem;
+          width: 9.72rem;
           padding: 0.8rem;
 
           .Top {

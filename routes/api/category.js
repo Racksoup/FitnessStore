@@ -33,7 +33,7 @@ router.delete('/:id', adminAuth, async (req, res) => {
 //
 //
 // Get all
-router.get('/', adminAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const categories = await Category.find();
     res.json(categories);

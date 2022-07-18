@@ -179,20 +179,24 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             />
           </div>
           <div className='Row'>
-            <label>Details</label>
+            <label>Main Details</label>
             <button className='Btn-5' onClick={(e) => addInputRow(e, 'details')}>
               <FontAwesomeIcon icon={faPlus} className='Icon' />
             </button>
             <div className='MultiInputWidget'>
               {product.details.map((detail, i) => {
+                let marginStyle = { marginBottom: '0.5rem' };
+                if (i === product.details.length - 1) {
+                  marginStyle.marginBottom = '0rem';
+                }
                 return (
-                  <div className='SingleRow' key={i}>
+                  <div className='SingleRow' style={marginStyle} key={i}>
                     <button className='Btn-4' onClick={(e) => deleteInputRow(e, i, 'details')}>
                       <FontAwesomeIcon icon={faX} className='Icon' />
                     </button>
                     <div className='Inputs'>
-                      <div>
-                        <label>Name:</label>
+                      <div className='InputGroup'>
+                        <div className='Label'>Name:</div>
                         <input
                           className='KeyInput'
                           type='text'
@@ -200,8 +204,8 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                           value={detail.key}
                         />
                       </div>
-                      <div>
-                        <label>Detail:</label>
+                      <div className='InputGroup'>
+                        <div className='Label'>Detail:</div>
                         <input
                           className='ValueInput'
                           type='text'
@@ -222,14 +226,18 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             </button>
             <div className='MultiInputWidget'>
               {product.tech_details.map((tech_details, i) => {
+                let marginStyle = { marginBottom: '0.5rem' };
+                if (i === product.tech_details.length - 1) {
+                  marginStyle.marginBottom = '0rem';
+                }
                 return (
-                  <div className='SingleRow' key={i}>
+                  <div className='SingleRow' style={marginStyle} key={i}>
                     <button className='Btn-4' onClick={(e) => deleteInputRow(e, i, 'tech_details')}>
                       <FontAwesomeIcon icon={faX} className='Icon' />
                     </button>
                     <div className='Inputs'>
-                      <div>
-                        <label>Name:</label>
+                      <div className='InputGroup'>
+                        <div className='Label'>Name:</div>
                         <input
                           className='KeyInput'
                           type='text'
@@ -237,8 +245,8 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                           value={tech_details.key}
                         />
                       </div>
-                      <div>
-                        <label>Detail:</label>
+                      <div className='InputGroup'>
+                        <div className='Label'>Detail:</div>
                         <input
                           className='ValueInput'
                           type='text'
@@ -259,14 +267,19 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             </button>
             <div className='MultiInputWidget'>
               {product.about.map((item, i) => {
+                let marginStyle = { marginBottom: '0.5rem' };
+                if (i === product.about.length - 1) {
+                  marginStyle.marginBottom = '0rem';
+                }
+
                 return (
-                  <div className='SingleRow' key={i}>
+                  <div className='SingleRow' style={marginStyle} key={i}>
                     <button className='Btn-4' onClick={(e) => deleteInputRow(e, i, 'about')}>
                       <FontAwesomeIcon icon={faX} className='Icon' />
                     </button>
                     <div className='Inputs'>
-                      <div>
-                        <label>Info:</label>
+                      <div className='InputGroup'>
+                        <div className='Label'>Info:</div>
                         <input
                           className='AboutInput'
                           type='text'
@@ -281,7 +294,15 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             </div>
           </div>
 
-          <input type='file' onChange={(e) => fileChanged(e)} />
+          <label for='upload' className='Btn'>
+            Upload Image
+          </label>
+          <input
+            type='file'
+            onChange={(e) => fileChanged(e)}
+            id='upload'
+            style={{ display: 'none' }}
+          />
 
           <div className='Row'>
             <div className='ImagesRow'>

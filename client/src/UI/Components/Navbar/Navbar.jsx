@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.scss';
 
 import { Link } from 'react-router-dom';
 import { faCartShopping, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCategories, selectCategories } from '../../../Redux/categorySlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [searchActive, setSearchActive] = useState(false);
+  const categories = useSelector(selectCategories);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
 
   let TopMiddleStyle = {
     border: 'none',
@@ -55,13 +63,12 @@ const Navbar = () => {
         </div>
       </div>
       <div className='Bottom'>
-        <button className='Button'>All</button>
-        <button className='Button'>Weights</button>
-        <button className='Button'>Gym Systems</button>
-        <button className='Button'>Plate Loaded</button>
-        <button className='Button'>Cardio</button>
-        <button className='Button'>Accessories</button>
-        <button className='Button'>Bicycles</button>
+        {categories &&
+          categories.map((x, i) => (
+            <button key={i} className='Button'>
+              {x.category}
+            </button>
+          ))}
       </div>
     </div>
   );
