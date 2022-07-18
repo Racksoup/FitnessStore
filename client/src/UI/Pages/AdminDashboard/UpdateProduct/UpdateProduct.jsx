@@ -7,7 +7,6 @@ import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 
 const UpdateProduct = ({ toggleModal, currProduct }) => {
-  const [file, setFile] = useState('');
   const [files, setFiles] = useState([]);
   const [product, setProduct] = useState(currProduct);
   const [newMain, setNewMain] = useState('');
@@ -15,7 +14,7 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProduct(product, file, files));
+    dispatch(updateProduct(product, files, newMain));
   };
 
   const addInputRow = (e, objName) => {
@@ -29,15 +28,37 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
   };
 
   const keyChange = (e, i, objName) => {
-    let newArr = [...product[objName]];
-    newArr[i]['key'] = e.target.value;
-    setProduct({ ...product, [objName]: newArr });
+    setProduct({
+      ...product,
+      [objName]: [
+        ...product[objName].map((x, j) => {
+          if (i === j) {
+            let f = { key: x.key, value: x.value };
+            f.key = e.target.value;
+            return f;
+          } else {
+            return x;
+          }
+        }),
+      ],
+    });
   };
 
   const valueChange = (e, i, objName) => {
-    let newArr = [...product[objName]];
-    newArr[i]['value'] = e.target.value;
-    setProduct({ ...product, [objName]: newArr });
+    setProduct({
+      ...product,
+      [objName]: [
+        ...product[objName].map((x, j) => {
+          if (i === j) {
+            let f = { key: x.key, value: x.value };
+            f.value = e.target.value;
+            return f;
+          } else {
+            return x;
+          }
+        }),
+      ],
+    });
   };
 
   const aboutChange = (e, i) => {
@@ -243,32 +264,6 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             </div>
           </div>
 
-          {/* <div className='Row'>
-            <label>Main Image</label>
-            <input className='MainInput' type='file' onChange={(e) => setFile(e.target.files[0])} />
-          </div>
-          <div className='Row'>
-            <label>Extra Images</label>
-            <div className='ExtraImagesBox'>
-              <input
-                className='MainInput'
-                type='file'
-                onChange={(e) => setFiles([...files, e.target.files[0]])}
-              />
-              {files.map((item, i) => {
-                return (
-                  <div className='ExtraImage' key={i}>
-                    <FontAwesomeIcon
-                      icon={faX}
-                      className='Icon'
-                      onClick={() => setFiles(files.filter((x) => x.name !== item.name))}
-                    />
-                    <p>{item.name}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div> */}
           <input type='file' onChange={(e) => fileChanged(e)} />
 
           <div className='Row'>

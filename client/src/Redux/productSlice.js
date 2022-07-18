@@ -98,14 +98,13 @@ export const createProduct = (product, file, files) => async (dispatch) => {
       },
     };
     const res = await axios.post('api/product', data, config);
-    //dispatch(createExtraProductImages(files, res.data));
     dispatch(productCreated(res.data));
   } catch (err) {
     console.log(err);
   }
 };
 
-export const updateProduct = (product, file) => async (dispatch) => {
+export const updateProduct = (product, files, newMain) => async (dispatch) => {
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -115,15 +114,24 @@ export const updateProduct = (product, file) => async (dispatch) => {
   try {
     let data = new FormData();
     Object.entries(product).map((k) => {
-      if (k[0] === 'details') {
+      if (
+        k[0] === 'details' ||
+        k[0] === 'tech_details' ||
+        k[0] === 'about' ||
+        k[0] === 'image_filenames'
+      ) {
         data.append(k[0], JSON.stringify(k[1]));
       } else {
         data.append(k[0], k[1]);
       }
     });
 
-    if (file !== '' && file !== null && file !== undefined) {
-      data.append('file', file);
+    data.append('newMain', newMain);
+
+    if (files !== '' && files !== null && files !== undefined && files.length !== 0) {
+      files.map((x) => {
+        data.append('file', x.file);
+      });
       config = {
         headers: {
           accept: 'application/json',

@@ -91,35 +91,74 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
 //
 //
 // Update Product
-router.put('/:id', [adminAuth, upload.single('file')], async (req, res) => {
-  const { name, category, price, details, image_filename } = req.body;
+router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
+  const { name, category, price, details, tech_details, about, newMain, image_filenames } =
+    req.body;
   const postItem = {
     name,
     category,
     price,
-    image_filename,
   };
-  if (details) {
-    postItem.details = JSON.parse(details);
+  postItem.details = JSON.parse(details);
+  postItem.tech_details = JSON.parse(tech_details);
+  postItem.about = JSON.parse(about);
+  postItem.image_filenames = JSON.parse(image_filenames);
+
+  // Check and delete old images
+  try {
+    const product = await Product.findOne({ _id: req.params.id });
+    let images = [];
+    product.image_filenames.map((a) => {
+      let bool = false;
+      postItem.image_filenames.map((b) => {
+        if (a.filename === b.filename) {
+          bool = true;
+        }
+      });
+      if (!bool) {
+        let x = imageBucket.find({ filename: a.filename }).toArray();
+        images.push(x);
+      }
+    });
+
+    console.log(images);
+
+    Promise.all(images).then((results) => {
+      results.map((result) => imageBucket.delete(result[0]._id));
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error, Cannot Update Product');
   }
-  if (req.file) {
-    postItem.image_filename = req.file.filename;
-  }
+
+  // Check and set new file as main file
+  const files = req.files.map((file) => {
+    if (file.originalname === newMain) {
+      let data = {
+        main: true,
+        filename: file.filename,
+      };
+      return data;
+    } else {
+      let data = {
+        main: false,
+        filename: file.filename,
+      };
+      return data;
+    }
+  });
+  postItem.image_filenames = [...postItem.image_filenames, ...files];
 
   try {
     const product = await Product.findByIdAndUpdate({ _id: req.params.id }, postItem, {
       new: true,
     });
-    // primary image is already uploaded. so if it was, delete the old one.
-    if (req.file) {
-      const x = await imageBucket.find({ filename: image_filename }).toArray();
-      await imageBucket.delete(x[0]._id);
-    }
+
     await product.save();
     res.json(product);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error, Cannot Post Product');
+    res.status(500).send('Server Error, Cannot Update Product');
   }
 });
 //
