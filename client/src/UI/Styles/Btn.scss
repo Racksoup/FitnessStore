@@ -11,10 +11,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  border: solid 0.1rem black;
 
   &:hover {
-    color: rgb(107, 76, 55);
-    border: solid 0.1rem rgb(107, 76, 55);
+    border: none;
+    font-size: 1.1rem;
   }
 }
 
@@ -31,21 +32,32 @@
     width: 2rem;
     height: 2rem;
     background-color: rgb(179, 0, 0);
-    &:hover {
-      color: black;
-      border: solid 0.1rem black;
-      font-size: 1.2rem;
-    }
   }
   &-3 {
     @include btn;
     width: 1.1rem;
     height: 1.1rem;
     background-color: rgb(179, 0, 0);
+  }
+  &-4 {
+    @include btn;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.2rem;
+    background-color: rgb(179, 0, 0);
+    font-size: 0.6rem;
     &:hover {
-      color: black;
-      border: solid 0.1rem black;
-      font-size: 1.2rem;
+      font-size: 0.7rem;
+    }
+  }
+  &-5 {
+    @include btn;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.2rem;
+    font-size: 0.6rem;
+    &:hover {
+      font-size: 0.7rem;
     }
   }
 }

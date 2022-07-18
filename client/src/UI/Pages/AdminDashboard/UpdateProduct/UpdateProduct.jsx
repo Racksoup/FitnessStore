@@ -146,7 +146,7 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
   return (
     <div className='UpdateProduct'>
       <div className='Content' onClick={(e) => e.stopPropagation()}>
-        <button className='Btn-2 CloseBtn' onClick={() => toggleModal(false)}>
+        <button className='Btn-2' onClick={() => toggleModal(false)}>
           <FontAwesomeIcon icon={faX} className='Icon' />
         </button>
         <h2 className='Title'>Update Product</h2>
@@ -180,29 +180,35 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
           </div>
           <div className='Row'>
             <label>Details</label>
-            <button className='Btn' onClick={(e) => addInputRow(e, 'details')}>
+            <button className='Btn-5' onClick={(e) => addInputRow(e, 'details')}>
               <FontAwesomeIcon icon={faPlus} className='Icon' />
             </button>
             <div className='MultiInputWidget'>
               {product.details.map((detail, i) => {
                 return (
                   <div className='SingleRow' key={i}>
-                    <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'details')}>
+                    <button className='Btn-4' onClick={(e) => deleteInputRow(e, i, 'details')}>
                       <FontAwesomeIcon icon={faX} className='Icon' />
                     </button>
                     <div className='Inputs'>
-                      <input
-                        className='KeyInput'
-                        type='text'
-                        onChange={(e) => keyChange(e, i, 'details')}
-                        value={detail.key}
-                      />
-                      <input
-                        className='ValueInput'
-                        type='text'
-                        onChange={(e) => valueChange(e, i, 'details')}
-                        value={detail.value}
-                      />
+                      <div>
+                        <label>Name:</label>
+                        <input
+                          className='KeyInput'
+                          type='text'
+                          onChange={(e) => keyChange(e, i, 'details')}
+                          value={detail.key}
+                        />
+                      </div>
+                      <div>
+                        <label>Detail:</label>
+                        <input
+                          className='ValueInput'
+                          type='text'
+                          onChange={(e) => valueChange(e, i, 'details')}
+                          value={detail.value}
+                        />
+                      </div>
                     </div>
                   </div>
                 );
@@ -211,29 +217,35 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
           </div>
           <div className='Row'>
             <label>Technical Details</label>
-            <button className='Btn' onClick={(e) => addInputRow(e, 'tech_details')}>
+            <button className='Btn-5' onClick={(e) => addInputRow(e, 'tech_details')}>
               <FontAwesomeIcon icon={faPlus} className='Icon' />
             </button>
             <div className='MultiInputWidget'>
               {product.tech_details.map((tech_details, i) => {
                 return (
                   <div className='SingleRow' key={i}>
-                    <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'tech_details')}>
+                    <button className='Btn-4' onClick={(e) => deleteInputRow(e, i, 'tech_details')}>
                       <FontAwesomeIcon icon={faX} className='Icon' />
                     </button>
                     <div className='Inputs'>
-                      <input
-                        className='KeyInput'
-                        type='text'
-                        onChange={(e) => keyChange(e, i, 'tech_details')}
-                        value={tech_details.key}
-                      />
-                      <input
-                        className='ValueInput'
-                        type='text'
-                        onChange={(e) => valueChange(e, i, 'tech_details')}
-                        value={tech_details.value}
-                      />
+                      <div>
+                        <label>Name:</label>
+                        <input
+                          className='KeyInput'
+                          type='text'
+                          onChange={(e) => keyChange(e, i, 'tech_details')}
+                          value={tech_details.key}
+                        />
+                      </div>
+                      <div>
+                        <label>Detail:</label>
+                        <input
+                          className='ValueInput'
+                          type='text'
+                          onChange={(e) => valueChange(e, i, 'tech_details')}
+                          value={tech_details.value}
+                        />
+                      </div>
                     </div>
                   </div>
                 );
@@ -242,22 +254,27 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
           </div>
           <div className='Row'>
             <label>About</label>
-            <button className='Btn' onClick={(e) => addAboutRow(e)}>
+            <button className='Btn-5' onClick={(e) => addAboutRow(e)}>
               <FontAwesomeIcon icon={faPlus} className='Icon' />
             </button>
             <div className='MultiInputWidget'>
               {product.about.map((item, i) => {
                 return (
                   <div className='SingleRow' key={i}>
-                    <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'about')}>
+                    <button className='Btn-4' onClick={(e) => deleteInputRow(e, i, 'about')}>
                       <FontAwesomeIcon icon={faX} className='Icon' />
                     </button>
-                    <input
-                      className='AboutInput'
-                      type='text'
-                      onChange={(e) => aboutChange(e, i)}
-                      value={item}
-                    />
+                    <div className='Inputs'>
+                      <div>
+                        <label>Info:</label>
+                        <input
+                          className='AboutInput'
+                          type='text'
+                          onChange={(e) => aboutChange(e, i)}
+                          value={item}
+                        />
+                      </div>
+                    </div>
                   </div>
                 );
               })}
@@ -279,7 +296,7 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                         onChange={(e) => setMainImage(e)}
                         name={item.filename}
                       />
-                      <button className='Btn' onClick={() => removeOGImage(item)}>
+                      <button className='Btn-4' onClick={() => removeOGImage(item)}>
                         <FontAwesomeIcon icon={faX} className='Icon' />
                       </button>
                     </div>
@@ -299,7 +316,7 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                         onChange={(e) => setMainImageNew(e)}
                         name={item.file.name}
                       />
-                      <button className='Btn' onClick={() => removeNewImage(item)}>
+                      <button className='Btn-4' onClick={() => removeNewImage(item)}>
                         <FontAwesomeIcon icon={faX} className='Icon' />
                       </button>
                     </div>
