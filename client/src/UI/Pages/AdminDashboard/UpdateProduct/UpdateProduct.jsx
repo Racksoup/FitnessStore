@@ -68,6 +68,58 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
         }),
       ],
     }));
+
+    setFiles([
+      ...files.map((x) => {
+        x.main = false;
+        return x;
+      }),
+    ]);
+  };
+
+  const setMainImageNew = (e) => {
+    setNewMain(e.target.name);
+
+    setProduct(() => ({
+      ...product,
+      image_filenames: [
+        ...product.image_filenames.map((x) => {
+          let f = { filename: x.filename, main: false };
+          return f;
+        }),
+      ],
+    }));
+
+    setFiles([
+      ...files.map((x) => {
+        if (x.file.name === e.target.name) {
+          let n = { main: x.main, file: x.file };
+          n.main = true;
+          return n;
+        } else {
+          let n = { main: x.main, file: x.file };
+          n.main = false;
+          return n;
+        }
+      }),
+    ]);
+  };
+
+  const fileChanged = (e) => {
+    e.preventDefault();
+    let x = { main: false, file: e.target.files[0] };
+    setFiles([...files, x]);
+  };
+
+  const removeOGImage = (item) => {
+    setProduct({
+      ...product,
+      image_filenames: [...product.image_filenames.filter((x) => x.filename !== item.filename)],
+    });
+  };
+
+  const removeNewImage = (item) => {
+    setFiles([...files.filter((x) => x.file.name !== item.file.name)]);
   };
 
   return (
@@ -217,21 +269,7 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
               })}
             </div>
           </div> */}
-
-          <div>
-            {files.map((item, i) => {
-              return (
-                <div className='ExtraImage' key={i}>
-                  <FontAwesomeIcon
-                    icon={faX}
-                    className='Icon'
-                    onClick={() => setFiles(files.filter((x) => x.name !== item.name))}
-                  />
-                  <p>{item.name}</p>
-                </div>
-              );
-            })}
-          </div>
+          <input type='file' onChange={(e) => fileChanged(e)} />
 
           <div className='Row'>
             <div className='ImagesRow'>
@@ -239,7 +277,6 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                 return (
                   <div className='ImageBox' key={i}>
                     <div className='Top'>
-                      <FontAwesomeIcon icon={faX} className='Icon' />
                       <input
                         type='checkbox'
                         className='Input'
@@ -247,9 +284,31 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                         onChange={(e) => setMainImage(e)}
                         name={item.filename}
                       />
+                      <button className='Btn' onClick={() => removeOGImage(item)}>
+                        <FontAwesomeIcon icon={faX} className='Icon' />
+                      </button>
                     </div>
                     <img src={`api/product/image/${item.filename}`} alt='image' className='Image' />
-                    <p className='Text'>{item.filename}</p>
+                  </div>
+                );
+              })}
+              {files.map((item, i) => {
+                let newSrc = URL.createObjectURL(item.file);
+                return (
+                  <div className='ImageBox' key={i}>
+                    <div className='Top'>
+                      <input
+                        type='checkbox'
+                        className='Input'
+                        checked={item.main}
+                        onChange={(e) => setMainImageNew(e)}
+                        name={item.file.name}
+                      />
+                      <button className='Btn' onClick={() => removeNewImage(item)}>
+                        <FontAwesomeIcon icon={faX} className='Icon' />
+                      </button>
+                    </div>
+                    <img src={newSrc} alt='image' className='Image' />
                   </div>
                 );
               })}
