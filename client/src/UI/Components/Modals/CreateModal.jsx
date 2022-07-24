@@ -19,17 +19,23 @@ const CreateModal = ({ toggleModal, func, state, title }) => {
       <div className='Modal' onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         <form onSubmit={(e) => submitForm(e)}>
-          {Object.entries(currState).map(([k, v], i) => (
-            <div className='Row' key={i}>
-              <label>{k}:</label>
-              <input
-                type='text'
-                name={k}
-                onChange={(e) => setCurrState({ ...currState, [e.target.name]: e.target.value })}
-                value={v}
-              />
-            </div>
-          ))}
+          {Object.entries(currState).map(([k, v], i) => {
+            if (k !== 'main' && k !== 'mainID') {
+              return (
+                <div className='Row' key={i}>
+                  <label>{k}:</label>
+                  <input
+                    type='text'
+                    name={k}
+                    onChange={(e) =>
+                      setCurrState({ ...currState, [e.target.name]: e.target.value })
+                    }
+                    value={v}
+                  />
+                </div>
+              );
+            }
+          })}
           <input type='submit' value='Submit' className='Btn-1' />
         </form>
       </div>

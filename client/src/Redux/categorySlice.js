@@ -31,7 +31,15 @@ export const createCategory = (item) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ category: item.category });
+  const postItem = {
+    category: item.category,
+    main: item.main,
+  };
+  if (item.mainID) {
+    postItem.mainID = item.mainID;
+  }
+
+  const body = JSON.stringify(postItem);
 
   try {
     const res = await axios.post('/api/category/', body, config);

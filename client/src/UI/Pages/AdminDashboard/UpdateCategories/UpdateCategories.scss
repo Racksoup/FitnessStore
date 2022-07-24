@@ -17,17 +17,10 @@
     justify-content: space-between;
     margin: 0.4rem 0 1.5rem 0;
 
-    .Category {
-      width: 100%;
-      height: 1.5rem;
-      border: solid 0.1rem rgb(200, 200, 200);
+    .CategoryGroup {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      p {
-        margin-left: 0.5rem;
-      }
+      flex-direction: column;
+      border: solid 0.1rem rgb(200, 200, 200);
 
       .Icon {
         cursor: pointer;
@@ -38,6 +31,34 @@
         }
         path {
           cursor: pointer;
+        }
+      }
+      .Buttons {
+        display: flex;
+      }
+      .Category {
+        width: 100%;
+        min-height: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+          margin-left: 0.5rem;
+        }
+      }
+      .ChildCategories {
+        display: flex;
+        flex-direction: column;
+
+        .ChildCategory {
+          display: flex;
+          justify-content: space-between;
+          border-top: solid 0.1rem rgba(100, 100, 100, 0.6);
+
+          p {
+            margin-left: 1rem;
+          }
         }
       }
     }
