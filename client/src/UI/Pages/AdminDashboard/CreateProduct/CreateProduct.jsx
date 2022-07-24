@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './CreateProduct.scss';
 import { createProduct } from '../../../../Redux/productSlice';
+import { selectCategories } from '../../../../Redux/categorySlice';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const CreateProduct = () => {
+  const categories = useSelector(selectCategories);
+  const [showCategories, setShowCategories] = useState(false);
   const [file, setFile] = useState('');
   const [files, setFiles] = useState([]);
   const [product, setProduct] = useState({
@@ -69,11 +72,26 @@ const CreateProduct = () => {
       </div>
       <div className='Row'>
         <label>Category</label>
-        <input
+        {/* <input
           className='MainInput'
           type='text'
           onChange={(e) => setProduct({ ...product, category: e.target.value })}
-        />
+        /> */}
+        <div
+          className='MainInput'
+          onMouseEnter={() => setShowCategories(true)}
+          onMouseLeave={() => setShowCategories(false)}
+        >
+          {showCategories && (
+            <div className='Categories'>
+              {categories.map((cat, i) => {
+                <div className='Category' key={i}>
+                  {cat.category}
+                </div>;
+              })}
+            </div>
+          )}
+        </div>
       </div>
       <div className='Row'>
         <label>Price</label>

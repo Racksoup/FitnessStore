@@ -7,6 +7,19 @@
   flex-direction: column;
   align-items: center;
 
+  .Categories {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0 0 -0.5rem;
+    width: 25rem;
+    background-color: black;
+    height: 5rem;
+
+    .Category {
+    }
+  }
+
   .Row {
     margin: 0.4rem 0;
     width: 100%;

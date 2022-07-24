@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UpdateCategories.scss';
 import CreateModal from '../../../Components/Modals/CreateModal.jsx';
-import {
-  getCategories,
-  deleteCategory,
-  createCategory,
-  selectCategories,
-} from '../../../../Redux/categorySlice';
+import { deleteCategory, createCategory, selectCategories } from '../../../../Redux/categorySlice';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,10 +12,6 @@ const UpdateCategories = () => {
   const [createCategoryModal, toggleCreateCategoryModal] = useState(false);
   const [categoryInit, setCategoryInit] = useState({ category: '', main: true });
   const categories = useSelector(selectCategories);
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, []);
 
   const createMainCategory = () => {
     setCategoryInit({ category: '', main: true });

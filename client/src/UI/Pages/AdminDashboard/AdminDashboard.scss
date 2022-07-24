@@ -2,6 +2,7 @@
 
 .AdminDashboard {
   @include Section;
+  min-height: 50rem;
 
   .PageHeader {
     width: 100%;

@@ -5,30 +5,30 @@ import CreateProduct from './CreateProduct/CreateProduct.jsx';
 import ViewProducts from './ViewProducts/ViewProducts';
 import UpdateCategories from './UpdateCategories/UpdateCategories';
 import CreateFileModal from '../../Components/Modals/CreateFileModal';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
-
 import {
   createHeaderImage,
   deleteHeaderImage,
   getHeaderImages,
   selectHeaderImages,
 } from '../../../Redux/headerImageSlice';
+import { getCategories } from '../../../Redux/categorySlice';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
   const [view, setView] = useState('createProduct');
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const dispatch = useDispatch();
-
   const headerImages = useSelector(selectHeaderImages);
   const [createHeaderImgModal, toggleCreateHeaderImgModal] = useState(false);
 
   useEffect(() => {
     dispatch(loadAdmin());
     dispatch(getHeaderImages());
+    dispatch(getCategories());
   }, []);
 
   if (!isAuthenticated) {
