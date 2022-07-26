@@ -51,7 +51,7 @@ const UpdateCategories = () => {
                       />
                       <FontAwesomeIcon
                         icon={faX}
-                        className='Btn-3 Icon'
+                        className='Btn-4 Icon'
                         onClick={() => dispatch(deleteCategory(cat._id))}
                       />
                     </div>
@@ -65,7 +65,7 @@ const UpdateCategories = () => {
                             <div className='Buttons'>
                               <FontAwesomeIcon
                                 icon={faX}
-                                className='Btn-3 Icon'
+                                className='Btn-4 Icon'
                                 onClick={() => dispatch(deleteCategory(cat2._id))}
                               />
                             </div>

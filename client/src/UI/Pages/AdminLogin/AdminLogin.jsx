@@ -34,6 +34,7 @@ const AdminLogin = () => {
           type='text'
           className='Input'
           onChange={(e) => setForm({ ...form, username: e.target.value })}
+          tabIndex='1'
         />
         <label htmlFor='' className='Label'>
           Password
@@ -42,6 +43,7 @@ const AdminLogin = () => {
           type='password'
           className='Input'
           onChange={(e) => setForm({ ...form, password: e.target.value })}
+          tabIndex='2'
         />
         <input type='submit' className='Btn' />
       </form>

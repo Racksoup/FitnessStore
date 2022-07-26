@@ -84,11 +84,11 @@ const CreateProduct = () => {
         >
           {showCategories && (
             <div className='Categories'>
-              {categories.map((cat, i) => {
+              {categories.map((cat, i) => (
                 <div className='Category' key={i}>
                   {cat.category}
-                </div>;
-              })}
+                </div>
+              ))}
             </div>
           )}
         </div>
