@@ -85,12 +85,17 @@ const CreateProduct = () => {
           {showCategories && (
             <div className='Categories'>
               {categories.map((cat, i) => (
-                <div className='Category' key={i}>
+                <div
+                  className='Category'
+                  key={i}
+                  onClick={() => setProduct({ ...product, category: cat.category })}
+                >
                   {cat.category}
                 </div>
               ))}
             </div>
           )}
+          <p className='CategoryDisplay'>{product.category}</p>
         </div>
       </div>
       <div className='Row'>
