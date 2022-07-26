@@ -24,6 +24,31 @@
     align-items: center;
     overflow-y: scroll;
 
+    .Categories {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      margin: 2rem 0 0 -0.5rem;
+      width: 25rem;
+      background-color: rgba(30, 30, 30, 1);
+      color: white;
+
+      .Category {
+        height: 2rem;
+        border-bottom: rgba(200, 200, 200, 0.5) 0.05rem solid;
+
+        &:hover {
+          background-color: rgba(60, 60, 60, 1);
+        }
+      }
+    }
+
+    .CategoryDisplay {
+      line-height: 0;
+      color: black;
+      margin: 1.1rem 0 0 0;
+    }
+
     form {
       width: 100%;
       display: flex;

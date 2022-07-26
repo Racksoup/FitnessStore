@@ -72,11 +72,6 @@ const CreateProduct = () => {
       </div>
       <div className='Row'>
         <label>Category</label>
-        {/* <input
-          className='MainInput'
-          type='text'
-          onChange={(e) => setProduct({ ...product, category: e.target.value })}
-        /> */}
         <div
           className='MainInput'
           onMouseEnter={() => setShowCategories(true)}

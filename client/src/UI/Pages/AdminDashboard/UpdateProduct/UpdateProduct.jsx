@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './UpdateProduct.scss';
 import productSlice, { updateProduct } from '../../../../Redux/productSlice';
+import { selectCategories } from '../../../../Redux/categorySlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const UpdateProduct = ({ toggleModal, currProduct }) => {
+  const categories = useSelector(selectCategories);
+  const [showCategories, setShowCategories] = useState(false);
   const [files, setFiles] = useState([]);
   const [product, setProduct] = useState(currProduct);
   const [newMain, setNewMain] = useState('');
@@ -162,12 +165,26 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
           </div>
           <div className='Row'>
             <label>Category</label>
-            <input
+            <div
               className='MainInput'
-              type='text'
-              onChange={(e) => setProduct({ ...product, category: e.target.value })}
-              value={product.category}
-            />
+              onMouseEnter={() => setShowCategories(true)}
+              onMouseLeave={() => setShowCategories(false)}
+            >
+              {showCategories && (
+                <div className='Categories'>
+                  {categories.map((cat, i) => (
+                    <div
+                      className='Category'
+                      key={i}
+                      onClick={() => setProduct({ ...product, category: cat.category })}
+                    >
+                      {cat.category}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className='CategoryDisplay'>{product.category}</p>
+            </div>
           </div>
           <div className='Row'>
             <label>Price</label>
