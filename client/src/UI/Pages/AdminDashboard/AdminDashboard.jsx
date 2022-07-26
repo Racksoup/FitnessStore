@@ -11,6 +11,12 @@ import {
   getHeaderImages,
   selectHeaderImages,
 } from '../../../Redux/headerImageSlice';
+import {
+  createSaleImage,
+  deleteSaleImage,
+  getSaleImages,
+  selectSaleImages,
+} from '../../../Redux/saleImageSlice';
 import { getCategories } from '../../../Redux/categorySlice';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,10 +29,13 @@ const AdminDashboard = () => {
   const [view, setView] = useState('createProduct');
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const headerImages = useSelector(selectHeaderImages);
+  const saleImages = useSelector(selectSaleImages);
   const [createHeaderImgModal, toggleCreateHeaderImgModal] = useState(false);
+  const [createSaleImgModal, toggleCreateSaleImgModal] = useState(false);
 
   useEffect(() => {
     dispatch(loadAdmin());
+    dispatch(getSaleImages());
     dispatch(getHeaderImages());
     dispatch(getCategories());
   }, []);
@@ -42,6 +51,13 @@ const AdminDashboard = () => {
           toggleModal={toggleCreateHeaderImgModal}
           func={createHeaderImage}
           title='Create Header Image'
+        />
+      )}
+      {createSaleImgModal && (
+        <CreateFileModal
+          toggleModal={toggleCreateSaleImgModal}
+          func={createSaleImage}
+          title='Create Sale Image'
         />
       )}
       <div className='PageHeader'>
@@ -106,6 +122,26 @@ const AdminDashboard = () => {
                       <FontAwesomeIcon icon={faX} />
                     </button>
                     <img src={`api/header-images/${img.filename}`} alt='Header Image' />
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className='Half'>
+            <h2>Update Sale Images</h2>
+            <button className='Btn-1' onClick={() => toggleCreateSaleImgModal(true)}>
+              Create Sale Image
+            </button>
+            <div className='ViewImages'>
+              {saleImages &&
+                saleImages.map((img, i) => (
+                  <div className='ImageBox' key={i}>
+                    <button
+                      className='Btn-3'
+                      onClick={() => dispatch(deleteSaleImage(img.filename))}
+                    >
+                      <FontAwesomeIcon icon={faX} />
+                    </button>
+                    <img src={`api/sale-images/${img.filename}`} alt='Sale Image' />
                   </div>
                 ))}
             </div>

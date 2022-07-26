@@ -69,7 +69,7 @@ router.get('/:filename', async (req, res) => {
 //
 //
 // Get all sale images
-router.get('/data', async (req, res) => {
+router.get('/data/data', async (req, res) => {
   try {
     const items = await saleBucket.find().toArray();
     res.json(items);

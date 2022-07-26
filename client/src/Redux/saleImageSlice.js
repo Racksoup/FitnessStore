@@ -55,7 +55,7 @@ export const deleteSaleImage = (filename) => async (dispatch) => {
 
 export const getSaleImages = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/sale-images');
+    const res = await axios.get('/api/sale-images/data/data');
     dispatch(gotSaleImages(res.data));
   } catch (error) {
     console.log(error);
