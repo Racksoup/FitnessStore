@@ -10,6 +10,7 @@ import Navbar from './UI/Components/Navbar/Navbar.jsx';
 import Footer from './UI/Components/Footer/Footer.jsx';
 
 import { Route, Routes } from 'react-router-dom';
+import SingleProduct from './UI/Pages/SingleProduct/SingleProduct';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route exact path='/admin-dashboard' element={<AdminDashboard />} />
           <Route exact path='/user-dashboard' element={<UserDashboard />} />
           <Route exact path='/create-user' element={<CreateUser />} />
+          <Route exact path='/product' element={<SingleProduct />} />
         </Routes>
         <Footer />
       </div>

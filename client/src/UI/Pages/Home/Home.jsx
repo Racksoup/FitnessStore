@@ -2,6 +2,8 @@ import React from 'react';
 import './Home.scss';
 import Image from '../../../images/pexels-alexgtacar-1592384.jpg';
 
+import { Link } from 'react-router-dom';
+
 const Home = () => {
   return (
     <div className='Home'>
@@ -21,7 +23,9 @@ const Home = () => {
         </div>
       </div>
       <div className='Section1'>
-        <img src={Image} alt='image' className='Btn' />
+        <Link className='Link' to='/product'>
+          <img src={Image} alt='image' className='Btn' />
+        </Link>
         <img src={Image} alt='image' className='Btn' />
         <img src={Image} alt='image' className='Btn' />
         <img src={Image} alt='image' className='Btn' />
