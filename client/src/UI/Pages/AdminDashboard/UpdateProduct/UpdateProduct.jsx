@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './UpdateProduct.scss';
-import productSlice, { updateProduct } from '../../../../Redux/productSlice';
+import { updateProduct } from '../../../../Redux/productSlice';
 import { selectCategories } from '../../../../Redux/categorySlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -194,6 +194,17 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
               onChange={(e) => setProduct({ ...product, price: e.target.value })}
               value={product.price}
             />
+          </div>
+          <div className='Row'>
+            <label>Highlight</label>
+            <div className='CheckboxHolder'>
+              <input
+                className='Checkbox'
+                type='checkbox'
+                checked={product.highlight}
+                onChange={() => setProduct({ ...product, highlight: !product.highlight })}
+              />
+            </div>
           </div>
           <div className='Row'>
             <label>Main Details</label>

@@ -50,11 +50,12 @@ connect.once('open', () => {
 //
 // Create Product
 router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
-  const { name, category, price, details, tech_details, about, main_file } = req.body;
+  const { name, category, price, highlight, details, tech_details, about, main_file } = req.body;
   const postItem = {
     name,
     category,
     price,
+    highlight,
   };
   postItem.details = JSON.parse(details);
   postItem.tech_details = JSON.parse(tech_details);
@@ -92,12 +93,22 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
 //
 // Update Product
 router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
-  const { name, category, price, details, tech_details, about, newMain, image_filenames } =
-    req.body;
+  const {
+    name,
+    category,
+    price,
+    highlight,
+    details,
+    tech_details,
+    about,
+    newMain,
+    image_filenames,
+  } = req.body;
   const postItem = {
     name,
     category,
     price,
+    highlight,
   };
   postItem.details = JSON.parse(details);
   postItem.tech_details = JSON.parse(tech_details);
@@ -120,8 +131,6 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
         images.push(x);
       }
     });
-
-    console.log(images);
 
     Promise.all(images).then((results) => {
       results.map((result) => imageBucket.delete(result[0]._id));

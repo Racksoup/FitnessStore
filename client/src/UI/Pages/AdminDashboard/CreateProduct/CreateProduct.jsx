@@ -16,6 +16,7 @@ const CreateProduct = () => {
     name: '',
     category: '',
     price: '',
+    highlight: false,
     details: [{ key: '', value: '' }],
     tech_details: [{ key: '', value: '' }],
     about: [''],
@@ -100,6 +101,17 @@ const CreateProduct = () => {
           type='number'
           onChange={(e) => setProduct({ ...product, price: e.target.value })}
         />
+      </div>
+      <div className='Row'>
+        <label>Highlight</label>
+        <div className='CheckboxHolder'>
+          <input
+            className='Checkbox'
+            type='checkbox'
+            checked={product.highlight}
+            onChange={() => setProduct({ ...product, highlight: !product.highlight })}
+          />
+        </div>
       </div>
       <div className='Row'>
         <label>Details</label>

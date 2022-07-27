@@ -24,13 +24,8 @@ const Home = () => {
       </div>
       <div className='Section1'>
         <Link className='Link' to='/product'>
-          <img src={Image} alt='image' className='Btn' />
+          {/* <img src={Image} alt='image' className='Btn' onClick={() => }/> */}
         </Link>
-        <img src={Image} alt='image' className='Btn' />
-        <img src={Image} alt='image' className='Btn' />
-        <img src={Image} alt='image' className='Btn' />
-        <img src={Image} alt='image' className='Btn' />
-        <img src={Image} alt='image' className='Btn' />
       </div>
     </div>
   );

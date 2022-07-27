@@ -8,9 +8,9 @@ import UserDashboard from './UI/Pages/UserDashboard/UserDashboard.jsx';
 import CreateUser from './UI/Pages/CreateUser/CreateUser.jsx';
 import Navbar from './UI/Components/Navbar/Navbar.jsx';
 import Footer from './UI/Components/Footer/Footer.jsx';
+import SingleProduct from './UI/Pages/SingleProduct/SingleProduct';
 
 import { Route, Routes } from 'react-router-dom';
-import SingleProduct from './UI/Pages/SingleProduct/SingleProduct';
 
 const App = () => {
   return (

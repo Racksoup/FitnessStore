@@ -35,26 +35,6 @@ export const productSlice = createSlice({
     productRemoved: (state, action) => {
       state.products = state.products.filter((item) => item._id !== action.payload._id);
     },
-    extraProductImgCreated: (state, action) => {
-      state.extraProductImages.push(action.payload);
-    },
-    gotExtraProductImages: (state, action) => {
-      state.extraProductImages = action.payload;
-    },
-    extraProductImageDeleted: (state, action) => {
-      state.extraProductImages = state.extraProductImages.filter(
-        (img) => img.filename !== action.payload[0].filename
-      );
-    },
-    extraProductImageUpdated: (state, action) => {
-      state.extraProductImages = state.extraProductImages.map((img) => {
-        if (img._id !== action.payload._id) {
-          return img;
-        } else {
-          return action.payload;
-        }
-      });
-    },
     gotSearch: (state, action) => {
       state.products.push(...action.payload[0], ...action.payload[1]);
     },
@@ -68,10 +48,6 @@ export const {
   productCreated,
   productUpdated,
   productRemoved,
-  extraProductImgCreated,
-  gotExtraProductImages,
-  extraProductImageDeleted,
-  extraProductImageUpdated,
   gotSearch,
 } = productSlice.actions;
 
@@ -80,6 +56,7 @@ export const createProduct = (product, file, files) => async (dispatch) => {
   data.append('name', product.name);
   data.append('category', product.category);
   data.append('price', product.price);
+  data.append('highlight', product.highlight);
   data.append('details', JSON.stringify(product.details));
   data.append('tech_details', JSON.stringify(product.tech_details));
   data.append('about', JSON.stringify(product.about));
@@ -118,7 +95,8 @@ export const updateProduct = (product, files, newMain) => async (dispatch) => {
         k[0] === 'details' ||
         k[0] === 'tech_details' ||
         k[0] === 'about' ||
-        k[0] === 'image_filenames'
+        k[0] === 'image_filenames' ||
+        k[0] === 'highlight'
       ) {
         data.append(k[0], JSON.stringify(k[1]));
       } else {
@@ -212,68 +190,6 @@ export const createExtraProductImages = (files, product) => async (dispatch) => 
 
   try {
     await axios.post(`api/product/extra-images/${product._id}`, data, config);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const createExtraProductImage = (img, name, productID) => async (dispatch) => {
-  let data = new FormData();
-  const config = {
-    headers: {
-      accept: 'application/json',
-      'Accept-Language': 'en-US,en;q=0.8',
-      'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-    },
-  };
-
-  data.append('file', img, name);
-
-  try {
-    const res = await axios.post(`/api/product/extra-image/${productID}`, data, config);
-    dispatch(extraProductImgCreated(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const updateImageName = (img, name, productID) => async (dispatch) => {
-  let data = new FormData();
-  data.append('name', name);
-  data.append('productID', productID);
-  const config = {
-    headers: {
-      accept: 'application/json',
-      'Accept-Language': 'en-US,en;q=0.8',
-      'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-    },
-  };
-
-  try {
-    const res = await axios.put(
-      `/api/product/extra-image/name/${img.filename}/${name}/${productID}`,
-      data,
-      config
-    );
-    dispatch(extraProductImageUpdated(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const deleteExtraProductImage = (filename) => async (dispatch) => {
-  try {
-    const res = await axios.delete(`/api/product/extra-image/${filename}`);
-    dispatch(extraProductImageDeleted(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getExtraProductImagesData = (productID) => async (dispatch) => {
-  try {
-    const res = await axios.get(`/api/product/extra-images/data/${productID}`);
-    dispatch(gotExtraProductImages(res.data));
   } catch (error) {
     console.log(error);
   }

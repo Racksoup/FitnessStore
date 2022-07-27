@@ -39,6 +39,16 @@
     justify-content: space-between;
     align-items: start;
 
+    .CheckboxHolder {
+      width: 25rem;
+      display: flex;
+
+      .Checkbox {
+        height: 2.2rem;
+        width: 2.2rem;
+      }
+    }
+
     label {
       width: 7rem;
     }
