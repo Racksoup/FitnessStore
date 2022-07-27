@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Home.scss';
-import Image from '../../../images/pexels-alexgtacar-1592384.jpg';
+import { getHighlightProducts, selectProducts, setCurrProduct } from '../../../Redux/productSlice';
 
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const products = useSelector(selectProducts);
+
+  useEffect(() => {
+    dispatch(getHighlightProducts());
+  }, []);
+
   return (
     <div className='Home'>
       <div className='HeaderBox'>
@@ -23,9 +31,27 @@ const Home = () => {
         </div>
       </div>
       <div className='Section1'>
-        <Link className='Link' to='/product'>
-          {/* <img src={Image} alt='image' className='Btn' onClick={() => }/> */}
-        </Link>
+        {products &&
+          products.map((x, i) => {
+            return (
+              <>
+                {x.image_filenames.map((c, j) => {
+                  if (c.main) {
+                    return (
+                      <Link key={i} className='Link' to='/product'>
+                        <img
+                          src={`api/product/image/${c.filename}`}
+                          alt='image'
+                          className='Btn'
+                          onClick={() => dispatch(setCurrProduct(x))}
+                        />
+                      </Link>
+                    );
+                  }
+                })}
+              </>
+            );
+          })}
       </div>
     </div>
   );

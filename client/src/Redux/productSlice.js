@@ -4,18 +4,16 @@ import axios from 'axios';
 const initialState = {
   products: null,
   product: null,
-  extraProductImages: null,
 };
 
 export const selectProducts = (state) => state.product.products;
 export const selectProduct = (state) => state.product.product;
-export const selectExtraProductImages = (state) => state.product.extraProductImages;
 
 export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    gotAllProducts: (state, action) => {
+    gotProducts: (state, action) => {
       state.products = action.payload;
     },
     setCurrProduct: (state, action) => {
@@ -43,7 +41,7 @@ export const productSlice = createSlice({
 
 export const {
   setCurrProduct,
-  gotAllProducts,
+  gotProducts,
   gotOneProduct,
   productCreated,
   productUpdated,
@@ -137,16 +135,24 @@ export const removeProduct = (id) => async (dispatch) => {
 export const getAllProducts = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/product/');
-    dispatch(gotAllProducts(res.data));
+    dispatch(gotProducts(res.data));
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getHighlightProducts = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/product/highlight');
+    dispatch(gotProducts(res.data));
+  } catch (error) {
+    console.log(error);
   }
 };
 
 export const getCurrProduct = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/product/${localStorage.productID}`);
-    dispatch(getExtraProductImagesData(localStorage.productID));
     dispatch(gotOneProduct(res.data));
   } catch (err) {
     console.log(err);
@@ -157,7 +163,6 @@ export const getSingleProduct = (productID) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/product/${productID}`);
     localStorage.setItem('productID', productID);
-    dispatch(getExtraProductImagesData(localStorage.productID));
     dispatch(gotOneProduct(res.data));
   } catch (err) {
     console.log(err);
@@ -168,28 +173,6 @@ export const searchProducts = (search) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/product/search/${search}`);
     dispatch(gotSearch(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const createExtraProductImages = (files, product) => async (dispatch) => {
-  let data = new FormData();
-  if (files) {
-    files.map((v) => {
-      data.append('file', v, v.name);
-    });
-  }
-  const config = {
-    headers: {
-      accept: 'application/json',
-      'Accept-Language': 'en-US,en;q=0.8',
-      'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-    },
-  };
-
-  try {
-    await axios.post(`api/product/extra-images/${product._id}`, data, config);
   } catch (error) {
     console.log(error);
   }

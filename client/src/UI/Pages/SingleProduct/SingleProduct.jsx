@@ -8,29 +8,29 @@ const SingleProduct = () => {
   const [currImage, setCurrImage] = useState('');
 
   useEffect(() => {
-    product.map((x) => {
-      if (x.main) {
-        setCurrImage(x.filename);
-      }
-    });
-    setCurrImage();
+    if (product) {
+      product.image_filenames.map((x) => {
+        if (x.main) {
+          setCurrImage(x);
+        }
+      });
+    }
   }, [product]);
 
-  console.log(product);
+  console.log(currImage);
 
   return (
     <div className='SingleProduct'>
       <div className='Top'>
         <div className='Left'>
           <div className='Images'>
-            {product.image_filenames.map((x, i) => (
+            {currImage && (
               <img
-                key={i}
                 className='Img'
-                src={`api/product/image/${x.filename}`}
+                src={`api/product/image/${currImage.filename}`}
                 alt='Product Image'
               />
-            ))}
+            )}
           </div>
           <img className='MainImage' src={`api/product/image/${currImage}`} alt='Product Image' />
         </div>

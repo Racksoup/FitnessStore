@@ -197,20 +197,30 @@ router.delete('/:_id', adminAuth, async (req, res) => {
 //
 //
 // Getters
-// Get Product
-router.get('/:id', async (req, res) => {
+// Get All Products
+router.get('/', async (req, res) => {
   try {
-    const product = await Product.findOne({ _id: req.params.id });
-    res.json(product);
+    const products = await Product.find();
+    res.json(products);
   } catch (error) {
     console.error(error.message);
     res.status(500).send;
   }
 });
-// Get All Products
-router.get('/', async (req, res) => {
+// Get Highlight Products
+router.get('/highlight', async (req, res) => {
   try {
-    const product = await Product.find();
+    const products = await Product.find({ highlight: true });
+    res.json(products);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send;
+  }
+});
+// Get Product
+router.get('/:id', async (req, res) => {
+  try {
+    const product = await Product.findOne({ _id: req.params.id });
     res.json(product);
   } catch (error) {
     console.error(error.message);
