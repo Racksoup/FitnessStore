@@ -152,7 +152,8 @@ export const getHighlightProducts = () => async (dispatch) => {
 
 export const getCurrProduct = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/product/${localStorage.productID}`);
+    const res = await axios.get(`/api/product/${localStorage.ProductID}`);
+    console.log(res.data);
     dispatch(gotOneProduct(res.data));
   } catch (err) {
     console.log(err);
