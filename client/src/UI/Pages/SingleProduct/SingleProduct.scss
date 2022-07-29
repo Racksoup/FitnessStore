@@ -2,10 +2,12 @@
 
 .SingleProduct {
   @include Section;
+  margin: 2rem 0;
 
   .HLine {
-    width: 100%;
+    width: 90%;
     border-bottom: 0.05rem solid rgba(150, 150, 150, 0.9);
+    margin: 0.4rem 0;
   }
 
   .Top {
@@ -47,10 +49,68 @@
       display: flex;
       justify-content: space-between;
 
+      .PriceLine {
+        display: flex;
+        margin-top: 0.7rem;
+
+        .DollarSign {
+          font-size: 0.7rem;
+          margin-right: 0.1rem;
+        }
+
+        .Dollars {
+          font-size: 1.5rem;
+          line-height: 1.6rem;
+          margin-right: 0.1rem;
+        }
+
+        .Cents {
+          font-size: 0.7rem;
+        }
+      }
+
+      .Dot {
+        width: 0.65rem;
+        height: 0.65rem;
+        background-color: white;
+        border-radius: 1rem;
+        margin-top: 0.4rem;
+        margin-right: 0.4rem;
+      }
+
       .Info {
         width: 60%;
         display: flex;
         flex-direction: column;
+
+        .Title {
+        }
+
+        .DetailLine {
+          width: 90%;
+          display: flex;
+
+          .Key {
+            margin-right: 7.5rem;
+          }
+
+          .Value {
+          }
+        }
+
+        .AboutTitle {
+          font-size: 1.2rem;
+          margin: 0.4rem 0;
+        }
+
+        .AboutLine {
+          width: 100%;
+          display: flex;
+
+          .About {
+            font-size: 0.9rem;
+          }
+        }
       }
 
       .Purchase {
@@ -59,6 +119,31 @@
         flex-direction: column;
         border-radius: 0.8rem;
         border: solid 0.05rem rgba(150, 150, 150, 0.6);
+        padding: 0.5rem 1rem;
+
+        .DeliveryDetails {
+          margin: 0.3rem 0;
+          font-size: 0.8rem;
+        }
+
+        .AddressLine {
+          display: flex;
+          margin: 0.3rem 0;
+
+          .Dot {
+            margin-top: 0.3rem;
+          }
+
+          .Address {
+            font-size: 0.8rem;
+          }
+        }
+
+        .Stock {
+          margin: 0.3rem 0;
+          color: rgb(44, 219, 0);
+          font-size: 0.8rem;
+        }
       }
     }
   }

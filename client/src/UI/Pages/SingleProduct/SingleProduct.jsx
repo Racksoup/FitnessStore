@@ -26,6 +26,8 @@ const SingleProduct = () => {
     }
   }, [product]);
 
+  console.log(product);
+
   if (product) {
     return (
       <div className='SingleProduct'>
@@ -53,8 +55,41 @@ const SingleProduct = () => {
               {/* <p className='Brand'>{product.brand}</p> */}
               {/* <div className='Rating'></div> */}
               <div className='HLine' />
+              <div className='PriceLine'>
+                <p className='DollarSign'>$</p>
+                <p className='Dollars'>{product.price}</p>
+                <p className='Cents'>99</p>
+              </div>
+              {product.details.map((x, i) => {
+                return (
+                  <div className='DetailLine' key={i}>
+                    <div className='Key'>{x.key}</div>
+                    <div className='Value'>{x.value}</div>
+                  </div>
+                );
+              })}
+              <div className='HLine' />
+              <div className='AboutTitle'>About This Item</div>
+              {product.about.map((x, i) => (
+                <div className='AboutLine' key={i}>
+                  <div className='Dot' />
+                  <div className='About'>{x}</div>
+                </div>
+              ))}
             </div>
-            <div className='Purchase'></div>
+            <div className='Purchase'>
+              <div className='PriceLine'>
+                <p className='DollarSign'>$</p>
+                <p className='Dollars'>{product.price}</p>
+                <p className='Cents'>99</p>
+              </div>
+              <p className='DeliveryDetails'>Delivery Details</p>
+              <div className='AddressLine'>
+                <div className='Dot' />
+                <div className='Address'>User Address Goes Here</div>
+              </div>
+              <p className='Stock'>In Stock / Out of Stock</p>
+            </div>
           </div>
         </div>
       </div>

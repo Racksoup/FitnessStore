@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './Home.scss';
 import { getHighlightProducts, selectProducts, setCurrProduct } from '../../../Redux/productSlice';
+import Car from '../../../images/car.jpg';
 
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +17,7 @@ const Home = () => {
   return (
     <div className='Home'>
       <div className='HeaderBox'>
-        <img src={Image} alt='image' className='HeaderImage' />
+        <img src={Car} alt='image' className='HeaderImage' />
         <div className='Gradient' />
         <div className='Header'>
           <div />
