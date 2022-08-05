@@ -28,8 +28,6 @@ const SingleProduct = () => {
     }
   }, [product]);
 
-  console.log(product);
-
   if (product) {
     return (
       <div className='SingleProduct'>
@@ -42,6 +40,7 @@ const SingleProduct = () => {
                   src={`api/product/image/${x.filename}`}
                   alt='Product Image'
                   key={i}
+                  onMouseEnter={() => setCurrImage(x)}
                 />
               ))}
             </div>
@@ -100,6 +99,14 @@ const SingleProduct = () => {
               </div>
               <button className='Btn Add'>Add To Cart</button>
               <button className='Btn Buy'>Buy Now</button>
+              <div className='MerchantDetails'>
+                Sold by <p className='BlueText'>{product.merchant}</p>
+                and shipped by <p className='BlueText'>FedEx</p>
+              </div>
+              <div className='WishlistBox'>
+                <p>Add to Wishlist</p>
+                <FontAwesomeIcon className='Icon' icon={faChevronDown} />
+              </div>
             </div>
           </div>
         </div>
