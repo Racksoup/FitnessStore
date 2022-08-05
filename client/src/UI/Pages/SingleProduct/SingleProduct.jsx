@@ -3,6 +3,8 @@ import './SingleProduct.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProduct, getCurrProduct } from '../../../Redux/productSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
@@ -89,6 +91,15 @@ const SingleProduct = () => {
                 <div className='Address'>User Address Goes Here</div>
               </div>
               <p className='Stock'>In Stock / Out of Stock</p>
+              <div className='QuantityLine'>
+                <p className='Label'>Quantity</p>
+                <div className='QuantitySelector'>
+                  <p className='Quantity'>1</p>
+                  <FontAwesomeIcon className='Icon' icon={faChevronDown} />
+                </div>
+              </div>
+              <button className='Btn Add'>Add To Cart</button>
+              <button className='Btn Buy'>Buy Now</button>
             </div>
           </div>
         </div>

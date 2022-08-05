@@ -17,6 +17,8 @@ const CreateProduct = () => {
     category: '',
     price: '',
     highlight: false,
+    brand: '',
+    merchant: '',
     details: [{ key: '', value: '' }],
     tech_details: [{ key: '', value: '' }],
     about: [''],
@@ -112,6 +114,22 @@ const CreateProduct = () => {
             onChange={() => setProduct({ ...product, highlight: !product.highlight })}
           />
         </div>
+      </div>
+      <div className='Row'>
+        <label>Brand</label>
+        <input
+          className='MainInput'
+          type='text'
+          onChange={(e) => setProduct({ ...product, brand: e.target.value })}
+        />
+      </div>
+      <div className='Row'>
+        <label>Merchant</label>
+        <input
+          className='MainInput'
+          type='text'
+          onChange={(e) => setProduct({ ...product, merchant: e.target.value })}
+        />
       </div>
       <div className='Row'>
         <label>Details</label>

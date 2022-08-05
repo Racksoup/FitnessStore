@@ -207,6 +207,24 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             </div>
           </div>
           <div className='Row'>
+            <label>Brand</label>
+            <input
+              className='MainInput'
+              type='text'
+              onChange={(e) => setProduct({ ...product, brand: e.target.value })}
+              value={product.brand}
+            />
+          </div>
+          <div className='Row'>
+            <label>Merchant</label>
+            <input
+              className='MainInput'
+              type='text'
+              onChange={(e) => setProduct({ ...product, merchant: e.target.value })}
+              value={product.merchant}
+            />
+          </div>
+          <div className='Row'>
             <label>Main Details</label>
             <button className='Btn-5' onClick={(e) => addInputRow(e, 'details')}>
               <FontAwesomeIcon icon={faPlus} className='Icon' />

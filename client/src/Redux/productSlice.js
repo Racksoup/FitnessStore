@@ -55,6 +55,8 @@ export const createProduct = (product, file, files) => async (dispatch) => {
   data.append('category', product.category);
   data.append('price', product.price);
   data.append('highlight', product.highlight);
+  data.append('brand', product.brand);
+  data.append('merchant', product.merchant);
   data.append('details', JSON.stringify(product.details));
   data.append('tech_details', JSON.stringify(product.tech_details));
   data.append('about', JSON.stringify(product.about));
@@ -116,6 +118,7 @@ export const updateProduct = (product, files, newMain) => async (dispatch) => {
         },
       };
     }
+
     const res = await axios.put(`/api/product/${product._id}`, data, config);
     dispatch(productUpdated(res.data));
   } catch (err) {
