@@ -65,9 +65,11 @@ const Navbar = () => {
       <div className='Bottom'>
         {categories &&
           categories.map((x, i) => (
-            <button key={i} className='Button'>
-              {x.category}
-            </button>
+            <Link className='Link' to='/category'>
+              <button key={i} className='Button'>
+                {x.category}
+              </button>
+            </Link>
           ))}
       </div>
     </div>

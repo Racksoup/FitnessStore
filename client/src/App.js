@@ -9,6 +9,7 @@ import CreateUser from './UI/Pages/CreateUser/CreateUser.jsx';
 import Navbar from './UI/Components/Navbar/Navbar.jsx';
 import Footer from './UI/Components/Footer/Footer.jsx';
 import SingleProduct from './UI/Pages/SingleProduct/SingleProduct';
+import CategoryView from './UI/Pages/CategoryView/CategoryView';
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route exact path='/user-dashboard' element={<UserDashboard />} />
           <Route exact path='/create-user' element={<CreateUser />} />
           <Route exact path='/product' element={<SingleProduct />} />
+          <Route exact path='/category' element={<CategoryView />} />
         </Routes>
         <Footer />
       </div>
