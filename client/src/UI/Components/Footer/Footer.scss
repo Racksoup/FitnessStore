@@ -2,7 +2,7 @@
 
 .Footer {
   width: 100vw;
-  padding: 3.5rem 0 1rem 0;
+  padding: 0.8rem 0 1rem 0;
   background-color: black;
   display: flex;
   justify-content: center;
@@ -18,5 +18,58 @@
     background-color: black;
     z-index: -1;
     position: fixed;
+  }
+
+  .Content {
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+
+    .Half {
+      width: 48%;
+      display: flex;
+
+      .Col {
+        display: flex;
+        flex-direction: column;
+        width: 33%;
+
+        .Title {
+          font-size: 1.4rem;
+          font-weight: 550;
+        }
+
+        .Line {
+          height: 0.15rem;
+          margin: 0.5rem 0;
+          width: 7.5rem;
+          background-color: white;
+        }
+
+        .Item {
+          font-size: 1rem;
+          cursor: pointer;
+        }
+
+        .Input {
+          margin: 0.7rem 0;
+          padding: 0 0 0 0.5rem;
+          width: 13rem;
+          height: 1.8rem;
+          border-radius: 0.2rem;
+          border: solid 0.1rem grey;
+          color: black;
+          background-color: white;
+        }
+
+        .Btn {
+          height: 1.8rem;
+        }
+      }
+
+      .Right-Col {
+        width: 100%;
+      }
+    }
   }
 }
