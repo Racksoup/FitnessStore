@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { faCartShopping, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCategories, selectCategories, setCategory } from '../../../Redux/categorySlice';
+import { getProductsForCategory } from '../../../Redux/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = () => {
@@ -66,7 +67,13 @@ const Navbar = () => {
         {categories &&
           categories.map((x, i) => (
             <Link key={i} className='Link' to='/category'>
-              <button className='Button' onClick={() => dispatch(setCategory(x.category))}>
+              <button
+                className='Button'
+                onClick={() => {
+                  dispatch(setCategory(x.category));
+                  dispatch(getProductsForCategory(x.category));
+                }}
+              >
                 {x.category}
               </button>
             </Link>

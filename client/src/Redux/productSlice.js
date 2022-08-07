@@ -182,4 +182,13 @@ export const searchProducts = (search) => async (dispatch) => {
   }
 };
 
+export const getProductsForCategory = (category) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/product/category/${category}`);
+    dispatch(gotProducts(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default productSlice.reducer;
