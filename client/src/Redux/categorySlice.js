@@ -3,9 +3,11 @@ import axios from 'axios';
 
 const initialState = {
   categories: null,
+  category: localStorage.getItem('category'),
 };
 
 export const selectCategories = (state) => state.category.categories;
+export const selectCategory = (state) => state.category.category;
 
 export const categorySlice = createSlice({
   name: 'category',
@@ -20,10 +22,15 @@ export const categorySlice = createSlice({
     gotCategories: (state, action) => {
       state.categories = action.payload;
     },
+    setCategory: (state, action) => {
+      localStorage.setItem('category', action.payload);
+      state.category = action.payload;
+    },
   },
 });
 
-export const { categoryCreated, categoryDeleted, gotCategories } = categorySlice.actions;
+export const { categoryCreated, categoryDeleted, gotCategories, setCategory } =
+  categorySlice.actions;
 
 export const createCategory = (item) => async (dispatch) => {
   const config = {
