@@ -15,6 +15,11 @@ const CategoryView = () => {
     dispatch(getProductsForCategory(category));
   }, []);
 
+  let maxProductsNum = 50;
+  if (products && products.length > 0 && products.length < 50) {
+    maxProductsNum = products.length;
+  }
+
   return (
     <div className='CategoryView'>
       <div className='Nav2'>
@@ -39,7 +44,19 @@ const CategoryView = () => {
             }
           })}
       </div>
-      <div className='Content'>{category.category}</div>
+      {products && products.length > 0 ? (
+        <>
+          <div className='HeaderInfo'>
+            <p className='Text'>
+              1 - {maxProductsNum} of over {products.length} results for{' '}
+            </p>
+            <p className='OrangeText'>'{category.category}'</p>
+          </div>
+          <div className='Content'>{category.category}</div>
+        </>
+      ) : (
+        <>Products Not Found</>
+      )}
     </div>
   );
 };
