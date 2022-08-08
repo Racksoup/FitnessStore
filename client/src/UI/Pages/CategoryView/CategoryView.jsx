@@ -52,7 +52,27 @@ const CategoryView = () => {
             </p>
             <p className='OrangeText'>'{category.category}'</p>
           </div>
-          <div className='Content'>{category.category}</div>
+          <div className='Content'>
+            <div className='Left'>
+              <div className='CustomerReviews'>
+                <h4 className='Title'>Customer Review</h4>
+              </div>
+              <div className='PriceModule'>
+                <h4 className='Title'>Price</h4>
+                <p className='Item'>Under $25</p>
+                <p className='Item'>$25 to $50</p>
+                <p className='Item'>$50 to $100</p>
+                <p className='Item'>$100 to $200</p>
+                <p className='Item'>$200 & Above</p>
+                <div className='CustomPrice'>
+                  <input type='text' placeholder='Min' />
+                  <input type='text' placeholder='Max' />
+                  <button className='Go'>Go</button>
+                </div>
+              </div>
+            </div>
+            <div className='Right'></div>
+          </div>
         </>
       ) : (
         <>Products Not Found</>
