@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const catUnparsed = localStorage.getItem('category');
+
 const initialState = {
   categories: null,
-  category: localStorage.getItem('category'),
+  category: JSON.parse(catUnparsed),
 };
 
 export const selectCategories = (state) => state.category.categories;
@@ -23,7 +25,7 @@ export const categorySlice = createSlice({
       state.categories = action.payload;
     },
     setCategory: (state, action) => {
-      localStorage.setItem('category', action.payload);
+      localStorage.setItem('category', JSON.stringify(action.payload));
       state.category = action.payload;
     },
   },

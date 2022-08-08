@@ -70,7 +70,7 @@ const Navbar = () => {
               <button
                 className='Button'
                 onClick={() => {
-                  dispatch(setCategory(x.category));
+                  dispatch(setCategory(x));
                   dispatch(getProductsForCategory(x.category));
                 }}
               >
