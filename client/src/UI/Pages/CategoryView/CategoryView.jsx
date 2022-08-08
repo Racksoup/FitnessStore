@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react';
 import './CategoryView.scss';
 import { selectCategories, selectCategory } from '../../../Redux/categorySlice';
-import { selectProducts, getProductsForCategory } from '../../../Redux/productSlice';
+import {
+  selectProducts,
+  getProductsForCategory,
+  setCurrProduct,
+} from '../../../Redux/productSlice';
 
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 const CategoryView = () => {
@@ -83,7 +88,37 @@ const CategoryView = () => {
                 </div>
               </div>
             </div>
-            <div className='Right'></div>
+            <div className='Right'>
+              {products &&
+                products.map((x, i) => (
+                  <Link className='Link' key={i} to='/product'>
+                    <div className='Product' key={i} onClick={() => dispatch(setCurrProduct(x))}>
+                      {x.image_filenames.map((c, j) => {
+                        if (c.main) {
+                          return (
+                            <img
+                              src={`api/product/image/${c.filename}`}
+                              alt='Product Image'
+                              key={j}
+                            />
+                          );
+                        }
+                      })}
+                      <div className='InfoBox'>
+                        <h3 className='Title'>{x.name}</h3>
+                        <div className='RatingLine'>hrh</div>
+                        <div className='PriceLine'>
+                          <p className='DollarSign'>$</p>
+                          <p className='Price'>{x.price}</p>
+                        </div>
+                        <div className='SaleTag'>15% off</div>
+                        <p className='Info'>Free Delivery For Members</p>
+                        <p className='Info'>Save By Combining Items</p>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+            </div>
           </div>
         </>
       ) : (

@@ -35,7 +35,7 @@
     font-size: 0.9rem;
 
     .Text {
-      margin-left: 11rem;
+      margin-left: 12.4rem;
     }
 
     .OrangeText {
@@ -46,11 +46,12 @@
 
   .Content {
     display: flex;
-    width: 98rem;
+    width: 93rem;
     flex-direction: row;
+    justify-content: space-between;
 
     .Left {
-      width: 15%;
+      width: 19%;
       display: flex;
       flex-direction: column;
       margin-top: 2rem;
@@ -76,6 +77,7 @@
 
         .Item {
           font-size: 0.7rem;
+          cursor: pointer;
         }
 
         .CustomPrice {
@@ -90,6 +92,7 @@
             border: solid 0.05rem rgba(216, 216, 216, 0.4);
             border-radius: 0.3rem;
             padding-left: 0.2rem;
+            cursor: pointer;
           }
 
           .Go {
@@ -100,6 +103,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
           }
         }
       }
@@ -119,6 +123,7 @@
 
           input {
             margin-right: 0.4rem;
+            cursor: pointer;
           }
 
           p {
@@ -129,7 +134,80 @@
     }
 
     .Right {
-      width: 85%;
+      width: 81%;
+      margin-top: 7rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.6rem;
+
+      .Product {
+        height: 34rem;
+        width: 100%;
+        border: solid 0.02rem rgba(216, 216, 216, 0.2);
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        align-items: center;
+
+        img {
+          width: 71%;
+          height: 15.4rem;
+          object-fit: cover;
+          margin: 1rem 0;
+          align-self: center;
+          border-radius: 1.1rem;
+          cursor: pointer;
+        }
+
+        .InfoBox {
+          width: 90%;
+
+          .Title {
+            height: 4.7rem;
+            line-height: 1.5rem;
+            overflow: hidden;
+          }
+
+          .RatingLine {
+            margin: 0.4rem 0;
+          }
+
+          .PriceLine {
+            margin: 0.6rem 0;
+            display: flex;
+
+            .DollarSign {
+              font-size: 0.5rem;
+            }
+
+            .Price {
+              font-size: 2rem;
+              margin-left: 0.1rem;
+              line-height: 2rem;
+            }
+          }
+
+          .SaleTag {
+            width: 2.7rem;
+            height: 1rem;
+            margin: 1rem 0;
+            background-color: rgb(57, 99, 15);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+          }
+
+          .Info {
+            line-height: 0.9rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
     }
   }
 }
