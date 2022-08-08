@@ -70,6 +70,18 @@ const CategoryView = () => {
                   <button className='Go'>Go</button>
                 </div>
               </div>
+              <div className='MiscSelection'>
+                <h4 className='Title'>Deals</h4>
+                <div className='CheckLine'>
+                  <input type='checkbox' />
+                  <p>Today's Deals</p>
+                </div>
+                <h4 className='Title'>Availability</h4>
+                <div className='CheckLine'>
+                  <input type='checkbox' />
+                  <p>Include out of stock</p>
+                </div>
+              </div>
             </div>
             <div className='Right'></div>
           </div>

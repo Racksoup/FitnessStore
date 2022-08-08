@@ -103,6 +103,29 @@
           }
         }
       }
+
+      .MiscSelection {
+        display: flex;
+        flex-direction: column;
+
+        .Title {
+          font-size: 1rem;
+        }
+
+        .CheckLine {
+          width: 100%;
+          margin: 0.1rem 0 0.3rem 0;
+          display: flex;
+
+          input {
+            margin-right: 0.4rem;
+          }
+
+          p {
+            font-size: 0.8rem;
+          }
+        }
+      }
     }
 
     .Right {
