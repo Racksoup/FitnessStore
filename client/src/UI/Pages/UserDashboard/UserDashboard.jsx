@@ -27,13 +27,15 @@ const UserDashboard = () => {
             <p>Track, return, or buy something again</p>
           </div>
         </div>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Cart</h4>
-            <p>Go to Cart, Checkout</p>
+        <Link className='Link' to='/cart'>
+          <div className='Item'>
+            <img src={Car} alt='Img' />
+            <div className='Info'>
+              <h4>Cart</h4>
+              <p>Go to Cart, Checkout</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className='Item'>
           <img src={Car} alt='Img' />
           <div className='Info'>
