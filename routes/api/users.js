@@ -86,7 +86,6 @@ router.post(
           },
         ],
       });
-      console.log(user);
 
       if (!user) {
         return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });

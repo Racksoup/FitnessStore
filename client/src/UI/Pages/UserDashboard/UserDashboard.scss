@@ -1,4 +1,60 @@
 @import '../../../App.scss';
 
 .UserDashboard {
+  @include Section;
+  width: 64rem;
+
+  .HeaderLine {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 1.8rem 0;
+    align-items: center;
+
+    .MainTitle {
+      font-size: 2rem;
+    }
+  }
+
+  .Grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 5rem;
+
+    .Item {
+      width: 100%;
+      height: 6.5rem;
+      border: solid 0.05rem rgba(150, 150, 150, 0.4);
+      border-radius: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      padding: 1rem;
+
+      img {
+        border-radius: 20rem;
+        width: 4.5rem;
+        height: 4.5rem;
+        object-fit: cover;
+      }
+
+      .Info {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.4rem;
+        overflow: hidden;
+
+        h4 {
+          font-size: 1.2rem;
+        }
+
+        p {
+          font-size: 1rem;
+          font-weight: 100;
+          line-height: 1.3rem;
+        }
+      }
+    }
+  }
 }
