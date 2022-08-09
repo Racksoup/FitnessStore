@@ -61,9 +61,9 @@ router.get('/', userAuth, async (req, res) => {
 
 //  Desc    Get User Auth
 router.post(
-  '/auth',
+  '/userAuth',
   [
-    check('email', 'Please include a Email').exists(),
+    check('name', 'Please include a Username or Email').exists(),
     check('password', 'Please include a Password').exists(),
   ],
   async (req, res) => {
@@ -72,11 +72,21 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { name, password } = req.body;
 
     try {
-      const regex = new RegExp(['^', email, '$'].join(''), 'i');
-      let user = await User.findOne({ email: regex });
+      const regex = new RegExp(['^', name, '$'].join(''), 'i');
+      let user = await User.findOne({
+        $or: [
+          {
+            name: name,
+          },
+          {
+            email: regex,
+          },
+        ],
+      });
+      console.log(user);
 
       if (!user) {
         return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });

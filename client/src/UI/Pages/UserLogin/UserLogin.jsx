@@ -28,7 +28,7 @@ const AdminLogin = () => {
       <h1 className='Title'>Login</h1>
       <form className='Form' onSubmit={(e) => submitForm(e)}>
         <label htmlFor='' className='Label'>
-          Username
+          Username or Email
         </label>
         <input
           type='text'

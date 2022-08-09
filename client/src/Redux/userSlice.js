@@ -60,7 +60,7 @@ export const login = (form) => async (dispatch, getState) => {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ name: form.name, password: form.password });
+  const body = JSON.stringify({ name: form.username, password: form.password });
 
   try {
     const res = await axios.post('/api/users/userAuth', body, config);

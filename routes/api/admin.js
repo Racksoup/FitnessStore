@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 
 // Create Admin
-// -- move this route to another file for extra security --
+// -- move this route to another file to double up on protection --
 router.post('/', adminAuth, async (req, res) => {
   const { username, password } = req.body;
 
