@@ -42,6 +42,12 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      <div className='Right'>
+        <div className='CheckoutModule'>
+          <h4>Subtotal (2 items): $60.46</h4>
+          <button className='Btn'>Proceed to Checkout</button>
+        </div>
+      </div>
     </div>
   );
 };
