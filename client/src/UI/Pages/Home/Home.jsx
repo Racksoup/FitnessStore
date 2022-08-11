@@ -41,7 +41,7 @@ const Home = () => {
                     return (
                       <Link key={i} className='Link' to='/product'>
                         <img
-                          src={`api/product/image/${c.filename}`}
+                          src={`/api/product/image/${c.filename}`}
                           alt='image'
                           className='Btn'
                           onClick={() => dispatch(setCurrProduct(x))}

@@ -37,7 +37,7 @@ const SingleProduct = () => {
               {product.image_filenames.map((x, i) => (
                 <img
                   className='Img'
-                  src={`api/product/image/${x.filename}`}
+                  src={`/api/product/image/${x.filename}`}
                   alt='Product Image'
                   key={i}
                   onMouseEnter={() => setCurrImage(x)}
@@ -45,7 +45,7 @@ const SingleProduct = () => {
               ))}
             </div>
             <img
-              src={`api/product/image/${currImage.filename}`}
+              src={`/api/product/image/${currImage.filename}`}
               alt='Curr Image'
               className='CurrImage'
             />
