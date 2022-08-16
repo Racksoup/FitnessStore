@@ -18,6 +18,7 @@ app.use('/api/product', require('./routes/api/product'));
 app.use('/api/category', require('./routes/api/category'));
 app.use('/api/header-images', require('./routes/api/headerImages'));
 app.use('/api/sale-images', require('./routes/api/saleImages'));
+app.use('/api/cart', require('./routes/api/cart'));
 
 // production
 if (process.env.NODE_ENV === 'production') {

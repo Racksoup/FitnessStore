@@ -88,6 +88,7 @@ export const createUser = (user) => async (dispatch, getState) => {
     const res = await axios.post('/api/users', body, config);
     dispatch(loginSuccess(res.data));
     dispatch(loadUser());
+    await axios.post('/api/cart', { userID: res.data.userID });
   } catch (error) {
     console.log(error);
   }

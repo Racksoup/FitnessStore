@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 
-//  Desc    Create User
+// Create User
 router.post('/', async (req, res) => {
   const { email, password, name } = req.body;
   const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
 
-      await user.save();
+      const savedUser = await user.save();
 
       const payload = {
         user: {
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
       jwt.sign(payload, process.env.USER_SECRET, { expiresIn: '5h' }, (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.json({ token, userID: savedUser._id });
       });
     } catch (err) {
       console.error(err.message);
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-//  Desc    Get User
+// Get User
 router.get('/', userAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -59,7 +59,7 @@ router.get('/', userAuth, async (req, res) => {
   }
 });
 
-//  Desc    Get User Auth
+// Get User Auth
 router.post(
   '/userAuth',
   [
