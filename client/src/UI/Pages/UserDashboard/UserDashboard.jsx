@@ -60,7 +60,7 @@ const UserDashboard = () => {
         <div className='Item'>
           <img src={Car} alt='Img' />
           <div className='Info'>
-            <h4>Email ALerts</h4>
+            <h4>Email Alerts</h4>
             <p>Change email notifications and subscriptions</p>
           </div>
         </div>

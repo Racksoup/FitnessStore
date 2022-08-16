@@ -33,6 +33,7 @@
       padding: 1rem;
 
       img {
+        cursor: pointer;
         border-radius: 20rem;
         width: 4.5rem;
         height: 4.5rem;
@@ -40,16 +41,19 @@
       }
 
       .Info {
+        cursor: pointer;
         display: flex;
         flex-direction: column;
         margin-left: 0.4rem;
         overflow: hidden;
 
         h4 {
+          cursor: pointer;
           font-size: 1.2rem;
         }
 
         p {
+          cursor: pointer;
           font-size: 1rem;
           font-weight: 100;
           line-height: 1.3rem;
