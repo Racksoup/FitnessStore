@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { getCart } from './cartSlice';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -47,6 +48,7 @@ export const loadUser = () => async (dispatch) => {
     if (localStorage.userToken) {
       const res = await axios.get('/api/users');
       dispatch(userLoaded(res.data));
+      dispatch(getCart(res.data._id));
     }
   } catch (error) {
     console.log(error);

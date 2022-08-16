@@ -47,7 +47,7 @@ router.delete('/:userID', userAuth, async (req, res) => {
 // Get One Cart
 router.get('/:userID', userAuth, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ _id: req.params.userID });
+    const cart = await Cart.findOne({ userID: req.params.userID });
     res.json(cart);
   } catch (error) {
     console.log(error.message);
