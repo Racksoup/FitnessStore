@@ -1,11 +1,16 @@
 import React from 'react';
 import './Cart.scss';
 import Car from '../../../images/car.jpg';
+import { selectCart } from '../../../Redux/cartSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const cart = useSelector(selectCart);
+
   return (
     <div className='Cart'>
       <div className='ShoppingCart'>
@@ -17,30 +22,40 @@ const Cart = () => {
           </div>
         </div>
         <div className='Line' />
-        <div className='Item'>
-          <input type='checkbox' />
-          <img src={Car} alt='Product Image' />
-          <div className='Info'>
-            <div className='TitleLine'>
-              <h4>Title</h4>
-              <p>Price</p>
-            </div>
-            <p className='Brand'>Brand</p>
-            <p className='GreenText'>In Stock</p>
-            <p className='Shipping'>Ships from FedEx, sold by Fitness Store</p>
-            <p className='Size'>Size: 1kg (Pack of 1)</p>
-            <div className='QuantityLine'>
-              <div className='Quantity'>
-                <p>Qty: 1</p>
-                <FontAwesomeIcon className='Icon' icon={faChevronDown}></FontAwesomeIcon>
+
+        {cart.cart.map((product, i) => {
+          return (
+            <div className='Item'>
+              <input type='checkbox' />
+              {product.image_filenames.map((img) => {
+                console.log(img);
+                if (img.main) {
+                  return <img src={`/api/product/image/${img.filename}`} alt='Product Image' />;
+                }
+              })}
+              <div className='Info'>
+                <div className='TitleLine'>
+                  <h4>{product.name}</h4>
+                  <p>{product.price}</p>
+                </div>
+                <p className='Brand'>{product.brand}</p>
+                <p className='GreenText'>{product.stock}</p>
+                <p className='Shipping'>Ships from FedEx, sold by Fitness Store</p>
+                <p className='Size'>Size: 1kg (Pack of 1)</p>
+                <div className='QuantityLine'>
+                  <div className='Quantity'>
+                    <p>Qty: 1</p>
+                    <FontAwesomeIcon className='Icon' icon={faChevronDown}></FontAwesomeIcon>
+                  </div>
+                  <div className='VLine' />
+                  <p className='BlueText'>Delete</p>
+                  <div className='VLine' />
+                  <p className='BlueText'>Save for later</p>
+                </div>
               </div>
-              <div className='VLine' />
-              <p className='BlueText'>Delete</p>
-              <div className='VLine' />
-              <p className='BlueText'>Save for later</p>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
       <div className='Right'>
         <div className='CheckoutModule'>
