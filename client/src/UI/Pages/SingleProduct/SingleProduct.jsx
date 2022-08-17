@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './SingleProduct.scss';
+import { selectProduct, getCurrProduct } from '../../../Redux/productSlice';
+import { selectCart, updateCart } from '../../../Redux/cartSlice';
+import { selectIsAuthenticated } from '../../../Redux/userSlice';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProduct, getCurrProduct } from '../../../Redux/productSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
+  let cart = useSelector(selectCart);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const [currImage, setCurrImage] = useState('');
 
   useEffect(() => {
     if (!product) {
-      console.log('nnn');
       dispatch(getCurrProduct());
     }
   }, []);
@@ -27,6 +30,12 @@ const SingleProduct = () => {
       });
     }
   }, [product]);
+
+  const addToCart = () => {
+    if (isAuthenticated) {
+      dispatch(updateCart(cart._id, product, 4));
+    }
+  };
 
   if (product) {
     return (
@@ -97,7 +106,9 @@ const SingleProduct = () => {
                   <FontAwesomeIcon className='Icon' icon={faChevronDown} />
                 </div>
               </div>
-              <button className='Btn Add'>Add To Cart</button>
+              <button className='Btn Add' onClick={() => addToCart()}>
+                Add To Cart
+              </button>
               <button className='Btn Buy'>Buy Now</button>
               <div className='MerchantDetails'>
                 Sold by <p className='BlueText'>{product.merchant}</p>

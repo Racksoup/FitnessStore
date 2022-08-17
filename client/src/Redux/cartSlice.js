@@ -14,17 +14,34 @@ export const cartSlice = createSlice({
     gotCart: (state, action) => {
       state.cart = action.payload;
     },
+    updatedCart: (state, action) => {
+      state.cart = action.payload;
+    },
   },
 });
 
-export const { gotCart } = cartSlice.actions;
+export const { gotCart, updatedCart } = cartSlice.actions;
 
 export const getCart = (userID) => async (dispatch) => {
-  console.log(userID);
   try {
     const res = await axios.get(`/api/cart/${userID}`);
-    console.log(res.data);
     dispatch(gotCart(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateCart = (cartID, product, quantity) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ cartID, product, quantity });
+
+  try {
+    const res = await axios.put(`/api/cart/${cartID}`, body, config);
+    dispatch(updatedCart(res.data));
   } catch (error) {
     console.log(error);
   }

@@ -20,15 +20,39 @@ router.post('/', userAuth, async (req, res) => {
 });
 
 // Update One Cart
-router.put('/:userID', userAuth, async (req, res) => {
-  const { userID, cart } = req.body;
-
-  const postItem = { userID };
-  postItem.cart = JSON.parse(cart);
+router.put('/:_id', userAuth, async (req, res) => {
+  const { cartID, product, quantity } = req.body;
 
   try {
-    const cart = await Cart.findOneAndUpdate({ _id: req.params.userID }, postItem);
-    res.json(cart);
+    const cart = await Cart.findOne({ _id: cartID });
+    let inArr = false;
+    cart.cart.map((prod) => {
+      if (prod._id === product._id) {
+        inArr = true;
+        prod.quantity = quantity;
+      }
+    });
+
+    if (!inArr) {
+      cart.cart.push({ ...product, quantity });
+    }
+
+    const newCart = await Cart.findOneAndUpdate({ _id: cartID }, cart, { new: true });
+
+    // // finds the cart.
+    // // $push and $addToSet will both push. $addToSet only pushes if the object doesn't already exist
+    // // if the product exists in the array already &addToSet wont do anything. i'm hoping upsert will update the document
+    // // look through cart array, check _id for a match with product._id. spread product
+    // //
+    // const cart = await Cart.findOneAndUpdate(
+    //   { _id: cartID },
+    //   {
+    //     $addToSet: { cart: { _id: product._id, ...product, quantity } },
+    //   },
+    //   { upsert: true, new: true }
+    // );
+    console.log(newCart);
+    res.json(newCart);
   } catch (error) {
     console.log(error.message);
   }
