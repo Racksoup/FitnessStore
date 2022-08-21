@@ -3,9 +3,11 @@ import axios from 'axios';
 
 const initialState = {
   cart: [],
+  checkout: [],
 };
 
 export const selectCart = (state) => state.cart.cart;
+export const selectCheckout = (state) => state.cart.checkout;
 
 export const cartSlice = createSlice({
   name: 'cart',
@@ -17,10 +19,13 @@ export const cartSlice = createSlice({
     updatedCart: (state, action) => {
       state.cart = action.payload;
     },
+    setCheckout: (state, action) => {
+      state.checkout = action.payload;
+    },
   },
 });
 
-export const { gotCart, updatedCart } = cartSlice.actions;
+export const { gotCart, updatedCart, setCheckout } = cartSlice.actions;
 
 export const getCart = (userID) => async (dispatch) => {
   try {

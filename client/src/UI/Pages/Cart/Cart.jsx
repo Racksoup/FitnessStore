@@ -1,11 +1,11 @@
 import React from 'react';
 import './Cart.scss';
-import Car from '../../../images/car.jpg';
-import { selectCart } from '../../../Redux/cartSlice';
+import { selectCart, setCheckout } from '../../../Redux/cartSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -60,7 +60,10 @@ const Cart = () => {
       <div className='Right'>
         <div className='CheckoutModule'>
           <h4>Subtotal (2 items): $60.46</h4>
-          <button className='Btn'>Proceed to Checkout</button>
+
+          <Link to='/checkout' className='Btn' onClick={() => dispatch(setCheckout(cart))}>
+            Proceed to Checkout
+          </Link>
         </div>
       </div>
     </div>

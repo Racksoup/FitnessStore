@@ -11,6 +11,7 @@ import Footer from './UI/Components/Footer/Footer.jsx';
 import SingleProduct from './UI/Pages/SingleProduct/SingleProduct';
 import CategoryView from './UI/Pages/CategoryView/CategoryView';
 import Cart from './UI/Pages/Cart/Cart';
+import Checkout from './UI/Pages/Checkout/Checkout';
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -30,6 +31,7 @@ const App = () => {
           <Route exact path='/product' element={<SingleProduct />} />
           <Route exact path='/category' element={<CategoryView />} />
           <Route exact path='/cart' element={<Cart />} />
+          <Route exact path='/checkout' element={<Checkout />} />
         </Routes>
         <Footer />
       </div>

@@ -22,9 +22,7 @@ module.exports = (env, argv) => {
         ? [
             new webpack.DefinePlugin({
               'process.env': {
-                EMAILJS_SERVICE: JSON.stringify(process.env.EMAILJS_SERVICE),
-                EMAILJS_TEMPLATE: JSON.stringify(process.env.EMAILJS_TEMPLATE),
-                EMAILJS_USER: JSON.stringify(process.env.EMAILJS_USER),
+                STRIPE_KEY: JSON.stringify(process.env.STRIPE_KEY),
               },
             }),
           ]
