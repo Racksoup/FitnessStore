@@ -34,24 +34,25 @@ const Home = () => {
       <div className='Section1'>
         {products &&
           products.map((x, i) => {
-            return (
-              <>
-                {x.image_filenames.map((c, j) => {
-                  if (c.main) {
-                    return (
-                      <Link key={i} className='Link' to='/product'>
-                        <img
-                          src={`/api/product/image/${c.filename}`}
-                          alt='image'
-                          className='Btn'
-                          onClick={() => dispatch(setCurrProduct(x))}
-                        />
-                      </Link>
-                    );
-                  }
-                })}
-              </>
-            );
+            if (i < 6)
+              return (
+                <>
+                  {x.image_filenames.map((c, j) => {
+                    if (c.main) {
+                      return (
+                        <Link key={i} className='Link' to='/product'>
+                          <img
+                            src={`/api/product/image/${c.filename}`}
+                            alt='image'
+                            className='Btn'
+                            onClick={() => dispatch(setCurrProduct(x))}
+                          />
+                        </Link>
+                      );
+                    }
+                  })}
+                </>
+              );
           })}
       </div>
     </div>
