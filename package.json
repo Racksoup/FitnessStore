@@ -1,5 +1,5 @@
 {
-  "name": "MERNH App Starter",
+  "name": "mern-app-starter",
   "version": "1.0.0",
   "description": "Mongodb, Express, React, Node, Heroku App",
   "main": "server.js",
