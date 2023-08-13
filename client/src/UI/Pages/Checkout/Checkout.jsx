@@ -327,7 +327,7 @@ const Checkout = () => {
     },
   ];
 
-  const stripePromise = loadStripe(process.env.STRIPE_KEY);
+  // const stripePromise = loadStripe(process.env.STRIPE_KEY);
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();

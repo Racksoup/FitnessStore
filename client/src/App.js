@@ -8,10 +8,10 @@ import UserDashboard from './UI/Pages/UserDashboard/UserDashboard.jsx';
 import CreateUser from './UI/Pages/CreateUser/CreateUser.jsx';
 import Navbar from './UI/Components/Navbar/Navbar.jsx';
 import Footer from './UI/Components/Footer/Footer.jsx';
-import SingleProduct from './UI/Pages/SingleProduct/SingleProduct';
-import CategoryView from './UI/Pages/CategoryView/CategoryView';
-import Cart from './UI/Pages/Cart/Cart';
-import Checkout from './UI/Pages/Checkout/Checkout';
+import SingleProduct from './UI/Pages/SingleProduct/SingleProduct.jsx';
+import CategoryView from './UI/Pages/CategoryView/CategoryView.jsx';
+import Cart from './UI/Pages/Cart/Cart.jsx';
+import Checkout from './UI/Pages/Checkout/Checkout.jsx';
 
 import { Route, Routes } from 'react-router-dom';
 

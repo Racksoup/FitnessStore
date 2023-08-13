@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './AdminDashboard.scss';
 import { selectIsAuthenticated, logout, loadAdmin } from '../../../Redux/adminSlice';
 import CreateProduct from './CreateProduct/CreateProduct.jsx';
-import ViewProducts from './ViewProducts/ViewProducts';
-import UpdateCategories from './UpdateCategories/UpdateCategories';
-import CreateFileModal from '../../Components/Modals/CreateFileModal';
+import ViewProducts from './ViewProducts/ViewProducts.jsx';
+import UpdateCategories from './UpdateCategories/UpdateCategories.jsx';
+import CreateFileModal from '../../Components/Modals/CreateFileModal.jsx';
 import {
   createHeaderImage,
   deleteHeaderImage,
