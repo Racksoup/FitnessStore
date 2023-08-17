@@ -8,6 +8,7 @@ const multer = require('multer');
 const crypto = require('crypto');
 const path = require('path');
 const mongoose = require('mongoose');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { GridFsStorage } = require('multer-gridfs-storage');
 //
 //
@@ -92,8 +93,26 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
   postItem.image_filenames = files;
 
   try {
+    // create stripe product / price
+    const stripeProduct = await stripe.products.create({
+      name: postItem.name,
+      metadata: {
+        db_id: postItem._id,
+      },
+    });
+
+    const stripePrice = await stripe.prices.create({
+      currency: 'cad',
+      product: stripeProduct.id,
+      unit_amount: postItem.price,
+    });
+
+    // create mongodb product
+    postItem.stripe_product_id = stripeProduct.id;
+    postItem.stripe_price_id = stripePrice.id;
     const product = new Product(postItem);
     await product.save();
+
     res.json(product);
   } catch (error) {
     console.error(error.message);
@@ -117,6 +136,8 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
     about,
     newMain,
     image_filenames,
+    stripe_price_id,
+    stripe_product_id,
   } = req.body;
   const postItem = {
     brand,
@@ -125,6 +146,8 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
     category,
     price,
     highlight,
+    stripe_price_id,
+    stripe_product_id,
   };
   postItem.details = JSON.parse(details);
   postItem.tech_details = JSON.parse(tech_details);
@@ -175,11 +198,31 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
   postItem.image_filenames = [...postItem.image_filenames, ...files];
 
   try {
-    const product = await Product.findByIdAndUpdate({ _id: req.params.id }, postItem, {
-      new: true,
-    });
+    const product = await Product.findOne({ _id: req.params.id });
 
-    await product.save();
+    // check if price or name changed, if they did update stripe product/price objects
+    if (product.price != postItem.price) {
+      // disable last price
+      const stripePrice = await stripe.prices.update(product.stripe_price_id, {
+        active: false,
+      });
+      // create new price
+      const stripePrice2 = await stripe.prices.create({
+        currency: 'cad',
+        product: postItem.stripe_product_id,
+        unit_amount: postItem.price,
+      });
+
+      postItem.stripe_price_id = stripePrice2.id;
+    }
+    if (product.name != postItem.name) {
+      const stripeProduct = await stripe.products.update(product.stripe_product_id, {
+        name: postItem.name,
+      });
+    }
+
+    const product2 = await Product.findByIdAndUpdate({ _id: req.params.id }, postItem);
+    await product2.save();
     res.json(product);
   } catch (error) {
     console.error(error.message);
@@ -194,14 +237,20 @@ router.delete('/:_id', adminAuth, async (req, res) => {
   try {
     // Need to delete Product, Images
     const product = await Product.findOneAndDelete({ _id: req.params._id });
+
+    // delete images
     let images = [];
     product.image_filenames.map((obj) => {
       let x = imageBucket.find({ filename: obj.filename }).toArray();
       images.push(x);
     });
-
     Promise.all(images).then((results) => {
       results.map((result) => imageBucket.delete(result[0]._id));
+    });
+
+    // update stripe product as inactive
+    const stripeProduct = await stripe.products.update(product.stripe_product_id, {
+      active: false,
     });
 
     res.json(product);

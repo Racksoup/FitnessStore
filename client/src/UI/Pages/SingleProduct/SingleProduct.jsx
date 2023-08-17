@@ -33,7 +33,7 @@ const SingleProduct = () => {
 
   const addToCart = () => {
     if (isAuthenticated) {
-      dispatch(updateCart(cart._id, product, 4));
+      dispatch(updateCart(cart._id, product, 1));
     }
   };
 

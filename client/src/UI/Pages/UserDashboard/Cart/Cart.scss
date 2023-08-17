@@ -1,4 +1,4 @@
-@import '../../../App.scss';
+@import '../../../../App.scss';
 
 .Cart {
   display: flex;
@@ -21,6 +21,7 @@
 
     .BlueText {
       color: cyan;
+      cursor: pointer;
     }
 
     .HeaderLine {
@@ -106,7 +107,7 @@
           }
 
           .Quantity {
-            width: 3.4rem;
+            width: 3.7rem;
             padding: 0 0.4rem;
             border-radius: 0.3rem;
             background-color: rgb(26, 26, 26);

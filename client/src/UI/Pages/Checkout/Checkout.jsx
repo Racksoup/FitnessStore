@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Checkout.scss';
 import { selectCheckout } from '../../../Redux/cartSlice';
+import { selectUser } from '../../../Redux/userSlice';
+import { selectCart } from '../../../Redux/cartSlice';
+import Payment from './Payment/Payment.jsx';
 
 import { useSelector } from 'react-redux';
-import { CardElement, useElements, useStripe, Elements } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 
 const Checkout = () => {
+  const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState('');
+  const [intentAmount, setIntentAmount] = useState(0);
   const checkout = useSelector(selectCheckout);
+  const user = useSelector(selectUser);
+  const cart = useSelector(selectCart);
   const [country, setCountry] = useState('');
   const [billing, setBilling] = useState({
     firstName: '',
@@ -327,15 +336,40 @@ const Checkout = () => {
     },
   ];
 
-  // const stripePromise = loadStripe(process.env.STRIPE_KEY);
+  useEffect(() => {
+    const fetchKey = async () => {
+      const res = await axios.get('/api/payment/config');
+      setStripePromise(loadStripe(res.data.publishableKey));
+    };
+    fetchKey();
+  }, []);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  useEffect(() => {
+    const fetchKey = async () => {
+      let customer_stripe_id = false;
+      if (user.customer_stripe_id) {
+        customer_stripe_id = user.customer_stripe_id;
+      }
+      const res = await axios.post('/api/payment/invoice', {
+        email: user.email,
+        name: user.name,
+        customer_stripe_id,
+        user_id: user._id,
+        priceItems: cart.cart,
+      });
+      setClientSecret(res.data.clientSecret);
+      setIntentAmount(res.data.intentAmount);
+    };
+    fetchKey();
+  }, []);
 
-  //   if (!stripe || !elements) {
-  //     return;
-  //   }
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // if (!stripe || !elements) {
+    //   return;
+    // }
+  };
 
   return (
     <div className='Checkout'>
@@ -451,14 +485,14 @@ const Checkout = () => {
           </div>
         </div>
         <div className='Payment'>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <Elements stripe={stripePromise}>
-              <CardElement />
-            </Elements>
-            <button className='Btn' type='submit'>
-              Pay
-            </button>
-          </form>
+          {stripePromise && clientSecret && (
+            <div>
+              <h2>Purchase Total: ${intentAmount / 100}</h2>
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <Payment />
+              </Elements>
+            </div>
+          )}
         </div>
       </div>
     </div>

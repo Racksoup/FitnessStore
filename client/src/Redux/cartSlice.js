@@ -22,10 +22,15 @@ export const cartSlice = createSlice({
     setCheckout: (state, action) => {
       state.checkout = action.payload;
     },
+    deletedCartItem: (state, action) => {
+      state.cart.cart = state.cart.cart.filter((x) => {
+        x._id !== action.payload;
+      });
+    },
   },
 });
 
-export const { gotCart, updatedCart, setCheckout } = cartSlice.actions;
+export const { gotCart, updatedCart, setCheckout, deletedCartItem } = cartSlice.actions;
 
 export const getCart = (userID) => async (dispatch) => {
   try {
@@ -47,6 +52,22 @@ export const updateCart = (cartID, product, quantity) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/cart/${cartID}`, body, config);
     dispatch(updatedCart(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteCartItem = (cartID, productID) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ cartID, productID });
+
+  try {
+    const res = await axios.put(`/api/cart/delete/${cartID}`, body, config);
+    dispatch(deletedCartItem(res.data));
   } catch (error) {
     console.log(error);
   }

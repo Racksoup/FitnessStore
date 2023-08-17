@@ -45,6 +45,23 @@ router.put('/:_id', userAuth, async (req, res) => {
   }
 });
 
+router.put('/delete/:_id', userAuth, async (req, res) => {
+  const { cartID, productID } = req.body;
+
+  try {
+    const cart = await Cart.findOne({ _id: cartID });
+    cart.cart.filter((prod) => {
+      prod._id !== productID;
+    });
+
+    const newCart = await Cart.findOneAndUpdate({ _id: cartID }, cart);
+
+    res.json(productID);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 // Delete One Cart
 router.delete('/:userID', userAuth, async (req, res) => {
   try {

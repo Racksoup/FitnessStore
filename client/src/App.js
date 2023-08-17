@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import Home from './UI/Pages/Home/Home.jsx';
 import AdminLogin from './UI/Pages/AdminLogin/AdminLogin.jsx';
@@ -10,12 +10,20 @@ import Navbar from './UI/Components/Navbar/Navbar.jsx';
 import Footer from './UI/Components/Footer/Footer.jsx';
 import SingleProduct from './UI/Pages/SingleProduct/SingleProduct.jsx';
 import CategoryView from './UI/Pages/CategoryView/CategoryView.jsx';
-import Cart from './UI/Pages/Cart/Cart.jsx';
+import Cart from './UI/Pages/UserDashboard/Cart/Cart.jsx';
 import Checkout from './UI/Pages/Checkout/Checkout.jsx';
+import { loadUser } from './Redux/userSlice';
 
 import { Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, []);
+
   return (
     <div className='App-Main'>
       <div className='App-Background' />
