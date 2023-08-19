@@ -190,4 +190,24 @@ export const getProductsForCategory = (category) => async (dispatch) => {
   }
 };
 
+export const getProductsByStripeIDs = (products) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const postItem = {
+    products,
+  };
+
+  try {
+    const res = await axios.post('/api/product/find-by-stripe-ids', postItem, config);
+    console.log(res.data);
+    dispatch(gotProducts(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default productSlice.reducer;

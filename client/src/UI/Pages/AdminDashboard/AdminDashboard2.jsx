@@ -24,7 +24,17 @@ const AdminDashboard2 = () => {
   }
 
   return (
-    <div className='adminDashboard2'>
+    <div
+      className='adminDashboard2'
+      onClick={() => {
+        if (
+          document.getElementById('check01') &&
+          document.getElementById('check01').checked === true
+        ) {
+          document.getElementById('check01').click();
+        }
+      }}
+    >
       <div className='sideBar'>
         <p onClick={() => setTab('home')}>Dashboard</p>
         <p onClick={() => setTab('products')}>Products</p>

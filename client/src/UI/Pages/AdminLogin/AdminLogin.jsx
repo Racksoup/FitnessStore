@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminLogin.scss';
-import { login, selectIsAuthenticated, selectLoading } from '../../../Redux/adminSlice';
+import { loadAdmin, login, selectIsAuthenticated, selectLoading } from '../../../Redux/adminSlice';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -18,6 +18,10 @@ const AdminLogin = () => {
     e.preventDefault();
     dispatch(login(form));
   };
+
+  useEffect(() => {
+    dispatch(loadAdmin());
+  }, []);
 
   if (isAuthenticated) {
     return <Navigate to='/admin-dashboard' />;

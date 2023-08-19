@@ -282,6 +282,21 @@ router.get('/highlight', async (req, res) => {
     res.status(500).send;
   }
 });
+// Get Products by Stripe IDs
+router.post('/find-by-stripe-ids', async (req, res) => {
+  const { products } = req.body;
+  try {
+    const resProducts = products.map(async (x) => {
+      const product = await Product.findOne({ stripe_product_id: x });
+      return product;
+    });
+    Promise.all(resProducts).then((x) => {
+      res.json(x);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 // Get Product
 router.get('/:id', async (req, res) => {
   try {
