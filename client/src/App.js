@@ -3,7 +3,7 @@ import './App.scss';
 import Home from './UI/Pages/Home/Home.jsx';
 import AdminLogin from './UI/Pages/AdminLogin/AdminLogin.jsx';
 import UserLogin from './UI/Pages/UserLogin/UserLogin.jsx';
-import AdminDashboard from './UI/Pages/AdminDashboard/AdminDashboard.jsx';
+import AdminDashboard2 from './UI/Pages/AdminDashboard/AdminDashboard2.jsx';
 import UserDashboard from './UI/Pages/UserDashboard/UserDashboard.jsx';
 import CreateUser from './UI/Pages/CreateUser/CreateUser.jsx';
 import Navbar from './UI/Components/Navbar/Navbar.jsx';
@@ -33,7 +33,7 @@ const App = () => {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/admin-login' element={<AdminLogin />} />
           <Route exact path='/user-login' element={<UserLogin />} />
-          <Route exact path='/admin-dashboard' element={<AdminDashboard />} />
+          <Route exact path='/admin-dashboard' element={<AdminDashboard2 />} />
           <Route exact path='/user-dashboard' element={<UserDashboard />} />
           <Route exact path='/create-user' element={<CreateUser />} />
           <Route exact path='/product' element={<SingleProduct />} />

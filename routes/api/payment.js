@@ -1,5 +1,6 @@
 const userAuth = require('../../middleware/userAuth');
 const User = require('../../models/User');
+const Order = require('../../models/Order');
 
 const express = require('express');
 const router = express.Router();
@@ -82,17 +83,15 @@ router.get('/config', userAuth, async (req, res) => {
 });
 
 // stripe webhook
-router.post('/webhook', (req, res) => {
+router.post('/webhook', async (req, res) => {
   const event = req.body;
 
   switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      console.log('PaymentIntent was successful!');
-      break;
-    case 'payment_method.attached':
-      const paymentMethod = event.data.object;
-      console.log('PaymentMethod was attached to a Customer!');
+    case 'invoice.paid':
+      // save order
+      const invoice = event.data.object;
+      const order = new Order({ status: 'new', invoice });
+      await order.save();
       break;
     // ... handle other event types
     default:

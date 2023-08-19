@@ -1,0 +1,52 @@
+.UpdateImages {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .Half {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0 2rem 0;
+
+    h2 {
+      margin: 1rem 0;
+    }
+
+    .Btn-1 {
+      margin: 1rem 0;
+    }
+
+    .ViewImages {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+
+      .ImageBox {
+        margin: 0.2rem;
+        width: 7rem;
+        display: flex;
+        flex-direction: column;
+        border: solid 0.1rem grey;
+        border-radius: 0.2rem;
+        padding: 0.1rem;
+
+        .Btn-3 {
+          align-self: end;
+          svg {
+            cursor: pointer;
+          }
+          path {
+            cursor: pointer;
+          }
+        }
+
+        img {
+          width: 100%;
+          height: 5rem;
+        }
+      }
+    }
+  }
+}

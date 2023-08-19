@@ -1,60 +1,56 @@
 @import '../../../../App.scss';
 
 .CreateProduct {
-  width: 40rem;
-  margin: 1rem 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 
-  .Categories {
+  .Content {
     position: absolute;
+    margin: 3rem auto 0 auto;
+    padding: 1rem;
+    width: 52rem;
+    max-height: 51rem;
+    color: black;
+    background-color: rgb(27, 38, 41);
+    border: solid 0.3rem $color-4;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    margin: 2rem 0 0 -0.5rem;
-    width: 25rem;
-    background-color: rgba(30, 30, 30, 1);
-    color: white;
+    align-items: center;
+    overflow-y: scroll;
 
-    .Category {
-      height: 2rem;
-      border-bottom: rgba(200, 200, 200, 0.5) 0.05rem solid;
-
-      &:hover {
-        background-color: rgba(60, 60, 60, 1);
-      }
-    }
-  }
-
-  .CategoryDisplay {
-    line-height: 0;
-    color: black;
-    margin: 1.1rem 0 0 0;
-  }
-
-  .Row {
-    margin: 0.4rem 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-
-    .CheckboxHolder {
-      width: 25rem;
+    .Categories {
+      position: absolute;
       display: flex;
+      flex-direction: column;
+      margin: 2rem 0 0 -0.5rem;
+      width: 25rem;
+      background-color: rgba(30, 30, 30, 1);
+      color: white;
 
-      .Checkbox {
-        height: 2.2rem;
-        width: 2.2rem;
+      .Category {
+        height: 2rem;
+        border-bottom: rgba(200, 200, 200, 0.5) 0.05rem solid;
+
+        &:hover {
+          background-color: rgba(60, 60, 60, 1);
+        }
       }
     }
 
-    label {
-      width: 7rem;
+    .CategoryDisplay {
+      line-height: 0;
+      color: black;
+      margin: 1.1rem 0 0 0;
     }
 
-    .Btn {
-      width: 2.3rem;
+    .Btn-2 {
+      align-self: end;
     }
 
     .Icon {
@@ -67,83 +63,119 @@
       }
     }
 
-    .MainInput {
-      width: 25rem;
-      padding: 0 0 0 0.5rem;
-      border-radius: 0.2rem;
-      height: 2.2rem;
-      color: black;
-      background-color: white;
-    }
-
-    .MultiInputWidget {
+    .Row {
+      margin: 0.4rem 0;
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      width: 28rem;
+      justify-content: space-between;
+      align-items: start;
 
-      .SingleRow {
-        width: 100%;
+      .CheckboxHolder {
+        width: 25rem;
         display: flex;
-        justify-content: space-between;
-        margin: 0 0 0.6rem 0;
 
-        .Btn {
-          background-color: red;
-        }
-
-        .Inputs {
-          width: 25rem;
-          display: flex;
-          justify-content: space-between;
-
-          .KeyInput {
-            width: 6rem;
-            padding: 0 0 0 0.5rem;
-            border-radius: 0.2rem;
-            height: 2.2rem;
-            color: black;
-            background-color: white;
-          }
-          .ValueInput {
-            width: 17rem;
-            padding: 0 0 0 0.5rem;
-            border-radius: 0.2rem;
-            height: 2.2rem;
-            color: black;
-            background-color: white;
-          }
-        }
-
-        .AboutInput {
-          width: 25rem;
-          padding: 0 0 0 0.5rem;
-          border-radius: 0.2rem;
+        .Checkbox {
           height: 2.2rem;
-          color: black;
-          background-color: white;
+          width: 2.2rem;
         }
       }
-    }
 
-    .ExtraImagesBox {
-      display: flex;
-      flex-direction: column;
-      width: 25rem;
-      margin-bottom: 0.8rem;
+      label {
+        width: 7rem;
+      }
 
-      .ExtraImage {
+      .Btn {
+        width: 2.3rem;
+      }
+
+      .Icon {
+        color: black;
+        svg {
+          color: black;
+        }
+        path {
+          color: black;
+        }
+      }
+
+      .MainInput {
+        width: 25rem;
+        padding: 0 0 0 0.5rem;
+        border-radius: 0.2rem;
+        height: 2.2rem;
+        color: black;
+        background-color: white;
+      }
+
+      .MultiInputWidget {
         display: flex;
-        align-items: center;
-        margin-top: 0.2rem;
-        .Icon {
-          color: red;
-          cursor: pointer;
-          margin-right: 0.4rem;
-          svg {
-            cursor: pointer;
+        flex-direction: column;
+        width: 28rem;
+
+        .SingleRow {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin: 0 0 0.6rem 0;
+
+          .Btn {
+            background-color: red;
           }
-          path {
+
+          .Inputs {
+            width: 25rem;
+            display: flex;
+            justify-content: space-between;
+
+            .KeyInput {
+              width: 6rem;
+              padding: 0 0 0 0.5rem;
+              border-radius: 0.2rem;
+              height: 2.2rem;
+              color: black;
+              background-color: white;
+            }
+            .ValueInput {
+              width: 17rem;
+              padding: 0 0 0 0.5rem;
+              border-radius: 0.2rem;
+              height: 2.2rem;
+              color: black;
+              background-color: white;
+            }
+          }
+
+          .AboutInput {
+            width: 25rem;
+            padding: 0 0 0 0.5rem;
+            border-radius: 0.2rem;
+            height: 2.2rem;
+            color: black;
+            background-color: white;
+          }
+        }
+      }
+
+      .ExtraImagesBox {
+        display: flex;
+        flex-direction: column;
+        width: 25rem;
+        margin-bottom: 0.8rem;
+
+        .ExtraImage {
+          display: flex;
+          align-items: center;
+          margin-top: 0.2rem;
+          .Icon {
+            color: red;
             cursor: pointer;
+            margin-right: 0.4rem;
+            svg {
+              cursor: pointer;
+            }
+            path {
+              cursor: pointer;
+            }
           }
         }
       }

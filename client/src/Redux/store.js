@@ -6,6 +6,7 @@ import categoryReducer from './categorySlice';
 import headerImagesReducer from './headerImageSlice';
 import saleImagesReducer from './saleImageSlice';
 import cartReducer from './cartSlice';
+import orderSlice from './orderSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     headerImages: headerImagesReducer,
     saleImages: saleImagesReducer,
     cart: cartReducer,
+    order: orderSlice,
   },
 });

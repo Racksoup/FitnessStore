@@ -1,0 +1,135 @@
+.ViewOrders {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    margin-top: 5rem;
+  }
+
+  .Orders {
+    margin-top: 2.5rem;
+    width: 70rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .TableTop {
+    margin-right: 2rem;
+    margin-bottom: 0.3rem;
+    width: 18.8rem;
+    align-self: end;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      min-width: 4rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.4rem;
+      border: solid 1px grey;
+      cursor: pointer;
+    }
+
+    .highlight {
+      background-color: rgb(34, 34, 34);
+    }
+  }
+
+  .Table {
+    width: 100%;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    border: solid 1px grey;
+
+    .item {
+      width: 100%;
+      height: 2.2rem;
+      padding: 0 2rem;
+      border-bottom: solid 1px grey;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: rgb(29, 29, 29);
+      }
+
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .name {
+        width: 10rem;
+      }
+
+      .amount {
+        width: 5rem;
+      }
+
+      .paid {
+        width: 5rem;
+      }
+
+      .date {
+        width: 14rem;
+      }
+
+      .status {
+        margin-left: auto;
+        width: 4rem;
+        height: 1.8rem;
+        position: relative;
+        cursor: pointer;
+
+        label {
+          cursor: pointer;
+          width: 100%;
+          padding: 0.1rem 0.4rem;
+          border: solid 1px grey;
+          border-radius: 0.8rem;
+          background-color: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        input {
+          display: none;
+          &:checked ~ ul.drop {
+            display: block;
+          }
+        }
+
+        .drop {
+          display: none;
+          position: absolute;
+          background-color: black;
+          width: 6rem;
+          right: 0%;
+          top: 100%;
+
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgb(51, 51, 51);
+            }
+          }
+        }
+      }
+    }
+  }
+}

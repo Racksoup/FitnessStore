@@ -7,6 +7,64 @@
   align-items: center;
   margin: 1rem 0;
 
+  h1 {
+    margin-top: 2rem;
+  }
+
+  .topLine {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      background-color: white;
+      color: black;
+      width: 7rem;
+      height: 2rem;
+      padding: 0.2rem;
+    }
+  }
+
+  .filter {
+    border: solid 1px grey;
+    background-color: none;
+    padding: 0.1rem 0.4rem;
+    position: relative;
+
+    &:hover {
+      .drop {
+        display: block;
+      }
+    }
+
+    .drop {
+      display: none;
+      position: absolute;
+      background-color: black;
+      width: 16rem;
+      left: 0%;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgb(51, 51, 51);
+        }
+      }
+    }
+  }
+
+  .create {
+    margin-top: 2rem;
+    margin-bottom: 0.2rem;
+  }
+
   .Product {
     width: 100%;
     margin: 0.1rem 0;

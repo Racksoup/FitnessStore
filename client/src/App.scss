@@ -61,7 +61,8 @@ a {
   &-Main {
     width: 100%;
     color: white;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
   }
