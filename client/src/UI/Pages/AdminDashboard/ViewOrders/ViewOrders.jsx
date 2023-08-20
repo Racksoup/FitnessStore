@@ -163,10 +163,79 @@ const OrderModal = ({ setShowOrderModal, order }) => {
             })}
           </div>
         )}
-        {tab == 'Invoice Details' && <div className='invoiceDetails'></div>}
+        {tab == 'Invoice Details' && (
+          <div className='invoiceDetails'>
+            <div className='Row'>
+              <p>Name:</p>
+              <p>{order.invoice.customer_name}</p>
+            </div>
+            <div className='Row'>
+              <p>Email:</p>
+              <p>{order.invoice.customer_email}</p>
+            </div>
+            <div className='Row'>
+              <p>Date:</p>
+              <p>{new Date(order.invoice.effective_at).toUTCString()}</p>
+            </div>
+            <div className='Row'>
+              <p>Country:</p>
+              <p>{order.invoice.account_country}</p>
+            </div>
+            <div className='Row'>
+              <p>Total:</p>
+              <p>{order.invoice.amount_paid}</p>
+            </div>
+            <div className='Row'>
+              <p>Paid Status:</p>
+              <p>{order.invoice.status}</p>
+            </div>
+            <div className='Row'>
+              <p>Currency:</p>
+              <p>{order.invoice.currency}</p>
+            </div>
+            <div className='Row'>
+              <p>Invoice pdf:</p>
+              <a href={order.invoice.invoice_pdf}>pdf</a>
+            </div>
+            <div className='Row'>
+              <p>Order ID:</p>
+              <p>{order._id}</p>
+            </div>
+            <div className='Row'>
+              <p>Invoice ID:</p>
+              <p>{order.invoice.id}</p>
+            </div>
+            <div className='Row'>
+              <p>Charge ID:</p>
+              <p>{order.invoice.charge}</p>
+            </div>
+            <div className='Row'>
+              <p>Customer ID:</p>
+              <p>{order.invoice.customer}</p>
+            </div>
+            <div className='Row'>
+              <p>Payment Intent ID:</p>
+              <p>{order.invoice.payment_intent}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default ViewOrders;
+
+// name
+// email
+// date
+// account country
+// amount paid
+// paid status
+// currency
+// invoice pdf
+// order id
+// invoice id
+// charge id
+// customer id
+// payment intent id

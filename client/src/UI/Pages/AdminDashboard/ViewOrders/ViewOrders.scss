@@ -149,8 +149,8 @@
   .modal {
     position: absolute;
     margin: 5rem auto 0 20rem;
-    width: 70rem;
-    height: 50rem;
+    // width: 70rem;
+    // height: 50rem;
     padding: 2rem;
     color: rgb(236, 236, 236);
     background-color: rgb(31, 31, 31);
@@ -225,6 +225,30 @@
 
       .quantity {
         width: 20%;
+      }
+    }
+
+    .invoiceDetails {
+      width: 30rem;
+      max-height: 40rem;
+      border: solid 1px grey;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .Row {
+        width: 100%;
+        min-height: 2.2rem;
+        border-bottom: solid 1px grey;
+        padding: 0 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        a {
+          cursor: pointer;
+          color: rgb(189, 238, 255);
+        }
       }
     }
   }
