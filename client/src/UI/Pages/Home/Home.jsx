@@ -19,16 +19,24 @@ const Home = () => {
       <div className='HeaderBox'>
         <img src={Car} alt='image' className='HeaderImage' />
         <div className='Gradient' />
+        <h1 className='Title'>GET FIT TODAY!</h1>
         <div className='Header'>
-          <div />
-          <h1 className='Title'>GET FIT TODAY!</h1>
-          <div />
-          <div className='Btn'>Weights</div>
-          <div className='Btn'>Gym Systems</div>
-          <div className='Btn'>Plate Loaded</div>
-          <div className='Btn'>Cardio</div>
-          <div className='Btn'>Accessories</div>
-          <div className='Btn'>Bicycles</div>
+          <div className='Btn'>
+            <img src={Car} alt='x' />
+            <p>Weights</p>
+          </div>
+          <div className='Btn'>
+            <img src={Car} alt='x' />
+            <p>Gym Systems</p>
+          </div>
+          <div className='Btn'>
+            <img src={Car} alt='x' />
+            <p>Plate Loaded</p>
+          </div>
+          <div className='Btn'>
+            <img src={Car} alt='x' />
+            <p>Accessories</p>
+          </div>
         </div>
       </div>
       <div className='Section1'>
@@ -40,11 +48,10 @@ const Home = () => {
                   {x.image_filenames.map((c, j) => {
                     if (c.main) {
                       return (
-                        <Link key={i} className='Link' to='/product'>
+                        <Link key={i} className='product' to='/product'>
                           <img
                             src={`/api/product/image/${c.filename}`}
                             alt='image'
-                            className='Btn'
                             onClick={() => dispatch(setCurrProduct(x))}
                           />
                         </Link>
@@ -54,6 +61,17 @@ const Home = () => {
                 </>
               );
           })}
+      </div>
+      <div className='Section2'>
+        <img className='promo' src={Car} alt='' />
+        <div className='category'>
+          <h2>Bicycles</h2>
+          <img src={Car} alt='' />
+        </div>
+        <div className='category'>
+          <h2>Bicycles</h2>
+          <img src={Car} alt='' />
+        </div>
       </div>
     </div>
   );
