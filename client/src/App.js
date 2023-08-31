@@ -12,6 +12,7 @@ import SingleProduct from './UI/Pages/SingleProduct/SingleProduct.jsx';
 import CategoryView from './UI/Pages/CategoryView/CategoryView.jsx';
 import Cart from './UI/Pages/UserDashboard/Cart/Cart.jsx';
 import Checkout from './UI/Pages/Checkout/Checkout.jsx';
+import Categories from './UI/Pages/Categories/Categories.jsx';
 import { loadUser } from './Redux/userSlice';
 
 import { Route, Routes } from 'react-router-dom';
@@ -38,6 +39,7 @@ const App = () => {
           <Route exact path='/create-user' element={<CreateUser />} />
           <Route exact path='/product' element={<SingleProduct />} />
           <Route exact path='/category' element={<CategoryView />} />
+          <Route exact path='/categories' element={<Categories />} />
           <Route exact path='/cart' element={<Cart />} />
           <Route exact path='/checkout' element={<Checkout />} />
         </Routes>

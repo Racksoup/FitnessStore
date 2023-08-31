@@ -43,7 +43,9 @@ const Navbar = () => {
           </Link>
           <div className='TopMiddle' style={TopMiddleStyle}>
             <button className='DropdownButton'>
-              All
+              <Link to='/categories'>
+                <p>All</p>
+              </Link>
               <div className='DropdownBox'>
                 <div className='DropdownItem'>123</div>
                 <div className='DropdownItem'>abc</div>
