@@ -13,6 +13,7 @@ import CategoryView from './UI/Pages/CategoryView/CategoryView.jsx';
 import Cart from './UI/Pages/UserDashboard/Cart/Cart.jsx';
 import Checkout from './UI/Pages/Checkout/Checkout.jsx';
 import Categories from './UI/Pages/Categories/Categories.jsx';
+import Orders from './UI/Pages/UserDashboard/Orders/Orders.jsx';
 import { loadUser } from './Redux/userSlice';
 
 import { Route, Routes } from 'react-router-dom';
@@ -42,6 +43,7 @@ const App = () => {
           <Route exact path='/categories' element={<Categories />} />
           <Route exact path='/cart' element={<Cart />} />
           <Route exact path='/checkout' element={<Checkout />} />
+          <Route exact path='/orders' element={<Orders />} />
         </Routes>
         <Footer />
       </div>

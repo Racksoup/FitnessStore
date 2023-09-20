@@ -20,13 +20,15 @@ const UserDashboard = () => {
         </Link>
       </div>
       <div className='Grid'>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Your Orders</h4>
-            <p>Track, return, or buy something again</p>
+        <Link className='Link' to='/orders'>
+          <div className='Item'>
+            <img src={Car} alt='Img' />
+            <div className='Info'>
+              <h4>Your Orders</h4>
+              <p>Track, return, or buy something again</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <Link className='Link' to='/cart'>
           <div className='Item'>
             <img src={Car} alt='Img' />
