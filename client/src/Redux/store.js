@@ -7,6 +7,7 @@ import headerImagesReducer from './headerImageSlice';
 import saleImagesReducer from './saleImageSlice';
 import cartReducer from './cartSlice';
 import orderSlice from './orderSlice';
+import mailSlice from './mailSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     saleImages: saleImagesReducer,
     cart: cartReducer,
     order: orderSlice,
+    mail: mailSlice,
   },
 });

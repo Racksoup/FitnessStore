@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './UserDashboard.scss';
-import { logout } from '../../../Redux/userSlice';
+import { logout, selectUser } from '../../../Redux/userSlice';
+import { checkSub, selectSubscribed, subToNewsletter, unsub } from '../../../Redux/mailSlice';
 import Car from '../../../images/car.jpg';
 
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const UserDashboard = () => {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const subscribed = useSelector(selectSubscribed);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(checkSub(user.email));
+    }
+  }, [user]);
 
   return (
     <div className='UserDashboard'>
@@ -59,12 +68,28 @@ const UserDashboard = () => {
             <p>View balance or redeem a card</p>
           </div>
         </div>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Email Alerts</h4>
-            <p>Change email notifications and subscriptions</p>
+        {/* <Link className='Link' to='/newsletter'>
+          <div className='Item'>
+            <img src={Car} alt='Img' />
+            <div className='Info'>
+              <h4>Email Alerts</h4>
+              <p>Change email notifications and subscriptions</p>
+            </div>
           </div>
+        </Link> */}
+        <div className='ItemBox'>
+          {subscribed ? (
+            <button className='red' onClick={() => dispatch(unsub(user.email))}>
+              Un-subscribe from Newsletter
+            </button>
+          ) : (
+            <button
+              className='green'
+              onClick={() => dispatch(subToNewsletter(user.email, 'This-Is-A-Test'))}
+            >
+              Subscribe to Newsletter
+            </button>
+          )}
         </div>
         <div className='Item'>
           <img src={Car} alt='Img' />
