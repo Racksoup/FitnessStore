@@ -1,4 +1,5 @@
 const auth = require('../../middleware/adminAuth');
+const userAuth = require('../../middleware/userAuth');
 
 const express = require('express');
 const router = express.Router();
@@ -18,8 +19,8 @@ router.post('/new-email', auth, async (req, res) => {
   const myData = {
     from: listAddress,
     to: listAddress,
-    subject: 'New Dev Blog Post',
-    html: `<h1>Check out the new article!</h1><p>${req.body.text}</p><p>${req.body.link}</p><p>To unsubscribe from this newsletter, click the link below.</p><div>%mailing_list_unsubscribe_url%</div>`,
+    subject: req.body.subject,
+    text: req.body.text,
   };
 
   try {
@@ -46,7 +47,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // Remove member
-router.post('/destroy-member', async (req, res) => {
+router.post('/destroy-member', userAuth, async (req, res) => {
   try {
     const deletedMember = await client.lists.members.destroyMember(listAddress, req.body.email);
     res.json(deletedMember);
@@ -56,7 +57,7 @@ router.post('/destroy-member', async (req, res) => {
 });
 
 // Desc     Add Member to Mailing List
-router.post('/member', async (req, res) => {
+router.post('/member', userAuth, async (req, res) => {
   try {
     const newMember = await client.lists.members.createMember(listAddress, {
       address: req.body.email,
@@ -70,10 +71,10 @@ router.post('/member', async (req, res) => {
 });
 
 // Check if user is subcribed
-router.post('/check-subbed', async (req, res) => {
+router.post('/check-subbed', userAuth, async (req, res) => {
   try {
-    const list = await client.lists.members.getMember(listAddress, req.body.email);
-    console.log(list);
+    const member = await client.lists.members.getMember(listAddress, req.body.email);
+    res.json(member);
   } catch (error) {
     console.log(error);
   }

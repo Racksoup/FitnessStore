@@ -21,10 +21,13 @@ export const mailSlice = createSlice({
     checkedSubbed: (state, action) => {
       state.subscribed = action.payload;
     },
+    newsletterSent: (state, action) => {
+      state.newsletter = action.payload;
+    },
   },
 });
 
-export const { subbedToNewsLetter, unsubbed, checkedSubbed } = mailSlice.actions;
+export const { subbedToNewsLetter, unsubbed, checkedSubbed, newsletterSent } = mailSlice.actions;
 
 export const checkSub = (email) => async (dispatch) => {
   const config = {
@@ -36,7 +39,7 @@ export const checkSub = (email) => async (dispatch) => {
 
   try {
     const res = await axios.post('/api/mailing/check-subbed', body, config);
-    dispatch(checkedSubbed(res.data));
+    dispatch(checkedSubbed(res.data.subscribed));
   } catch (error) {
     console.log(error);
   }
@@ -50,7 +53,6 @@ export const subToNewsletter = (email, name) => async (dispatch) => {
   };
   const body = JSON.stringify({ email, name });
 
-  console.log('subtonewsletter');
   try {
     const res = await axios.post('/api/mailing/member', body, config);
     dispatch(subbedToNewsLetter(true));
@@ -75,22 +77,20 @@ export const unsub = (email) => async (dispatch) => {
   }
 };
 
-// export const sendNewsletter = (newsletter) => async (dispatch) => {
-//   const config = {
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   };
-//   const { text, link } = newsletter;
+export const sendNewsletter = (subject, text) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ subject, text });
 
-//   const body = JSON.stringify({ text, link });
-
-//   try {
-//     const res = await axios.post('api/mailing/new-email', body, config);
-//     dispatch({ type: NEWSLETTER_SENT, payload: res.data });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+  try {
+    const res = await axios.post('api/mailing/new-email', body, config);
+    dispatch(newsletterSent(true));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default mailSlice.reducer;
