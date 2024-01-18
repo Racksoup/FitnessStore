@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './SingleProduct.scss';
 import { selectProduct, getCurrProduct } from '../../../Redux/productSlice';
 import { selectCart, updateCart } from '../../../Redux/cartSlice';
+import { selectWishlist, updateWishlist } from '../../../Redux/wishlistSlice';
 import { selectIsAuthenticated } from '../../../Redux/userSlice';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
   let cart = useSelector(selectCart);
+  let wishlist = useSelector(selectWishlist);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const [currImage, setCurrImage] = useState('');
 
@@ -34,6 +36,12 @@ const SingleProduct = () => {
   const addToCart = () => {
     if (isAuthenticated) {
       dispatch(updateCart(cart._id, product, 1));
+    }
+  };
+
+  const addToWishlist = () => {
+    if (isAuthenticated) {
+      dispatch(updateWishlist(wishlist._id, product, 1));
     }
   };
 
@@ -114,7 +122,7 @@ const SingleProduct = () => {
                 Sold by <p className='BlueText'>{product.merchant}</p>
                 and shipped by <p className='BlueText'>FedEx</p>
               </div>
-              <div className='WishlistBox'>
+              <div className='WishlistBox' onClick={() => addToWishlist()}>
                 <p>Add to Wishlist</p>
                 <FontAwesomeIcon className='Icon' icon={faChevronDown} />
               </div>

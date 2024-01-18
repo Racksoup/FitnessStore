@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCart } from './cartSlice';
+import { getWishlist } from './wishlistSlice';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -49,6 +50,7 @@ export const loadUser = () => async (dispatch) => {
       const res = await axios.get('/api/users');
       dispatch(userLoaded(res.data));
       dispatch(getCart(res.data._id));
+      dispatch(getWishlist(res.data._id));
     }
   } catch (error) {
     console.log(error);
@@ -90,7 +92,6 @@ export const createUser = (user) => async (dispatch, getState) => {
     const res = await axios.post('/api/users', body, config);
     dispatch(loginSuccess(res.data));
     dispatch(loadUser());
-    await axios.post('/api/cart', { userID: res.data.userID });
   } catch (error) {
     console.log(error);
   }

@@ -6,6 +6,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
+const axios = require('axios');
+const url = require('url');
 
 // Create User
 router.post('/', async (req, res) => {
@@ -37,9 +39,26 @@ router.post('/', async (req, res) => {
         },
       };
 
-      jwt.sign(payload, process.env.USER_SECRET, { expiresIn: '5h' }, (err, token) => {
+      jwt.sign(payload, process.env.USER_SECRET, { expiresIn: '5h' }, async (err, token) => {
         if (err) throw err;
+
         res.json({ token, userID: savedUser._id });
+
+        const baseURL = req.protocol + '://' + req.get('host');
+
+        try {
+          const cart = await axios.post(`${baseURL}/api/cart`, { userID: savedUser._id });
+          console.log('Cart created:', cart.data); // Log the response data
+        } catch (cartError) {
+          console.error('Error creating cart:', cartError.message);
+        }
+
+        try {
+          const wishlist = await axios.post(`${baseURL}/api/wishlist`, { userID: savedUser._id });
+          console.log('Wishlist created:', wishlist.data); // Log the response data
+        } catch (wishlistError) {
+          console.error('Error creating wishlist:', wishlistError.message);
+        }
       });
     } catch (err) {
       console.error(err.message);

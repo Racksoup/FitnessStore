@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 // Create One Cart
-router.post('/', userAuth, async (req, res) => {
+router.post('/', async (req, res) => {
   const { userID } = req.body;
 
   const postItem = { userID };
@@ -50,9 +50,7 @@ router.put('/delete/:_id', userAuth, async (req, res) => {
 
   try {
     const cart = await Cart.findOne({ _id: cartID });
-    cart.cart.filter((prod) => {
-      prod._id !== productID;
-    });
+    cart.cart = cart.cart.filter((prod) => prod._id !== productID);
 
     const newCart = await Cart.findOneAndUpdate({ _id: cartID }, cart);
 

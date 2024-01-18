@@ -1,6 +1,7 @@
 import React from 'react';
 import './Cart.scss';
 import { deleteCartItem, selectCart, setCheckout, updateCart } from '../../../../Redux/cartSlice';
+import { selectWishlist, updateWishlist } from '../../../../Redux/wishlistSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +11,12 @@ import { Link } from 'react-router-dom';
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector(selectCart);
+  const wishlist = useSelector(selectWishlist);
+
+  const moveToWishlist = (product) => {
+    dispatch(deleteCartItem(cart._id, product._id));
+    dispatch(updateWishlist(wishlist._id, product, 1));
+  };
 
   if (cart.cart) {
     let cartTotal = 0;
@@ -77,7 +84,9 @@ const Cart = () => {
                       Delete
                     </p>
                     <div className='VLine' />
-                    <p className='BlueText'>Move to Wishlist</p>
+                    <p className='BlueText' onClick={() => moveToWishlist(product)}>
+                      Move to Wishlist
+                    </p>
                   </div>
                 </div>
               </div>

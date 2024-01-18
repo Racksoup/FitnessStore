@@ -8,6 +8,7 @@ import saleImagesReducer from './saleImageSlice';
 import cartReducer from './cartSlice';
 import orderSlice from './orderSlice';
 import mailSlice from './mailSlice';
+import wishlistSlice from './wishlistSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     cart: cartReducer,
     order: orderSlice,
     mail: mailSlice,
+    wishlist: wishlistSlice,
   },
 });

@@ -23,9 +23,7 @@ export const cartSlice = createSlice({
       state.checkout = action.payload;
     },
     deletedCartItem: (state, action) => {
-      state.cart.cart = state.cart.cart.filter((x) => {
-        x._id !== action.payload;
-      });
+      state.cart.cart = state.cart.cart.filter((x) => x._id !== action.payload);
     },
   },
 });

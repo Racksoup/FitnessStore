@@ -47,13 +47,15 @@ const UserDashboard = () => {
             </div>
           </div>
         </Link>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Wishlist</h4>
-            <p>Update Wishlist</p>
+        <Link className='Link' to='/wishlist'>
+          <div className='Item'>
+            <img src={Car} alt='Img' />
+            <div className='Info'>
+              <h4>Wishlist</h4>
+              <p>Update Wishlist</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className='Item'>
           <img src={Car} alt='Img' />
           <div className='Info'>
@@ -101,8 +103,8 @@ const UserDashboard = () => {
         <div className='Item'>
           <img src={Car} alt='Img' />
           <div className='Info'>
-            <h4>Delivery Address</h4>
-            <p>Edit addresses for orders and gifts</p>
+            <h4>Account Information</h4>
+            <p>Edit address, account</p>
           </div>
         </div>
       </div>
