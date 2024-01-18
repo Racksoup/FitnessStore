@@ -3,9 +3,11 @@ import axios from 'axios';
 
 const initialState = {
   orders: null,
+  customerOrders: null,
 };
 
 export const selectOrders = (state) => state.order.orders;
+export const selectCustomerOrders = (state) => state.order.customerOrders;
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -20,10 +22,13 @@ export const orderSlice = createSlice({
       });
       state.orders = [...state.orders, action.payload];
     },
+    gotCustomerOrders: (state, action) => {
+      state.customerOrders = action.payload;
+    },
   },
 });
 
-export const { gotOrders, changedOrderStatus } = orderSlice.actions;
+export const { gotOrders, changedOrderStatus, gotCustomerOrders } = orderSlice.actions;
 
 export const getOrders = () => async (dispatch) => {
   try {
@@ -53,6 +58,15 @@ export const changeOrderStatus = (id, status) => async (dispatch) => {
     dispatch(changedOrderStatus(res.data));
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getCustomerOrders = (customerID) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/order/customer-orders/${customerID}`);
+    dispatch(gotCustomerOrders(res.data));
+  } catch (error) {
+    console.log(error.message);
   }
 };
 

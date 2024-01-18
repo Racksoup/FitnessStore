@@ -84,18 +84,18 @@ router.get('/config', userAuth, async (req, res) => {
 
 // stripe webhook
 router.post('/webhook', async (req, res) => {
-  const event = req.body;
+  const payload = req.body;
 
-  switch (event.type) {
+  switch (payload.type) {
     case 'invoice.paid':
       // save order
-      const invoice = event.data.object;
+      const invoice = payload.data.object;
       const order = new Order({ status: 'new', invoice });
       await order.save();
       break;
     // ... handle other event types
     default:
-      console.log(`Unhandled event type ${event.type}`);
+      console.log(`Unhandled event type ${payload.type}`);
   }
 
   // Return a 200 response to acknowledge receipt of the event

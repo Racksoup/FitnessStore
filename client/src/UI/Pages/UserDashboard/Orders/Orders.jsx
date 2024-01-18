@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Orders.scss';
+import { getCustomerOrders, selectCustomerOrders } from '../../../../Redux/orderSlice';
+import { selectUser } from '../../../../Redux/userSlice';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 const Orders = () => {
+  const dispatch = useDispatch();
+  const orders = useSelector(selectCustomerOrders);
+  const user = useSelector(selectUser);
   const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(getCustomerOrders(user.customer_stripe_id));
+    console.log(orders);
+  }, []);
 
   return (
     <div className='orders'>

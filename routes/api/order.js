@@ -1,5 +1,6 @@
 const Order = require('../../models/Order');
 const adminAuth = require('../../middleware/adminAuth');
+const userAuth = require('../../middleware/userAuth');
 
 const express = require('express');
 const router = express.Router();
@@ -21,6 +22,15 @@ router.put('/change-status', adminAuth, async (req, res) => {
       { new: true }
     );
     res.json(order);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+router.get('/customer-orders/:_customerID', userAuth, async (req, res) => {
+  try {
+    const orders = await Order.find({ 'invoice.customer': req.params._customerID });
+    res.json(orders);
   } catch (error) {
     console.log(error.message);
   }
