@@ -14,10 +14,12 @@ router.post('/', async (req, res) => {
   const { email, password, name } = req.body;
   const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
   const isEmail = emailRegex.test(email);
+  const caseEmail = email.toLowerCase();
+  const caseName = name.toLowerCase();
 
   if (isEmail) {
     try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ $or: [{ email: caseEmail }, { name: caseName }] });
       if (user) {
         return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
       }
@@ -36,9 +38,9 @@ router.post('/', async (req, res) => {
       };
 
       user = new User({
-        email,
+        email: caseEmail,
         password,
-        name,
+        name: caseName,
         address,
       });
 
@@ -106,13 +108,14 @@ router.post(
     }
 
     const { name, password } = req.body;
+    const caseName = name.toLowerCase();
 
     try {
-      const regex = new RegExp(['^', name, '$'].join(''), 'i');
+      const regex = new RegExp(['^', caseName, '$'].join(''), 'i');
       let user = await User.findOne({
         $or: [
           {
-            name: name,
+            name: caseName,
           },
           {
             email: regex,
