@@ -1,4 +1,31 @@
 @import '../../../../App.scss';
 
 .Security {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    margin: 1rem 0;
+  }
+
+  .Line {
+    width: 15rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    input {
+      background-color: white;
+      color: black;
+      padding: 0.2rem;
+    }
+  }
+
+  button {
+    margin: 1rem 0;
+    padding: 0.3rem;
+    border: solid 0.1rem rgb(189, 189, 189);
+    border-radius: 0.2rem;
+  }
 }

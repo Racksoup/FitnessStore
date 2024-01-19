@@ -40,8 +40,27 @@ export const userSlice = createSlice({
     updatedUserAddress: (state, action) => {
       state.user = action.payload;
     },
+    changedUserPassword: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
+
+export const changeUserPassword = (newPassword, oldPassword) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ id, address });
+
+  try {
+    const res = await axios.post('/api/users/change-user-password', body, config);
+    dispatch(changedUserPassword(res.data));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export const updateUserAddress = (id, address) => async (dispatch) => {
   const config = {
@@ -124,5 +143,6 @@ const setAuthToken = (token) => {
   }
 };
 
-export const { userLoaded, loginSuccess, logout, updatedUserAddress } = userSlice.actions;
+export const { userLoaded, loginSuccess, logout, updatedUserAddress, changedUserPassword } =
+  userSlice.actions;
 export default userSlice.reducer;
