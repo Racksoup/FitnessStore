@@ -52,7 +52,7 @@ export const changeUserPassword = (newPassword, oldPassword) => async (dispatch)
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ id, address });
+  const body = JSON.stringify({ newPassword, oldPassword });
 
   try {
     const res = await axios.post('/api/users/change-user-password', body, config);

@@ -171,4 +171,28 @@ router.post('/update-address', userAuth, async (req, res) => {
   }
 });
 
+// Update User Password
+router.post('/change-user-password', userAuth, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    const isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(req.body.newPassword, salt);
+
+    const newUser = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: { password: password } },
+      { returnOriginal: false }
+    ).select('-password');
+    console.log(newUser);
+    res.json(newUser);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 module.exports = router;
