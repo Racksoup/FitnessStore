@@ -22,10 +22,24 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
       }
 
+      const address = {
+        firstName: '',
+        lastName: '',
+        country: '',
+        address: '',
+        appartment: '',
+        city: '',
+        province: '',
+        postalCode: '',
+        phone: '',
+        email: '',
+      };
+
       user = new User({
         email,
         password,
         name,
+        address,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -137,6 +151,20 @@ router.post(
 router.delete('/', userAuth, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.user.id);
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Update User Address
+router.post('/update-address', userAuth, async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: { address: req.body.address } },
+      { returnOriginal: false }
+    ).select('-password');
     res.json(user);
   } catch (error) {
     console.log(error);

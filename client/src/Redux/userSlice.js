@@ -37,8 +37,27 @@ export const userSlice = createSlice({
       state.loading = false;
       state.user = null;
     },
+    updatedUserAddress: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
+
+export const updateUserAddress = (id, address) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ id, address });
+
+  try {
+    const res = await axios.post('/api/users/update-address', body, config);
+    dispatch(updatedUserAddress(res.data));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export const loadUser = () => async (dispatch) => {
   if (localStorage.userToken) {
@@ -105,5 +124,5 @@ const setAuthToken = (token) => {
   }
 };
 
-export const { userLoaded, loginSuccess, logout } = userSlice.actions;
+export const { userLoaded, loginSuccess, logout, updatedUserAddress } = userSlice.actions;
 export default userSlice.reducer;

@@ -14,11 +14,11 @@ const Checkout = () => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState('');
   const [intentAmount, setIntentAmount] = useState(0);
-  const checkout = useSelector(selectCheckout);
+  // const checkout = useSelector(selectCheckout);
   const user = useSelector(selectUser);
   const cart = useSelector(selectCart);
   const [country, setCountry] = useState('');
-  const [billing, setBilling] = useState({
+  const [address, setAddress] = useState({
     firstName: '',
     lastName: '',
     country: '',
@@ -31,16 +31,16 @@ const Checkout = () => {
     email: '',
   });
 
-  const [shipping, setShipping] = useState({
-    firstName: '',
-    lastName: '',
-    country: '',
-    address: '',
-    appartment: '',
-    city: '',
-    province: '',
-    postalCode: '',
-  });
+  // const [shipping, setShipping] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   country: '',
+  //   address: '',
+  //   appartment: '',
+  //   city: '',
+  //   province: '',
+  //   postalCode: '',
+  // });
 
   const usaStates = [
     {
@@ -375,33 +375,33 @@ const Checkout = () => {
     <div className='Checkout'>
       <h1>Checkout</h1>
       <div className='Content'>
-        <div className='Billing'>
-          <h3>Billing</h3>
+        <div className='Shipping-Address'>
+          <h3>Shipping Address</h3>
           <div className='HalfLine'>
             <div className='HalfBox'>
               <p>First name</p>
               <input
                 type='text'
-                onChange={(e) => setBilling({ ...billing, firstName: e.target.value })}
+                onChange={(e) => setAddress({ ...address, firstName: e.target.value })}
               />
             </div>
             <div className='HalfBox'>
               <p>Last name</p>
               <input
                 type='text'
-                onChange={(e) => setBilling({ ...billing, lastName: e.target.value })}
+                onChange={(e) => setAddress({ ...address, lastName: e.target.value })}
               />
             </div>
           </div>
           <div className='Line'>
             <p>Country / Region</p>
             <div className='DropBox'>
-              {billing.country !== '' && <p>{billing.country}</p>}
+              {address.country !== '' && <p>{address.country}</p>}
               <div className='DropItems'>
                 <p
                   onClick={() => {
                     setCountry('canada');
-                    setBilling({ ...billing, country: 'Canada' });
+                    setAddress({ ...address, country: 'Canada' });
                   }}
                 >
                   Canada
@@ -409,7 +409,7 @@ const Checkout = () => {
                 <p
                   onClick={() => {
                     setCountry('usa');
-                    setBilling({ ...billing, country: 'United States' });
+                    setAddress({ ...address, country: 'United States' });
                   }}
                 >
                   United States
@@ -423,7 +423,7 @@ const Checkout = () => {
               <input
                 type='text'
                 placeholder='House number and street name'
-                onChange={(e) => setBilling({ ...billing, address: e.target.value })}
+                onChange={(e) => setAddress({ ...address, address: e.target.value })}
               />
             </div>
             <div className='HalfBox'>
@@ -431,22 +431,22 @@ const Checkout = () => {
               <input
                 type='text'
                 placeholder='Optional'
-                onChange={(e) => setBilling({ ...billing, appartment: e.target.value })}
+                onChange={(e) => setAddress({ ...address, appartment: e.target.value })}
               />
             </div>
           </div>
           <div className='Line'>
             <p>Town / City</p>
-            <input type='text' onChange={(e) => setBilling({ ...billing, city: e.target.value })} />
+            <input type='text' onChange={(e) => setAddress({ ...address, city: e.target.value })} />
           </div>
           <div className='Line'>
             {country === 'usa' ? <p>State</p> : <p>Province</p>}
             <div className='DropBox'>
-              {billing.province !== '' && <p>{billing.province}</p>}
+              {address.province !== '' && <p>{address.province}</p>}
               {country === 'usa' ? (
                 <div className='DropItems'>
                   {usaStates.map((state) => (
-                    <p onClick={() => setBilling({ ...billing, province: state.name })}>
+                    <p onClick={() => setAddress({ ...address, province: state.name })}>
                       {state.name}
                     </p>
                   ))}
@@ -454,7 +454,7 @@ const Checkout = () => {
               ) : (
                 <div className='DropItems'>
                   {provinces.map((province) => (
-                    <p onClick={() => setBilling({ ...billing, province: province.name })}>
+                    <p onClick={() => setAddress({ ...address, province: province.name })}>
                       {province.name}
                     </p>
                   ))}
@@ -466,21 +466,21 @@ const Checkout = () => {
             <p>Postal Code</p>
             <input
               type='text'
-              onChange={(e) => setBilling({ ...billing, postalCode: e.target.value })}
+              onChange={(e) => setAddress({ ...address, postalCode: e.target.value })}
             />
           </div>
           <div className='Line'>
             <p>Phone</p>
             <input
               type='text'
-              onChange={(e) => setBilling({ ...billing, phone: e.target.value })}
+              onChange={(e) => setAddress({ ...address, phone: e.target.value })}
             />
           </div>
           <div className='Line'>
             <p>Email Address</p>
             <input
               type='text'
-              onChange={(e) => setBilling({ ...billing, email: e.target.value })}
+              onChange={(e) => setAddress({ ...address, email: e.target.value })}
             />
           </div>
         </div>

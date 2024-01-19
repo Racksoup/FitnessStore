@@ -15,6 +15,8 @@ import Checkout from './UI/Pages/Checkout/Checkout.jsx';
 import Categories from './UI/Pages/Categories/Categories.jsx';
 import Orders from './UI/Pages/UserDashboard/Orders/Orders.jsx';
 import Wishlist from './UI/Pages/UserDashboard/Wishlist/Wishlist.jsx';
+import Address from './UI/Pages/UserDashboard/Address/Address.jsx';
+import Security from './UI/Pages/UserDashboard/Security/Security.jsx';
 import { loadUser } from './Redux/userSlice';
 
 import { Route, Routes } from 'react-router-dom';
@@ -46,6 +48,8 @@ const App = () => {
           <Route exact path='/checkout' element={<Checkout />} />
           <Route exact path='/orders' element={<Orders />} />
           <Route exact path='/wishlist' element={<Wishlist />} />
+          <Route exact path='/address' element={<Address />} />
+          <Route exact path='/security' element={<Security />} />
         </Routes>
         <Footer />
       </div>

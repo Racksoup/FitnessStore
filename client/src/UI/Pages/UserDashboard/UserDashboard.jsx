@@ -63,20 +63,24 @@ const UserDashboard = () => {
             <p>View balance or redeem a card</p>
           </div>
         </div> */}
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Login & Security</h4>
-            <p>Edit info, change password</p>
+        <Link className='Link' to='/security'>
+          <div className='Item'>
+            <img src={Car} alt='Img' />
+            <div className='Info'>
+              <h4>Login & Security</h4>
+              <p>Edit info, change password</p>
+            </div>
           </div>
-        </div>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Address</h4>
-            <p>Edit delivery address</p>
+        </Link>
+        <Link className='Link' to='/address'>
+          <div className='Item'>
+            <img src={Car} alt='Img' />
+            <div className='Info'>
+              <h4>Address</h4>
+              <p>Edit delivery address</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className='ItemBox'>
           {subscribed ? (
             <button className='red' onClick={() => dispatch(unsub(user.email))}>
