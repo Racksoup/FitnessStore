@@ -56,29 +56,27 @@ const UserDashboard = () => {
             </div>
           </div>
         </Link>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Your Payments</h4>
-            <p>Manage payment methods and settings, view all transactions</p>
-          </div>
-        </div>
-        <div className='Item'>
+        {/* <div className='Item'>
           <img src={Car} alt='Img' />
           <div className='Info'>
             <h4>Gift Cards</h4>
             <p>View balance or redeem a card</p>
           </div>
-        </div>
-        {/* <Link className='Link' to='/newsletter'>
-          <div className='Item'>
-            <img src={Car} alt='Img' />
-            <div className='Info'>
-              <h4>Email Alerts</h4>
-              <p>Change email notifications and subscriptions</p>
-            </div>
+        </div> */}
+        <div className='Item'>
+          <img src={Car} alt='Img' />
+          <div className='Info'>
+            <h4>Login & Security</h4>
+            <p>Edit info, change password</p>
           </div>
-        </Link> */}
+        </div>
+        <div className='Item'>
+          <img src={Car} alt='Img' />
+          <div className='Info'>
+            <h4>Address</h4>
+            <p>Edit delivery address</p>
+          </div>
+        </div>
         <div className='ItemBox'>
           {subscribed ? (
             <button className='red' onClick={() => dispatch(unsub(user.email))}>
@@ -92,20 +90,6 @@ const UserDashboard = () => {
               Subscribe to Newsletter
             </button>
           )}
-        </div>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Login & Security</h4>
-            <p>Edit login, name, and cell phone number</p>
-          </div>
-        </div>
-        <div className='Item'>
-          <img src={Car} alt='Img' />
-          <div className='Info'>
-            <h4>Account Information</h4>
-            <p>Edit address, account</p>
-          </div>
         </div>
       </div>
     </div>
