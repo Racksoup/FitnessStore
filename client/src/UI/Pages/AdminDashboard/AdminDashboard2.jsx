@@ -6,6 +6,7 @@ import UpdateCategories from './UpdateCategories/UpdateCategories.jsx';
 import UpdateImages from './UpdateImages/UpdateImages.jsx';
 import ViewOrders from './ViewOrders/ViewOrders.jsx';
 import Newsletter from './Newsletter/Newsletter.jsx';
+import Returns from './Returns/Returns.jsx';
 
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -69,7 +70,11 @@ const AdminDashboard2 = () => {
             <ViewOrders />
           </div>
         )}
-        {tab == 'tickets' && <div>Tickets / Returns</div>}
+        {tab == 'tickets' && (
+          <div>
+            <Returns />
+          </div>
+        )}
         {tab == 'analytics' && <div>Analytics</div>}
         {tab == 'categories' && <UpdateCategories />}
         {tab == 'images' && <UpdateImages />}

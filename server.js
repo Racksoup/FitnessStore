@@ -23,14 +23,7 @@ app.use('/api/payment', require('./routes/api/payment'));
 app.use('/api/order', require('./routes/api/order'));
 app.use('/api/mailing', require('./routes/api/mailing'));
 app.use('/api/wishlist', require('./routes/api/wishlist'));
-
-// // Middleware to log the origin
-// let origin;
-// app.use((req, res, next) => {
-//   origin = req.protocol + '://' + req.get('host');
-//   console.log('Request Origin:', origin);
-//   next();
-// });
+app.use('/api/refund', require('./routes/api/refund'));
 
 // production
 if (process.env.NODE_ENV === 'production') {
