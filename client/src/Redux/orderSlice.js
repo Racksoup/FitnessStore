@@ -4,10 +4,12 @@ import axios from 'axios';
 const initialState = {
   orders: null,
   customerOrders: null,
+  customerOrder: null,
 };
 
 export const selectOrders = (state) => state.order.orders;
 export const selectCustomerOrders = (state) => state.order.customerOrders;
+export const selectCustomerOrder = (state) => state.order.customerOrder;
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -25,10 +27,14 @@ export const orderSlice = createSlice({
     gotCustomerOrders: (state, action) => {
       state.customerOrders = action.payload;
     },
+    setCustomerOrder: (state, action) => {
+      state.customerOrder = action.payload;
+    },
   },
 });
 
-export const { gotOrders, changedOrderStatus, gotCustomerOrders } = orderSlice.actions;
+export const { gotOrders, changedOrderStatus, gotCustomerOrders, setCustomerOrder } =
+  orderSlice.actions;
 
 export const getOrders = () => async (dispatch) => {
   try {

@@ -5,12 +5,13 @@ import { selectUser, updateUserAddress } from '../../../Redux/userSlice';
 import { selectCart } from '../../../Redux/cartSlice';
 import Payment from './Payment/Payment.jsx';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 
 const Checkout = () => {
+  const dispatch = useDispatch();
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState('');
   const [intentAmount, setIntentAmount] = useState(0);

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Orders.scss';
-import { getCustomerOrders, selectCustomerOrders } from '../../../../Redux/orderSlice';
+import {
+  getCustomerOrders,
+  selectCustomerOrders,
+  setCustomerOrder,
+} from '../../../../Redux/orderSlice';
 import { loadUser, selectUser } from '../../../../Redux/userSlice';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -64,6 +69,7 @@ const Orders = () => {
 };
 
 const OrdersModal = ({ setModal, order }) => {
+  const dispatch = useDispatch();
   const [tab, setTab] = useState('packing list');
 
   return (
@@ -84,7 +90,9 @@ const OrdersModal = ({ setModal, order }) => {
               Invoice Details
             </button>
           </div>
-          <button className='return'>Return Items</button>
+          <Link to='/returns' className='return'>
+            <p onClick={() => dispatch(setCustomerOrder(order))}>Return Items</p>
+          </Link>
         </div>
         {tab == 'packing list' && (
           <div className='grid'>

@@ -9,6 +9,9 @@ const OrderSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  returnedItems: {
+    type: Array,
+  },
 });
 
 module.exports = Order = mongoose.model('order', OrderSchema);

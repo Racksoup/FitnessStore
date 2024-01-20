@@ -109,12 +109,15 @@
         top: -0.2rem;
         width: 7.2rem;
         height: 2.2rem;
-        background-color: #000000;
         border: solid 1px white;
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: #000000;
+        color: white;
+        text-decoration: none;
         font-size: 1.2rem;
+        cursor: pointer;
       }
     }
 
