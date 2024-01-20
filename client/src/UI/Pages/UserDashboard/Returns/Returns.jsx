@@ -19,11 +19,9 @@ const Returns = () => {
         order.invoice.lines.data.map((v, i) => {
           return (
             <div className='Row'>
-              <checkbox></checkbox>
-              <div className='Info'>
-                <p>{v.description}</p>
-                <p>{v.amount}</p>
-              </div>
+              <input type='checkbox' />
+              <p>{v.description}</p>
+              <p className='Amount'>{v.amount}</p>
             </div>
           );
         })}
