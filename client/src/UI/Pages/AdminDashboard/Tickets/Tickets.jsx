@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './Returns.scss';
+import './Tickets.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-const Returns = () => {
+const Tickets = () => {
   const dispatch = useDispatch();
 
-  return <div className='Returns'>Returns</div>;
+  return <div className='Tickets'>Tickets</div>;
 };
 
-export default Returns;
+export default Tickets;

@@ -24,6 +24,7 @@ app.use('/api/order', require('./routes/api/order'));
 app.use('/api/mailing', require('./routes/api/mailing'));
 app.use('/api/wishlist', require('./routes/api/wishlist'));
 app.use('/api/refund', require('./routes/api/refund'));
+app.use('/api/ticket', require('./routes/api/ticket'));
 
 // production
 if (process.env.NODE_ENV === 'production') {
