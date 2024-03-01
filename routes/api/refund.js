@@ -14,7 +14,7 @@ router.post('/', userAuth, async (req, res) => {
       refund: {
         amount: req.body.amount,
         reason: req.body.reason,
-        isRefunded: req.body.isRefunded,
+        isRefunded: false,
         date: req.body.date,
         itemsReturned: req.body.itemsReturned,
         items: req.body.items,
@@ -29,7 +29,7 @@ router.post('/', userAuth, async (req, res) => {
   }
 });
 
-// Update refund
+// Admin Update refund
 router.put('/:id', adminAuth, async (req, res) => {
   try {
     const postItem = {
