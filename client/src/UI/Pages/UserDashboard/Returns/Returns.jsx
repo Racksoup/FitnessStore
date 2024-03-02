@@ -16,7 +16,7 @@ const Returns = () => {
   const [reason, setReason] = useState('')
 
   useEffect(() => {
-    order && dispatch(getCustomerRefund(order._id))
+    dispatch(getCustomerRefund(order._id))
   }, [order])
 
   const checked = (e, v) => {
@@ -32,12 +32,12 @@ const Returns = () => {
   )
 
   const sendRefund = () => {
-    dispatch(createCustomerRefund(returnItems, user._id, order.invoice, reason))
+    dispatch(createCustomerRefund(returnItems, order.invoice, order._id, reason))
   }
 
   return (
     <div className='Returns'>
-      {modal && <Modal modal={modal} toggleModal={toggleModal} reason={reason} setReason={setReason}/>}
+      {modal && <Modal modal={modal} toggleModal={toggleModal} reason={reason} setReason={setReason} sendRefund={sendRefund}/>}
       <div className='Top'>
         <p>Select All</p>
         <h3>Return</h3>
@@ -57,11 +57,15 @@ const Returns = () => {
   );
 };
 
-const Modal = ({modal, toggleModal, reason, setReason}) => {
+const Modal = ({ modal, toggleModal, reason, setReason, sendRefund }) => {
   return (
     <div className='modal-bg' onClick={() => toggleModal(false)}>
-      <div className='modal' onClick={(e) => e.preventDefault()}>
-        <input type="text" value={reason} onChange={(e) => setReason(e.target.value)}/>
+      <div className='modal' onClick={(e) => e.stopPropagation()}>
+        <div className="line">
+          <h4>Reason for Refund:</h4>
+          <button onClick={() => sendRefund()}>Submit Refund Request</button>
+        </div>
+        <textarea type="text" value={reason} onChange={(e) => setReason(e.target.value)} />
       </div>
     </div>
   )

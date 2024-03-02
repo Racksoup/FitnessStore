@@ -32,6 +32,10 @@ const RefundSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  orderID: {
+    type: String,
+    required: true,
+  },
   invoice: {
     type: Object,
     required: true,

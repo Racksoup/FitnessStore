@@ -24,7 +24,7 @@ export const refundSlice = createSlice({
   },
 });
 
-export const createCustomerRefund = (refundList, id, invoice) => async (dispatch) => {
+export const createCustomerRefund = (refundList, invoice, orderID, reason) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -32,9 +32,10 @@ export const createCustomerRefund = (refundList, id, invoice) => async (dispatch
   };
 
   const preBody = {
-    userID: id,
+    orderID, 
     invoice,
-    items: refundList
+    items: refundList,
+    reason
   }
 
   const body = JSON.stringify(preBody);
