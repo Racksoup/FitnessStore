@@ -1,7 +1,39 @@
 @import '../../../../App.scss';
 
-.Returns {
+.Admin-Returns {
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  h2 {
+    margin-bottom: 2rem;
+  }
+
+  .content {
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .item {
+      width: 100%;
+      height: 1.2rem;
+      border: solid 1px grey;
+      align-items: center;
+
+      .amount {
+        width: 20%;
+      }
+      .date {
+        width: 20%;
+      }
+      .isRefunded {
+        width: 20%;
+      }
+      .itemsReturned {
+        width: 20%;
+      }
+    }
+  }
 }

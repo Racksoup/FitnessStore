@@ -69,7 +69,7 @@ router.put('/:id', adminAuth, async (req, res) => {
 });
 
 // Get all refunds
-router.get('/', adminAuth, async (req, res) => {
+router.get('/all', adminAuth, async (req, res) => {
   try {
     const refunds = await Refund.find();
     res.json(refunds);

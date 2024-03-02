@@ -15,6 +15,9 @@ export const refundSlice = createSlice({
   reducers: {
     customerRefundReqSent: () => {},
 
+    gotAllRefunds: (state, action) => {
+      state.refunds = action.payload;
+    },
     gotCustomerRefund: (state, action) => {
       state.refund = action.payload;
     },
@@ -57,7 +60,16 @@ export const getCustomerRefund = (id) => async (dispatch) => {
   }
 };
 
-export const { customerRefundReqSent, gotCustomerRefund, createdCustomerRefund } =
+export const getAllRefunds = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/refund/all');
+    dispatch(gotAllRefunds(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const { customerRefundReqSent, gotCustomerRefund, createdCustomerRefund, gotAllRefunds } =
   refundSlice.actions;
 
 export default refundSlice.reducer;
