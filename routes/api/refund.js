@@ -1,18 +1,18 @@
-const adminAuth = require('../../middleware/adminAuth');
-const userAuth = require('../../middleware/userAuth');
-const Refund = require('../../models/Refund');
+const adminAuth = require("../../middleware/adminAuth");
+const userAuth = require("../../middleware/userAuth");
+const Refund = require("../../models/Refund");
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // Create refund request
-router.post('/', userAuth, async (req, res) => {
+router.post("/", userAuth, async (req, res) => {
   try {
     // check if refund created already
     const existingRefund = await Refund.findOne({ orderID: req.body.orderID });
 
     if (existingRefund) {
-      console.log('Refund found:', existingRefund);
+      console.log("Refund found:", existingRefund);
       // Handle the case where a refund already exists
     } else {
       const totalAmount = req.body.items.reduce((t, x) => t + x.amount, 0);
@@ -25,7 +25,7 @@ router.post('/', userAuth, async (req, res) => {
           amount: totalAmount,
           reason: req.body.reason,
           isRefunded: false,
-          date: new Date(), 
+          date: new Date(),
           itemsReturned: false,
           items: req.body.items,
         },
@@ -38,12 +38,12 @@ router.post('/', userAuth, async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 // Admin Update refund
-router.put('/:id', adminAuth, async (req, res) => {
+router.put("/:id", adminAuth, async (req, res) => {
   try {
     const postItem = {
       userID: req.body.id,
@@ -58,9 +58,13 @@ router.put('/:id', adminAuth, async (req, res) => {
       },
     };
 
-    const refund = await Refund.findOneAndUpdate({ _id: req.body.id }, postItem, {
-      returnOriginal: false,
-    });
+    const refund = await Refund.findOneAndUpdate(
+      { _id: req.body.id },
+      postItem,
+      {
+        returnOriginal: false,
+      }
+    );
     await refund.save();
     res.json(refund);
   } catch (error) {
@@ -69,7 +73,7 @@ router.put('/:id', adminAuth, async (req, res) => {
 });
 
 // Get all refunds
-router.get('/all', adminAuth, async (req, res) => {
+router.get("/all", adminAuth, async (req, res) => {
   try {
     const refunds = await Refund.find();
     res.json(refunds);
@@ -79,7 +83,7 @@ router.get('/all', adminAuth, async (req, res) => {
 });
 
 // Get one refund
-router.get('/:id', userAuth, async (req, res) => {
+router.get("/:id", userAuth, async (req, res) => {
   try {
     const refund = await Refund.find({ orderID: req.params.id });
     res.json(refund);

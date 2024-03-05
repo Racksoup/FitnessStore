@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import './ViewOrders.scss';
-import { getOrders, changeOrderStatus, selectOrders } from '../../../../Redux/orderSlice';
-import { getProductsByStripeIDs, selectProducts } from '../../../../Redux/productSlice';
+import React, { useState, useEffect } from "react";
+import "./ViewOrders.scss";
+import {
+  getOrders,
+  changeOrderStatus,
+  selectOrders,
+} from "../../../../Redux/orderSlice";
+import {
+  getProductsByStripeIDs,
+  selectProducts,
+} from "../../../../Redux/productSlice";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 const ViewOrders = () => {
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
-  const [tab, setTab] = useState('all');
+  const [tab, setTab] = useState("all");
   const [filteredOrders, setFilteredOrders] = useState(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [order, setOrder] = useState(null);
@@ -18,13 +25,13 @@ const ViewOrders = () => {
   }, []);
 
   useEffect(() => {
-    filterOrders('all');
+    filterOrders("all");
   }, [orders]);
 
   const filterOrders = (tab) => {
     if (orders) {
       const tempOrders = orders.filter((x) => {
-        if (tab === 'all' || x.status === tab) {
+        if (tab === "all" || x.status === tab) {
           return x;
         }
       });
@@ -43,76 +50,98 @@ const ViewOrders = () => {
   };
 
   return (
-    <div className='ViewOrders'>
-      {showOrderModal && <OrderModal setShowOrderModal={setShowOrderModal} order={order} />}
+    <div className="ViewOrders">
+      {showOrderModal && (
+        <OrderModal setShowOrderModal={setShowOrderModal} order={order} />
+      )}
       <h2>Orders</h2>
-      <div className='Orders'>
-        <div className='TableTop'>
+      <div className="Orders">
+        <div className="TableTop">
           <button
-            className={`${tab == 'all' && 'highlight'}`}
+            className={`${tab == "all" && "highlight"}`}
             onClick={() => {
-              filterOrders('all');
+              filterOrders("all");
             }}
           >
             All
           </button>
           <button
-            className={`${tab == 'new' && 'highlight'}`}
+            className={`${tab == "new" && "highlight"}`}
             onClick={() => {
-              filterOrders('new');
+              filterOrders("new");
             }}
           >
             New
           </button>
           <button
-            className={`${tab == 'open' && 'highlight'}`}
+            className={`${tab == "open" && "highlight"}`}
             onClick={() => {
-              filterOrders('open');
+              filterOrders("open");
             }}
           >
             Open
           </button>
           <button
-            className={`${tab == 'closed' && 'highlight'}`}
+            className={`${tab == "closed" && "highlight"}`}
             onClick={() => {
-              filterOrders('closed');
+              filterOrders("closed");
             }}
           >
             Closed
           </button>
         </div>
         {filteredOrders && (
-          <div className='table'>
+          <div className="table">
             {filteredOrders.map((x, i) => {
               let stat;
-              if (x.status == 'new') {
-                stat = 'New';
+              if (x.status == "new") {
+                stat = "New";
               }
-              if (x.status == 'open') {
-                stat = 'Open';
+              if (x.status == "open") {
+                stat = "Open";
               }
-              if (x.status == 'closed') {
-                stat = 'Closed';
+              if (x.status == "closed") {
+                stat = "Closed";
               }
               return (
                 <div
                   key={i}
-                  className='item'
+                  className="item"
                   onClick={() => {
                     itemClicked(x);
                   }}
                 >
-                  <p className='name'>{x.invoice.customer_name}</p>
-                  <p className='amount'>${x.invoice.amount_paid / 100.0}</p>
-                  <p className='paid'>{x.invoice.status}</p>
-                  <p className='date'>{new Date(x.invoice.effective_at).toUTCString()}</p>
-                  <div className='status' onClick={(e) => e.stopPropagation()}>
-                    <input id='check01' type='checkbox' name='statuscheck' />
-                    <label for='check01'>{stat}</label>
-                    <ul className='drop'>
-                      <li onClick={() => dispatch(changeOrderStatus(x._id, 'new'))}>New</li>
-                      <li onClick={() => dispatch(changeOrderStatus(x._id, 'open'))}>Open</li>
-                      <li onClick={() => dispatch(changeOrderStatus(x._id, 'closed'))}>Closed</li>
+                  <p className="name">{x.invoice.customer_name}</p>
+                  <p className="amount">${x.invoice.amount_paid / 100.0}</p>
+                  <p className="paid">{x.invoice.status}</p>
+                  <p className="date">
+                    {new Date(x.invoice.effective_at * 1000).toUTCString()}
+                  </p>
+                  <div className="status" onClick={(e) => e.stopPropagation()}>
+                    <input id="check01" type="checkbox" name="statuscheck" />
+                    <label for="check01">{stat}</label>
+                    <ul className="drop">
+                      <li
+                        onClick={() =>
+                          dispatch(changeOrderStatus(x._id, "new"))
+                        }
+                      >
+                        New
+                      </li>
+                      <li
+                        onClick={() =>
+                          dispatch(changeOrderStatus(x._id, "open"))
+                        }
+                      >
+                        Open
+                      </li>
+                      <li
+                        onClick={() =>
+                          dispatch(changeOrderStatus(x._id, "closed"))
+                        }
+                      >
+                        Closed
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -126,25 +155,27 @@ const ViewOrders = () => {
 };
 
 const OrderModal = ({ setShowOrderModal, order }) => {
-  const [tab, setTab] = useState('Packing List');
+  const [tab, setTab] = useState("Packing List");
   const products = useSelector(selectProducts);
 
   return (
-    <div className='orderModal' onClick={() => setShowOrderModal(false)}>
-      <div className='modal' onClick={(e) => e.stopPropagation()}>
+    <div className="orderModal" onClick={() => setShowOrderModal(false)}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>{tab}</h2>
-        <div className='tabRow'>
-          <button onClick={() => setTab('Packing List')}>Packing List</button>
-          <button onClick={() => setTab('Invoice Details')}>Invoice Details</button>
+        <div className="tabRow">
+          <button onClick={() => setTab("Packing List")}>Packing List</button>
+          <button onClick={() => setTab("Invoice Details")}>
+            Invoice Details
+          </button>
         </div>
-        {tab == 'Packing List' && products && (
-          <div className='packingList'>
-            <div className='topLine'>
-              <p className='name'>Name</p>
-              <div className='VLine' style={{ left: '40%' }}></div>
-              <p className='id'>ID</p>
-              <div className='VLine' style={{ left: '80%' }}></div>
-              <p className='quantity'>Quantity</p>
+        {tab == "Packing List" && products && (
+          <div className="packingList">
+            <div className="topLine">
+              <p className="name">Name</p>
+              <div className="VLine" style={{ left: "40%" }}></div>
+              <p className="id">ID</p>
+              <div className="VLine" style={{ left: "80%" }}></div>
+              <p className="quantity">Quantity</p>
             </div>
             {order.invoice.lines.data.map((x, i) => {
               let product;
@@ -154,66 +185,66 @@ const OrderModal = ({ setShowOrderModal, order }) => {
                 }
               });
               return (
-                <div className='item' key={i}>
-                  <p className='name'>{product.name}</p>
-                  <p className='id'>{product._id}</p>
-                  <p className='quantity'>{x.quantity}</p>
+                <div className="item" key={i}>
+                  <p className="name">{product.name}</p>
+                  <p className="id">{product._id}</p>
+                  <p className="quantity">{x.quantity}</p>
                 </div>
               );
             })}
           </div>
         )}
-        {tab == 'Invoice Details' && (
-          <div className='invoiceDetails'>
-            <div className='Row'>
+        {tab == "Invoice Details" && (
+          <div className="invoiceDetails">
+            <div className="Row">
               <p>Name:</p>
               <p>{order.invoice.customer_name}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Email:</p>
               <p>{order.invoice.customer_email}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Date:</p>
               <p>{new Date(order.invoice.effective_at).toUTCString()}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Country:</p>
               <p>{order.invoice.account_country}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Total:</p>
               <p>{order.invoice.amount_paid}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Paid Status:</p>
               <p>{order.invoice.status}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Currency:</p>
               <p>{order.invoice.currency}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Invoice pdf:</p>
               <a href={order.invoice.invoice_pdf}>pdf</a>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Order ID:</p>
               <p>{order._id}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Invoice ID:</p>
               <p>{order.invoice.id}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Charge ID:</p>
               <p>{order.invoice.charge}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Customer ID:</p>
               <p>{order.invoice.customer}</p>
             </div>
-            <div className='Row'>
+            <div className="Row">
               <p>Payment Intent ID:</p>
               <p>{order.invoice.payment_intent}</p>
             </div>

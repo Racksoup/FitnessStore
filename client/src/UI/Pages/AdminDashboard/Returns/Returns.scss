@@ -1,4 +1,4 @@
-@import '../../../../App.scss';
+@import "../../../../App.scss";
 
 .Admin-Returns {
   margin-top: 2.5rem;
@@ -16,24 +16,80 @@
     flex-direction: column;
     align-items: center;
 
-    .item {
+    .box {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      margin-bottom: 0.1rem;
+    }
+
+    .top {
       width: 100%;
-      height: 1.2rem;
+      height: 2.1rem;
       border: solid 1px grey;
-      align-items: center;
+      display: flex;
+      align-items: end;
 
       .amount {
-        width: 20%;
+        width: 15%;
       }
       .date {
         width: 20%;
       }
       .isRefunded {
-        width: 20%;
+        width: 15%;
+        margin-left: auto;
       }
       .itemsReturned {
+        width: 32%;
+      }
+    }
+
+    .item {
+      width: 100%;
+      height: 1.7rem;
+      border: solid 1px grey;
+      display: flex;
+      align-items: end;
+      cursor: pointer;
+
+      .amount {
+        width: 15%;
+      }
+      .date {
         width: 20%;
       }
+      .isRefunded {
+        width: 15%;
+        margin-left: auto;
+      }
+      .itemsReturned {
+        width: 32%;
+      }
+    }
+  }
+
+  .modal-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal {
+      width: 33rem;
+      height: 10rem;
+      background-color: white;
+      border: solid 4px rgb(105, 195, 224);
+      border-radius: 1rem;
+      color: black;
+      padding: 1rem 3rem;
+      display: flex;
+      flex-direction: column;
     }
   }
 }
