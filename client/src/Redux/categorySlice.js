@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const catUnparsed = localStorage.getItem('category');
+const catUnparsed = localStorage.getItem("category");
 
 const initialState = {
   categories: null,
@@ -12,20 +12,22 @@ export const selectCategories = (state) => state.category.categories;
 export const selectCategory = (state) => state.category.category;
 
 export const categorySlice = createSlice({
-  name: 'category',
+  name: "category",
   initialState,
   reducers: {
     categoryCreated: (state, action) => {
       state.categories.push(action.payload);
     },
     categoryDeleted: (state, action) => {
-      state.categories = state.categories.filter((cat) => cat._id !== action.payload._id);
+      state.categories = state.categories.filter(
+        (cat) => cat._id !== action.payload._id
+      );
     },
     gotCategories: (state, action) => {
       state.categories = action.payload;
     },
     setCategory: (state, action) => {
-      localStorage.setItem('category', JSON.stringify(action.payload));
+      localStorage.setItem("category", JSON.stringify(action.payload));
       state.category = action.payload;
     },
   },
@@ -37,7 +39,7 @@ export const { categoryCreated, categoryDeleted, gotCategories, setCategory } =
 export const createCategory = (item) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
   const postItem = {
@@ -51,7 +53,7 @@ export const createCategory = (item) => async (dispatch) => {
   const body = JSON.stringify(postItem);
 
   try {
-    const res = await axios.post('/api/category/', body, config);
+    const res = await axios.post("/api/category/", body, config);
     dispatch(categoryCreated(res.data));
   } catch (error) {
     console.log(error);
@@ -69,7 +71,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 
 export const getCategories = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/category');
+    const res = await axios.get("/api/category");
     dispatch(gotCategories(res.data));
   } catch (error) {
     console.log(error);
