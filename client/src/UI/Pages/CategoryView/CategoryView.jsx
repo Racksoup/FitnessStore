@@ -113,7 +113,7 @@ const CategoryView = () => {
                         <div className="RatingLine">hrh</div>
                         <div className="PriceLine">
                           <p className="DollarSign">$</p>
-                          <p className="Price">{x.price}</p>
+                          <p className="Price">{x.price / 100.0}</p>
                         </div>
                         <div className="SaleTag">15% off</div>
                         <p className="Info">Free Delivery For Members</p>
