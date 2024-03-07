@@ -332,8 +332,10 @@ router.get("/search/:search", async (req, res) => {
     const res1 = await Product.find({
       name: { $regex: req.params.search, $options: "i" },
     });
-    // const res2 = await Product.find({ category: { $regex: req.params.search, $options: 'i' } });
-    res.json(res1);
+    const res2 = await Product.find({
+      category: { $regex: req.params.search, $options: "i" },
+    });
+    res.json({ products: res1, category: res2 });
   } catch (error) {
     console.log(error);
   }

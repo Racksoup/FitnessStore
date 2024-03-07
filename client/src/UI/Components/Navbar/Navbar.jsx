@@ -18,12 +18,14 @@ import {
   searchProducts,
 } from "../../../Redux/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchActive, setSearchActive] = useState(false);
   const [show, setShow] = useState(true);
   const categories = useSelector(selectCategories);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategories());
@@ -70,8 +72,8 @@ const Navbar = () => {
               onBlur={() => setSearchActive(false)}
               onKeyDown={(e) => {
                 if (e.key == "Enter") {
-                  console.log("f");
                   dispatch(searchProducts(e.target.value));
+                  navigate("/category");
                 }
               }}
             />

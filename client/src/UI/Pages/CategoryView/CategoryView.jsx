@@ -16,9 +16,9 @@ const CategoryView = () => {
   const categories = useSelector(selectCategories);
   const products = useSelector(selectProducts);
 
-  useEffect(() => {
-    dispatch(getProductsForCategory(category.category));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getProductsForCategory(category.category));
+  // }, []);
 
   let maxProductsNum = 50;
   if (products && products.length > 0 && products.length < 50) {

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setCategory } from "./categorySlice";
 
 const initialState = {
   products: null,
@@ -184,7 +185,12 @@ export const getSingleProduct = (productID) => async (dispatch) => {
 export const searchProducts = (search) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/product/search/${search}`);
-    dispatch(gotSearch(res.data));
+    if (res.data.category.length == 0) {
+      dispatch(gotSearch(res.data.products));
+    } else {
+      dispatch(setCategory(res.data.category));
+      dispatch(getProductsForCategory(res.data.category.category));
+    }
   } catch (error) {
     console.log(error);
   }
