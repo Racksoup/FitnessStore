@@ -24,8 +24,24 @@ const Home = () => {
         <img src={Car} alt="image" />
       </div>
       <div className="header">
-        <h1 className="title">GET FIT TODAY!</h1>
+        <h1>GET FIT TODAY!</h1>
         <div className="store-categories">
+          <div className="category-widget">
+            <h2>Weights</h2>
+            <img src={Car} alt="" />
+          </div>
+          <div className="category-widget">
+            <h2>Gym Systems</h2>
+            <img src={Car} alt="" />
+          </div>
+          <div className="category-widget">
+            <h2>Plate Loaded</h2>
+            <img src={Car} alt="" />
+          </div>
+          <div className="category-widget">
+            <h2>Accessories</h2>
+            <img src={Car} alt="" />
+          </div>
           <div className="category-widget">
             <h2>Weights</h2>
             <img src={Car} alt="" />
@@ -44,10 +60,10 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="section1">
+      <div className="product-carousel">
         {products &&
           products.map((x, i) => {
-            if (i < 6)
+            while (i < 6)
               return (
                 <>
                   {x.image_filenames.map((c, j) => {
@@ -69,12 +85,18 @@ const Home = () => {
       </div>
       <div className="section2">
         <img className="promo" src={Car} alt="" />
-        <div className="category-widget">
-          <h2>Bicycles</h2>
+        <div
+          className="category-widget"
+          style={{ marginTop: 0, height: "100%", width: "100%" }}
+        >
+          <h2>Accessories</h2>
           <img src={Car} alt="" />
         </div>
-        <div className="category-widget">
-          <h2>Bicycles</h2>
+        <div
+          className="category-widget"
+          style={{ marginTop: 0, height: "100%", width: "100%" }}
+        >
+          <h2>Plate Loaded</h2>
           <img src={Car} alt="" />
         </div>
       </div>
