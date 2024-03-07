@@ -1,11 +1,11 @@
-const Cart = require('../../models/Cart');
-const userAuth = require('../../middleware/userAuth');
+const Cart = require("../../models/Cart");
+const userAuth = require("../../middleware/userAuth");
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // Create One Cart
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const { userID } = req.body;
 
   const postItem = { userID };
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update One Cart
-router.put('/:_id', userAuth, async (req, res) => {
+router.put("/:_id", userAuth, async (req, res) => {
   const { cartID, product, quantity } = req.body;
 
   try {
@@ -37,7 +37,9 @@ router.put('/:_id', userAuth, async (req, res) => {
       cart.cart.push({ ...product, quantity });
     }
 
-    const newCart = await Cart.findOneAndUpdate({ _id: cartID }, cart, { new: true });
+    const newCart = await Cart.findOneAndUpdate({ _id: cartID }, cart, {
+      new: true,
+    });
 
     res.json(newCart);
   } catch (error) {
@@ -45,7 +47,7 @@ router.put('/:_id', userAuth, async (req, res) => {
   }
 });
 
-router.put('/delete/:_id', userAuth, async (req, res) => {
+router.put("/delete/:_id", userAuth, async (req, res) => {
   const { cartID, productID } = req.body;
 
   try {
@@ -61,7 +63,7 @@ router.put('/delete/:_id', userAuth, async (req, res) => {
 });
 
 // Delete One Cart
-router.delete('/:userID', userAuth, async (req, res) => {
+router.delete("/:userID", userAuth, async (req, res) => {
   try {
     const cart = await Cart.findByIdAndDelete({ _id: req.params.userID });
     res.json(cart);
@@ -71,7 +73,7 @@ router.delete('/:userID', userAuth, async (req, res) => {
 });
 
 // Get One Cart
-router.get('/:userID', userAuth, async (req, res) => {
+router.get("/:userID", userAuth, async (req, res) => {
   try {
     const cart = await Cart.findOne({ userID: req.params.userID });
     res.json(cart);

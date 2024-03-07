@@ -1,11 +1,11 @@
-const Wishlist = require('../../models/Wishlist');
-const userAuth = require('../../middleware/userAuth');
+const Wishlist = require("../../models/Wishlist");
+const userAuth = require("../../middleware/userAuth");
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // Create One Wishlist
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const { userID } = req.body;
 
   const postItem = { userID };
@@ -20,12 +20,11 @@ router.post('/', async (req, res) => {
 });
 
 // Update One Wishlist
-router.put('/:_id', userAuth, async (req, res) => {
+router.put("/:_id", userAuth, async (req, res) => {
   const { wishlistID, product, quantity } = req.body;
 
   try {
     const wishlist = await Wishlist.findOne({ _id: wishlistID });
-    console.log(wishlist);
     let inArr = false;
     wishlist.wishlist.map((prod) => {
       if (prod._id === product._id) {
@@ -38,9 +37,13 @@ router.put('/:_id', userAuth, async (req, res) => {
       wishlist.wishlist.push({ ...product, quantity });
     }
 
-    const newWishlist = await Wishlist.findOneAndUpdate({ _id: wishlistID }, wishlist, {
-      new: true,
-    });
+    const newWishlist = await Wishlist.findOneAndUpdate(
+      { _id: wishlistID },
+      wishlist,
+      {
+        new: true,
+      }
+    );
 
     res.json(newWishlist);
   } catch (error) {
@@ -48,14 +51,19 @@ router.put('/:_id', userAuth, async (req, res) => {
   }
 });
 
-router.put('/delete/:_id', userAuth, async (req, res) => {
+router.put("/delete/:_id", userAuth, async (req, res) => {
   const { wishlistID, productID } = req.body;
 
   try {
     const wishlist = await Wishlist.findOne({ _id: wishlistID });
-    wishlist.wishlist = wishlist.wishlist.filter((prod) => prod._id !== productID);
+    wishlist.wishlist = wishlist.wishlist.filter(
+      (prod) => prod._id !== productID
+    );
 
-    const newWishlist = await Wishlist.findOneAndUpdate({ _id: wishlistID }, wishlist);
+    const newWishlist = await Wishlist.findOneAndUpdate(
+      { _id: wishlistID },
+      wishlist
+    );
 
     res.json(productID);
   } catch (error) {
@@ -64,9 +72,11 @@ router.put('/delete/:_id', userAuth, async (req, res) => {
 });
 
 // Delete One Wishlist
-router.delete('/:userID', userAuth, async (req, res) => {
+router.delete("/:userID", userAuth, async (req, res) => {
   try {
-    const wishlist = await Wishlist.findByIdAndDelete({ _id: req.params.userID });
+    const wishlist = await Wishlist.findByIdAndDelete({
+      _id: req.params.userID,
+    });
     res.json(wishlist);
   } catch (error) {
     console.log(error.message);
@@ -74,7 +84,7 @@ router.delete('/:userID', userAuth, async (req, res) => {
 });
 
 // Get One Wishlist
-router.get('/:userID', userAuth, async (req, res) => {
+router.get("/:userID", userAuth, async (req, res) => {
   try {
     const wishlist = await Wishlist.findOne({ userID: req.params.userID });
     res.json(wishlist);

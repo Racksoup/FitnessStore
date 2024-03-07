@@ -1,15 +1,15 @@
-const Product = require('../../models/Product');
-const adminAuth = require('../../middleware/adminAuth');
+const Product = require("../../models/Product");
+const adminAuth = require("../../middleware/adminAuth");
 const db = process.env.MONGOURI;
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const crypto = require('crypto');
-const path = require('path');
-const mongoose = require('mongoose');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { GridFsStorage } = require('multer-gridfs-storage');
+const multer = require("multer");
+const crypto = require("crypto");
+const path = require("path");
+const mongoose = require("mongoose");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const { GridFsStorage } = require("multer-gridfs-storage");
 //
 //
 // --- IMAGE STORAGE & DB CONNECTION ---
@@ -23,10 +23,10 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-          bucketName: 'productImages',
+          bucketName: "productImages",
           //metadata: req.body,
         };
         resolve(fileInfo);
@@ -39,9 +39,9 @@ const upload = multer({ storage });
 // Create a new mongodb connection and once connected save GridFSBucket 'productImages' to productImageBucket,
 const connect = mongoose.createConnection(db);
 let imageBucket;
-connect.once('open', () => {
+connect.once("open", () => {
   imageBucket = new mongoose.mongo.GridFSBucket(connect.db, {
-    bucketName: 'productImages',
+    bucketName: "productImages",
   });
 });
 // --- IMAGE STORAGE & DB CONNECTION ---
@@ -50,7 +50,7 @@ connect.once('open', () => {
 //
 //
 // Create Product
-router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
+router.post("/", [adminAuth, upload.array("file", 15)], async (req, res) => {
   const {
     name,
     category,
@@ -102,7 +102,7 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
     });
 
     const stripePrice = await stripe.prices.create({
-      currency: 'cad',
+      currency: "cad",
       product: stripeProduct.id,
       unit_amount: postItem.price,
     });
@@ -116,14 +116,14 @@ router.post('/', [adminAuth, upload.array('file', 15)], async (req, res) => {
     res.json(product);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error, Cannot Post Product');
+    res.status(500).send("Server Error, Cannot Post Product");
   }
 });
 //
 //
 //
 // Update Product
-router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
+router.put("/:id", [adminAuth, upload.array("file", 15)], async (req, res) => {
   const {
     brand,
     merchant,
@@ -176,7 +176,7 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
     });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error, Cannot Update Product');
+    res.status(500).send("Server Error, Cannot Update Product");
   }
 
   // Check and set new file as main file
@@ -208,7 +208,7 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
       });
       // create new price
       const stripePrice2 = await stripe.prices.create({
-        currency: 'cad',
+        currency: "cad",
         product: postItem.stripe_product_id,
         unit_amount: postItem.price,
       });
@@ -216,24 +216,30 @@ router.put('/:id', [adminAuth, upload.array('file', 15)], async (req, res) => {
       postItem.stripe_price_id = stripePrice2.id;
     }
     if (product.name != postItem.name) {
-      const stripeProduct = await stripe.products.update(product.stripe_product_id, {
-        name: postItem.name,
-      });
+      const stripeProduct = await stripe.products.update(
+        product.stripe_product_id,
+        {
+          name: postItem.name,
+        }
+      );
     }
 
-    const product2 = await Product.findByIdAndUpdate({ _id: req.params.id }, postItem);
+    const product2 = await Product.findByIdAndUpdate(
+      { _id: req.params.id },
+      postItem
+    );
     await product2.save();
     res.json(product);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error, Cannot Update Product');
+    res.status(500).send("Server Error, Cannot Update Product");
   }
 });
 //
 //
 //
 // Delete Product
-router.delete('/:_id', adminAuth, async (req, res) => {
+router.delete("/:_id", adminAuth, async (req, res) => {
   try {
     // Need to delete Product, Images
     const product = await Product.findOneAndDelete({ _id: req.params._id });
@@ -249,21 +255,24 @@ router.delete('/:_id', adminAuth, async (req, res) => {
     });
 
     // update stripe product as inactive
-    const stripeProduct = await stripe.products.update(product.stripe_product_id, {
-      active: false,
-    });
+    const stripeProduct = await stripe.products.update(
+      product.stripe_product_id,
+      {
+        active: false,
+      }
+    );
 
     res.json(product);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 //
 //
 // Getters
 // Get All Products
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
@@ -273,7 +282,7 @@ router.get('/', async (req, res) => {
   }
 });
 // Get Highlight Products
-router.get('/highlight', async (req, res) => {
+router.get("/highlight", async (req, res) => {
   try {
     const products = await Product.find({ highlight: true });
     res.json(products);
@@ -283,7 +292,7 @@ router.get('/highlight', async (req, res) => {
   }
 });
 // Get Products by Stripe IDs
-router.post('/find-by-stripe-ids', async (req, res) => {
+router.post("/find-by-stripe-ids", async (req, res) => {
   const { products } = req.body;
   try {
     const resProducts = products.map(async (x) => {
@@ -298,7 +307,7 @@ router.post('/find-by-stripe-ids', async (req, res) => {
   }
 });
 // Get Product
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
     res.json(product);
@@ -308,7 +317,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 // Get Products in Category
-router.get('/category/:category', async (req, res) => {
+router.get("/category/:category", async (req, res) => {
   try {
     const product = await Product.find({ category: req.params.category });
     res.json(product);
@@ -318,11 +327,13 @@ router.get('/category/:category', async (req, res) => {
   }
 });
 // Product Search
-router.get('/search/:search', async (req, res) => {
+router.get("/search/:search", async (req, res) => {
   try {
-    const res1 = await Product.find({ name: { $regex: req.params.search, $options: 'i' } });
-    const res2 = await Product.find({ category: { $regex: req.params.search, $options: 'i' } });
-    res.json([res1, res2]);
+    const res1 = await Product.find({
+      name: { $regex: req.params.search, $options: "i" },
+    });
+    // const res2 = await Product.find({ category: { $regex: req.params.search, $options: 'i' } });
+    res.json(res1);
   } catch (error) {
     console.log(error);
   }
@@ -333,20 +344,23 @@ router.get('/search/:search', async (req, res) => {
 // --- IMAGES ---
 // --- IMAGES ---
 // Get
-router.get('/image/:filename', async (req, res) => {
+router.get("/image/:filename", async (req, res) => {
   imageBucket.find({ filename: req.params.filename }).toArray((err, files) => {
     if (!files[0] || files.length === 0) {
       return res.status(200).json({
         success: false,
-        message: 'No files available',
+        message: "No files available",
       });
     }
 
-    if (files[0].contentType === 'image/png' || files[0].contentType === 'image/jpeg') {
+    if (
+      files[0].contentType === "image/png" ||
+      files[0].contentType === "image/jpeg"
+    ) {
       imageBucket.openDownloadStreamByName(req.params.filename).pipe(res);
     } else {
       res.status(404).json({
-        err: 'Not an image',
+        err: "Not an image",
       });
     }
   });

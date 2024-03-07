@@ -38,7 +38,7 @@ export const productSlice = createSlice({
       );
     },
     gotSearch: (state, action) => {
-      state.products.push(...action.payload[0], ...action.payload[1]);
+      state.products = action.payload;
     },
   },
 });

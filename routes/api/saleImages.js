@@ -1,13 +1,13 @@
-const adminAuth = require('../../middleware/adminAuth');
+const adminAuth = require("../../middleware/adminAuth");
 const db = process.env.MONGOURI;
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const crypto = require('crypto');
-const path = require('path');
-const mongoose = require('mongoose');
-const { GridFsStorage } = require('multer-gridfs-storage');
+const multer = require("multer");
+const crypto = require("crypto");
+const path = require("path");
+const mongoose = require("mongoose");
+const { GridFsStorage } = require("multer-gridfs-storage");
 //
 //
 // --- IMAGE STORAGE & DB CONNECTION ---
@@ -21,10 +21,10 @@ const saleStorage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-          bucketName: 'saleImages',
+          bucketName: "saleImages",
           //metadata: req.body,
         };
         resolve(fileInfo);
@@ -36,9 +36,9 @@ const saleUpload = multer({ storage: saleStorage });
 // Create a new mongodb connection and once connected save GridFSBucket 'saleImages' to saleBucket
 const connect = mongoose.createConnection(db);
 let saleBucket;
-connect.once('open', () => {
+connect.once("open", () => {
   saleBucket = new mongoose.mongo.GridFSBucket(connect.db, {
-    bucketName: 'saleImages',
+    bucketName: "saleImages",
   });
 });
 // --- IMAGE STORAGE & DB CONNECTION ---
@@ -47,20 +47,23 @@ connect.once('open', () => {
 //
 //
 // Read Image
-router.get('/:filename', async (req, res) => {
+router.get("/:filename", async (req, res) => {
   saleBucket.find({ filename: req.params.filename }).toArray((err, files) => {
     if (!files[0] || files.length === 0) {
       return res.status(200).json({
         success: false,
-        message: 'No files available',
+        message: "No files available",
       });
     }
 
-    if (files[0].contentType === 'image/png' || files[0].contentType === 'image/jpeg') {
+    if (
+      files[0].contentType === "image/png" ||
+      files[0].contentType === "image/jpeg"
+    ) {
       saleBucket.openDownloadStreamByName(req.params.filename).pipe(res);
     } else {
       res.status(404).json({
-        err: 'Not an image',
+        err: "Not an image",
       });
     }
   });
@@ -69,7 +72,7 @@ router.get('/:filename', async (req, res) => {
 //
 //
 // Get all sale images
-router.get('/data/data', async (req, res) => {
+router.get("/data/data", async (req, res) => {
   try {
     const items = await saleBucket.find().toArray();
     res.json(items);
@@ -81,9 +84,11 @@ router.get('/data/data', async (req, res) => {
 //
 //
 // Delete one sale image
-router.delete('/:filename', adminAuth, async (req, res) => {
+router.delete("/:filename", adminAuth, async (req, res) => {
   try {
-    const img = await saleBucket.find({ filename: req.params.filename }).toArray();
+    const img = await saleBucket
+      .find({ filename: req.params.filename })
+      .toArray();
     await saleBucket.delete(img[0]._id);
     res.json(img);
   } catch (error) {
@@ -95,7 +100,7 @@ router.delete('/:filename', adminAuth, async (req, res) => {
 //
 //
 // Post single sale image
-router.post('/', [adminAuth, saleUpload.single('file')], async (req, res) => {
+router.post("/", [adminAuth, saleUpload.single("file")], async (req, res) => {
   res.json(req.file);
 });
 
