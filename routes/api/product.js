@@ -1,4 +1,5 @@
 const Product = require("../../models/Product");
+const Category = require("../../models/Category");
 const adminAuth = require("../../middleware/adminAuth");
 const db = process.env.MONGOURI;
 
@@ -332,7 +333,7 @@ router.get("/search/:search", async (req, res) => {
     const res1 = await Product.find({
       name: { $regex: req.params.search, $options: "i" },
     });
-    const res2 = await Product.find({
+    const res2 = await Category.find({
       category: { $regex: req.params.search, $options: "i" },
     });
     res.json({ products: res1, category: res2 });

@@ -189,7 +189,7 @@ export const searchProducts = (search) => async (dispatch) => {
       dispatch(gotSearch(res.data.products));
     } else {
       dispatch(setCategory(res.data.category));
-      dispatch(getProductsForCategory(res.data.category.category));
+      dispatch(getProductsForCategory(res.data.category[0].category));
     }
   } catch (error) {
     console.log(error);
