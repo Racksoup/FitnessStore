@@ -35,13 +35,21 @@ const CategoryView = () => {
               if (isFirst) {
                 isFirst = false;
                 return (
-                  <div className="ItemFirst" key={i}>
+                  <div
+                    className="ItemFirst"
+                    key={i}
+                    onClick={() => dispatch(getProductsForCategory(x._id))}
+                  >
                     {x.category}
                   </div>
                 );
               } else {
                 return (
-                  <div className="Item" key={i}>
+                  <div
+                    className="Item"
+                    key={i}
+                    onClick={() => dispatch(getProductsForCategory(x._id))}
+                  >
                     {x.category}
                   </div>
                 );

@@ -58,6 +58,7 @@ export const createProduct = (product, file, files) => async (dispatch) => {
   let data = new FormData();
   data.append("name", product.name);
   data.append("category", product.category);
+  data.append("categoryID", product.categoryID);
   data.append("price", product.price);
   data.append("highlight", product.highlight);
   data.append("brand", product.brand);
@@ -196,9 +197,9 @@ export const searchProducts = (search) => async (dispatch) => {
   }
 };
 
-export const getProductsForCategory = (category) => async (dispatch) => {
+export const getProductsForCategory = (categoryID) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/product/category/${category}`);
+    const res = await axios.get(`/api/product/category/${categoryID}`);
     dispatch(gotProducts(res.data));
   } catch (error) {
     console.log(error);

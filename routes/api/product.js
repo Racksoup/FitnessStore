@@ -55,6 +55,7 @@ router.post("/", [adminAuth, upload.array("file", 15)], async (req, res) => {
   const {
     name,
     category,
+    categoryID,
     price,
     highlight,
     brand,
@@ -67,6 +68,7 @@ router.post("/", [adminAuth, upload.array("file", 15)], async (req, res) => {
   const postItem = {
     name,
     category,
+    categoryID,
     price,
     highlight,
     brand,
@@ -130,6 +132,7 @@ router.put("/:id", [adminAuth, upload.array("file", 15)], async (req, res) => {
     merchant,
     name,
     category,
+    categoryID,
     price,
     highlight,
     details,
@@ -145,6 +148,7 @@ router.put("/:id", [adminAuth, upload.array("file", 15)], async (req, res) => {
     merchant,
     name,
     category,
+    categoryID,
     price,
     highlight,
     stripe_price_id,
@@ -318,9 +322,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 // Get Products in Category
-router.get("/category/:category", async (req, res) => {
+router.get("/category/:categoryID", async (req, res) => {
   try {
-    const product = await Product.find({ category: req.params.category });
+    // check for sub-categories
+    const categories = await Category.find({ mainID: req.params.categoryID });
+
+    const product = await Product.find({
+      categoryID: {
+        $in: [req.params.categoryID, ...categories.map((x) => x._id)],
+      },
+    });
     res.json(product);
   } catch (error) {
     console.error(error.message);

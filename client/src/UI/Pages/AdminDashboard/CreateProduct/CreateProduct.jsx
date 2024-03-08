@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
-import './CreateProduct.scss';
-import { createProduct } from '../../../../Redux/productSlice';
-import { selectCategories } from '../../../../Redux/categorySlice';
+import React, { useState } from "react";
+import "./CreateProduct.scss";
+import { createProduct } from "../../../../Redux/productSlice";
+import { selectCategories } from "../../../../Redux/categorySlice";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CreateProduct = ({ toggleModal }) => {
   const categories = useSelector(selectCategories);
   const [showCategories, setShowCategories] = useState(false);
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState("");
   const [files, setFiles] = useState([]);
   const [product, setProduct] = useState({
-    name: '',
-    category: '',
-    price: '',
+    name: "",
+    category: "",
+    categoryID: "",
+    price: "",
     highlight: false,
-    brand: '',
-    merchant: '',
-    details: [{ key: '', value: '' }],
-    tech_details: [{ key: '', value: '' }],
-    about: [''],
+    brand: "",
+    merchant: "",
+    details: [{ key: "", value: "" }],
+    tech_details: [{ key: "", value: "" }],
+    about: [""],
   });
   const dispatch = useDispatch();
 
@@ -32,23 +33,29 @@ const CreateProduct = ({ toggleModal }) => {
 
   const addInputRow = (e, objName) => {
     e.preventDefault();
-    setProduct({ ...product, [objName]: [...product[objName], { key: '', value: '' }] });
+    setProduct({
+      ...product,
+      [objName]: [...product[objName], { key: "", value: "" }],
+    });
   };
 
   const deleteInputRow = (e, i, objName) => {
     e.preventDefault();
-    setProduct({ ...product, [objName]: [...product[objName].filter((d, j) => j !== i)] });
+    setProduct({
+      ...product,
+      [objName]: [...product[objName].filter((d, j) => j !== i)],
+    });
   };
 
   const keyChange = (e, i, objName) => {
     let newArr = [...product[objName]];
-    newArr[i]['key'] = e.target.value;
+    newArr[i]["key"] = e.target.value;
     setProduct({ ...product, [objName]: newArr });
   };
 
   const valueChange = (e, i, objName) => {
     let newArr = [...product[objName]];
-    newArr[i]['value'] = e.target.value;
+    newArr[i]["value"] = e.target.value;
     setProduct({ ...product, [objName]: newArr });
   };
 
@@ -60,104 +67,117 @@ const CreateProduct = ({ toggleModal }) => {
 
   const addAboutRow = (e) => {
     e.preventDefault();
-    setProduct({ ...product, about: [...product.about, ''] });
+    setProduct({ ...product, about: [...product.about, ""] });
   };
 
   return (
-    <div className='CreateProduct'>
-      <form className='Content' onSubmit={(e) => onSubmit(e)}>
-        <button className='Btn-2' onClick={() => toggleModal(false)}>
-          <FontAwesomeIcon icon={faX} className='Icon' />
+    <div className="CreateProduct">
+      <form className="Content" onSubmit={(e) => onSubmit(e)}>
+        <button className="Btn-2" onClick={() => toggleModal(false)}>
+          <FontAwesomeIcon icon={faX} className="Icon" />
         </button>
-        <div className='Row'>
+        <div className="Row">
           <label>Name</label>
           <input
-            className='MainInput'
-            type='text'
+            className="MainInput"
+            type="text"
             onChange={(e) => setProduct({ ...product, name: e.target.value })}
           />
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Category</label>
           <div
-            className='MainInput'
+            className="MainInput"
             onMouseEnter={() => setShowCategories(true)}
             onMouseLeave={() => setShowCategories(false)}
           >
             {showCategories && (
-              <div className='Categories'>
+              <div className="Categories">
                 {categories.map((cat, i) => (
                   <div
-                    className='Category'
+                    className="Category"
                     key={i}
-                    onClick={() => setProduct({ ...product, category: cat.category })}
+                    onClick={() =>
+                      setProduct({
+                        ...product,
+                        category: cat.category,
+                        categoryID: cat._id,
+                      })
+                    }
                   >
                     {cat.category}
                   </div>
                 ))}
               </div>
             )}
-            <p className='CategoryDisplay'>{product.category}</p>
+            <p className="CategoryDisplay">{product.category}</p>
           </div>
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Price</label>
           <input
-            className='MainInput'
-            type='number'
+            className="MainInput"
+            type="number"
             onChange={(e) => setProduct({ ...product, price: e.target.value })}
           />
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Highlight</label>
-          <div className='CheckboxHolder'>
+          <div className="CheckboxHolder">
             <input
-              className='Checkbox'
-              type='checkbox'
+              className="Checkbox"
+              type="checkbox"
               checked={product.highlight}
-              onChange={() => setProduct({ ...product, highlight: !product.highlight })}
+              onChange={() =>
+                setProduct({ ...product, highlight: !product.highlight })
+              }
             />
           </div>
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Brand</label>
           <input
-            className='MainInput'
-            type='text'
+            className="MainInput"
+            type="text"
             onChange={(e) => setProduct({ ...product, brand: e.target.value })}
           />
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Merchant</label>
           <input
-            className='MainInput'
-            type='text'
-            onChange={(e) => setProduct({ ...product, merchant: e.target.value })}
+            className="MainInput"
+            type="text"
+            onChange={(e) =>
+              setProduct({ ...product, merchant: e.target.value })
+            }
           />
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Details</label>
-          <button className='Btn' onClick={(e) => addInputRow(e, 'details')}>
-            <FontAwesomeIcon icon={faPlus} className='Icon' />
+          <button className="Btn" onClick={(e) => addInputRow(e, "details")}>
+            <FontAwesomeIcon icon={faPlus} className="Icon" />
           </button>
-          <div className='MultiInputWidget'>
+          <div className="MultiInputWidget">
             {product.details.map((detail, i) => {
               return (
-                <div className='SingleRow' key={i}>
-                  <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'details')}>
-                    <FontAwesomeIcon icon={faX} className='Icon' />
+                <div className="SingleRow" key={i}>
+                  <button
+                    className="Btn"
+                    onClick={(e) => deleteInputRow(e, i, "details")}
+                  >
+                    <FontAwesomeIcon icon={faX} className="Icon" />
                   </button>
-                  <div className='Inputs'>
+                  <div className="Inputs">
                     <input
-                      className='KeyInput'
-                      type='text'
-                      onChange={(e) => keyChange(e, i, 'details')}
+                      className="KeyInput"
+                      type="text"
+                      onChange={(e) => keyChange(e, i, "details")}
                       value={detail.key}
                     />
                     <input
-                      className='ValueInput'
-                      type='text'
-                      onChange={(e) => valueChange(e, i, 'details')}
+                      className="ValueInput"
+                      type="text"
+                      onChange={(e) => valueChange(e, i, "details")}
                       value={detail.value}
                     />
                   </div>
@@ -166,29 +186,35 @@ const CreateProduct = ({ toggleModal }) => {
             })}
           </div>
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Technical Details</label>
-          <button className='Btn' onClick={(e) => addInputRow(e, 'tech_details')}>
-            <FontAwesomeIcon icon={faPlus} className='Icon' />
+          <button
+            className="Btn"
+            onClick={(e) => addInputRow(e, "tech_details")}
+          >
+            <FontAwesomeIcon icon={faPlus} className="Icon" />
           </button>
-          <div className='MultiInputWidget'>
+          <div className="MultiInputWidget">
             {product.tech_details.map((tech_details, i) => {
               return (
-                <div className='SingleRow' key={i}>
-                  <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'tech_details')}>
-                    <FontAwesomeIcon icon={faX} className='Icon' />
+                <div className="SingleRow" key={i}>
+                  <button
+                    className="Btn"
+                    onClick={(e) => deleteInputRow(e, i, "tech_details")}
+                  >
+                    <FontAwesomeIcon icon={faX} className="Icon" />
                   </button>
-                  <div className='Inputs'>
+                  <div className="Inputs">
                     <input
-                      className='KeyInput'
-                      type='text'
-                      onChange={(e) => keyChange(e, i, 'tech_details')}
+                      className="KeyInput"
+                      type="text"
+                      onChange={(e) => keyChange(e, i, "tech_details")}
                       value={tech_details.key}
                     />
                     <input
-                      className='ValueInput'
-                      type='text'
-                      onChange={(e) => valueChange(e, i, 'tech_details')}
+                      className="ValueInput"
+                      type="text"
+                      onChange={(e) => valueChange(e, i, "tech_details")}
                       value={tech_details.value}
                     />
                   </div>
@@ -197,21 +223,24 @@ const CreateProduct = ({ toggleModal }) => {
             })}
           </div>
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>About</label>
-          <button className='Btn' onClick={(e) => addAboutRow(e)}>
-            <FontAwesomeIcon icon={faPlus} className='Icon' />
+          <button className="Btn" onClick={(e) => addAboutRow(e)}>
+            <FontAwesomeIcon icon={faPlus} className="Icon" />
           </button>
-          <div className='MultiInputWidget'>
+          <div className="MultiInputWidget">
             {product.about.map((item, i) => {
               return (
-                <div className='SingleRow' key={i}>
-                  <button className='Btn' onClick={(e) => deleteInputRow(e, i, 'about')}>
-                    <FontAwesomeIcon icon={faX} className='Icon' />
+                <div className="SingleRow" key={i}>
+                  <button
+                    className="Btn"
+                    onClick={(e) => deleteInputRow(e, i, "about")}
+                  >
+                    <FontAwesomeIcon icon={faX} className="Icon" />
                   </button>
                   <input
-                    className='AboutInput'
-                    type='text'
+                    className="AboutInput"
+                    type="text"
                     onChange={(e) => aboutChange(e, i)}
                     value={item.value}
                   />
@@ -221,25 +250,31 @@ const CreateProduct = ({ toggleModal }) => {
           </div>
         </div>
 
-        <div className='Row'>
+        <div className="Row">
           <label>Main Image</label>
-          <input className='MainInput' type='file' onChange={(e) => setFile(e.target.files[0])} />
+          <input
+            className="MainInput"
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
         </div>
-        <div className='Row'>
+        <div className="Row">
           <label>Extra Images</label>
-          <div className='ExtraImagesBox'>
+          <div className="ExtraImagesBox">
             <input
-              className='MainInput'
-              type='file'
+              className="MainInput"
+              type="file"
               onChange={(e) => setFiles([...files, e.target.files[0]])}
             />
             {files.map((item, i) => {
               return (
-                <div className='ExtraImage' key={i}>
+                <div className="ExtraImage" key={i}>
                   <FontAwesomeIcon
                     icon={faX}
-                    className='Icon'
-                    onClick={() => setFiles(files.filter((x) => x.name !== item.name))}
+                    className="Icon"
+                    onClick={() =>
+                      setFiles(files.filter((x) => x.name !== item.name))
+                    }
                   />
                   <p>{item.name}</p>
                 </div>
@@ -248,7 +283,7 @@ const CreateProduct = ({ toggleModal }) => {
           </div>
         </div>
 
-        <input type='submit' className='Btn' />
+        <input type="submit" className="Btn" />
       </form>
     </div>
   );

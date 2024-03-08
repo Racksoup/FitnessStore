@@ -96,19 +96,23 @@ const Navbar = () => {
         </div>
         <div className="Bottom">
           {categories &&
-            categories.map((x, i) => (
-              <Link key={i} className="Link" to="/category">
-                <button
-                  className="Button"
-                  onClick={() => {
-                    dispatch(setCategory(x));
-                    dispatch(getProductsForCategory(x.category));
-                  }}
-                >
-                  {x.category}
-                </button>
-              </Link>
-            ))}
+            categories.map((x, i) => {
+              if (x.main) {
+                return (
+                  <Link key={i} className="Link" to="/category">
+                    <button
+                      className="Button"
+                      onClick={() => {
+                        dispatch(setCategory(x));
+                        dispatch(getProductsForCategory(x._id));
+                      }}
+                    >
+                      {x.category}
+                    </button>
+                  </Link>
+                );
+              }
+            })}
         </div>
       </div>
     );
