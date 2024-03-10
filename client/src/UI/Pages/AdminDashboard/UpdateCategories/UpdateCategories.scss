@@ -2,6 +2,7 @@
 
 .UpdateCategories {
   width: 100%;
+  padding: 0 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,13 +12,14 @@
   }
 
   .CategoriesView {
-    width: 14rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
     margin: 0.4rem 0 1.5rem 0;
 
     .CategoryGroup {
+      margin: 0 0.2rem 0.4rem 0.2rem;
+      width: 14rem;
       display: flex;
       flex-direction: column;
       border: solid 0.1rem rgb(200, 200, 200);

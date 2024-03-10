@@ -1,9 +1,11 @@
-// @import '../../../../App.scss';
+@import "../../../../Vars.scss";
 
 .Cart {
-  display: flex;
+  @include Section;
   width: 76rem;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: start;
 
   .ShoppingCart {
     margin: 2rem 0;

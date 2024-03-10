@@ -1,9 +1,11 @@
-// @import '../../../../App.scss';
+@import "../../../../Vars.scss";
 
 .Wishlist {
-  display: flex;
+  @include Section;
   width: 76rem;
+  flex-direction: row;
   justify-content: center;
+  align-items: start;
 
   .ShoppingCart {
     margin: 2rem 0;

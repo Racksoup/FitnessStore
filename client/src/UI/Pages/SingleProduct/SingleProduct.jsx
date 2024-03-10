@@ -104,7 +104,7 @@ const SingleProduct = () => {
               <p className="DeliveryDetails">Delivery Details</p>
               <div className="AddressLine">
                 <div className="Dot" />
-                <div className="Address">User Address Goes Here</div>
+                <div className="address-info">User Address Goes Here</div>
               </div>
               <p className="Stock">In Stock / Out of Stock</p>
               <div className="QuantityLine">

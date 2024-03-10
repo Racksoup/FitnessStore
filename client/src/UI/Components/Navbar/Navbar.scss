@@ -99,7 +99,7 @@ $navColorBottom: rgb(28, 38, 50);
     &Right {
       display: flex;
       width: 100%;
-      justify-content: space-between;
+      justify-content: end;
       padding: 0 1.5rem;
 
       .Icon {

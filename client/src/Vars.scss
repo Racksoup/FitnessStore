@@ -14,6 +14,8 @@ $color-5-tran: rgba(211, 163, 116, 0.8);
 
 @mixin Section {
   width: 90rem;
+  min-height: 39rem;
+  padding: 0 0 3rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;

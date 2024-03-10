@@ -1,7 +1,5 @@
-// @import '../../../../App.scss';
+@import "../../../../Vars.scss";
 
 .Tickets {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include Section;
 }

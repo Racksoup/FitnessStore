@@ -321,6 +321,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).send;
   }
 });
+
 // Get Products in Category
 router.get("/category/:categoryID", async (req, res) => {
   try {
@@ -345,7 +346,8 @@ router.get("/category/:categoryID", async (req, res) => {
     res.status(500).send;
   }
 });
-// Product Search
+
+// User search for products and categories
 router.get("/search/:search", async (req, res) => {
   try {
     const res1 = await Product.find({

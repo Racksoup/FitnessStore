@@ -13,6 +13,7 @@ import {
   selectCategories,
   setCategory,
 } from "../../../Redux/categorySlice";
+import { selectUser } from "../../../Redux/userSlice";
 import {
   getProductsForCategory,
   searchProducts,
@@ -26,6 +27,7 @@ const Navbar = () => {
   const [searchActive, setSearchActive] = useState(false);
   const [show, setShow] = useState(true);
   const categories = useSelector(selectCategories);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -82,11 +84,13 @@ const Navbar = () => {
             </button>
           </div>
           <div className="TopRight">
-            <Link className="Link" to="/cart">
-              <button className="Icon">
-                <FontAwesomeIcon icon={faCartShopping} />
-              </button>
-            </Link>
+            {user && (
+              <Link className="Link" to="/cart">
+                <button className="Icon">
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </button>
+              </Link>
+            )}
             <Link className="Link" to="/user-login">
               <button className="Icon">
                 <FontAwesomeIcon icon={faUser} />

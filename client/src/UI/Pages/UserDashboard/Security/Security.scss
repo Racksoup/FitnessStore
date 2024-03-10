@@ -1,32 +1,38 @@
-// @import '../../../../App.scss';
+@import "../../../../Vars.scss";
 
 .Security {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include Section;
 
   h2 {
-    margin: 1rem 0;
+    margin: 2rem 0;
   }
 
-  .Line {
-    margin: 0.2rem 0;
-    width: 15rem;
+  .table {
+    padding: 1rem;
+    border: solid grey 1px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: end;
 
-    input {
-      background-color: white;
-      color: black;
-      padding: 0.2rem;
-    }
-  }
+    .Line {
+      margin: 0.2rem 0;
+      width: 19rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
 
-  button {
-    margin: 1rem 0;
-    padding: 0.3rem;
-    border: solid 0.1rem rgb(189, 189, 189);
-    border-radius: 0.2rem;
+      input {
+        background-color: white;
+        color: black;
+        padding: 0.2rem;
+      }
+    }
+
+    button {
+      margin: 1rem 0 0 0;
+      padding: 0.3rem;
+      border: solid 0.1rem rgb(189, 189, 189);
+      border-radius: 0.2rem;
+    }
   }
 }
