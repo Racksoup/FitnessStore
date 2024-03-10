@@ -324,15 +324,22 @@ router.get("/:id", async (req, res) => {
 // Get Products in Category
 router.get("/category/:categoryID", async (req, res) => {
   try {
-    // check for sub-categories
-    const categories = await Category.find({ mainID: req.params.categoryID });
+    // find all sub-categories of main category
+    // find by category name for user-searches. req.params.categoryID is a name when user searches
+    const categories = await Category.find({
+      $or: [
+        { mainID: req.params.categoryID },
+        { category: req.params.categoryID },
+      ],
+    });
 
-    const product = await Product.find({
+    // find all products from main category, sub categories, and for user searches
+    const products = await Product.find({
       categoryID: {
         $in: [req.params.categoryID, ...categories.map((x) => x._id)],
       },
     });
-    res.json(product);
+    res.json(products);
   } catch (error) {
     console.error(error.message);
     res.status(500).send;

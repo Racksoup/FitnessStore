@@ -187,10 +187,12 @@ export const searchProducts = (search) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/product/search/${search}`);
     if (res.data.category.length == 0) {
+      // if search is products
       dispatch(gotSearch(res.data.products));
     } else {
-      dispatch(setCategory(res.data.category));
-      dispatch(getProductsForCategory(res.data.category[0].category));
+      // if search is category
+      dispatch(setCategory(res.data.category[0]));
+      dispatch(getProductsForCategory(res.data.category[0]._id));
     }
   } catch (error) {
     console.log(error);
