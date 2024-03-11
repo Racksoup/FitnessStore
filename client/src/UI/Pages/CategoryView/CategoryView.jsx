@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import "./CategoryView.scss";
 import { selectCategories, selectCategory } from "../../../Redux/categorySlice";
 import {
@@ -15,15 +15,29 @@ const CategoryView = () => {
   const category = useSelector(selectCategory);
   const categories = useSelector(selectCategories);
   const products = useSelector(selectProducts);
+  const [price, setPrice] = useState({ upper: null, lower: null });
+  const minInputRef = useRef(null);
+  const maxInputRef = useRef(null);
 
-  // useEffect(() => {
-  //   dispatch(getProductsForCategory(category.category));
-  // }, []);
+  // Memoize the filtered products based on the price state
+  const filteredProducts = useMemo(() => {
+    if (!products) {
+      return [];
+    }
+
+    return products.filter(
+      (x) =>
+        (x.price > price.lower || price.lower === null) &&
+        (x.price < price.upper || price.upper === null)
+    );
+  }, [products, price]);
 
   let maxProductsNum = 50;
   if (products && products.length > 0 && products.length < 50) {
     maxProductsNum = products.length;
   }
+
+  console.log(price);
 
   return (
     <div className="CategoryView">
@@ -72,15 +86,51 @@ const CategoryView = () => {
               </div>
               <div className="PriceModule">
                 <h4 className="Title">Price</h4>
-                <p className="Item">Under $25</p>
-                <p className="Item">$25 to $50</p>
-                <p className="Item">$50 to $100</p>
-                <p className="Item">$100 to $200</p>
-                <p className="Item">$200 & Above</p>
+                <p
+                  className="Item"
+                  onClick={() => setPrice({ lower: null, upper: 2500 })}
+                >
+                  Under $25
+                </p>
+                <p
+                  className="Item"
+                  onClick={() => setPrice({ lower: 2500, upper: 5000 })}
+                >
+                  $25 to $50
+                </p>
+                <p
+                  className="Item"
+                  onClick={() => setPrice({ lower: 5000, upper: 10000 })}
+                >
+                  $50 to $100
+                </p>
+                <p
+                  className="Item"
+                  onClick={() => setPrice({ lower: 10000, upper: 20000 })}
+                >
+                  $100 to $200
+                </p>
+                <p
+                  className="Item"
+                  onClick={() => setPrice({ lower: 20000, upper: null })}
+                >
+                  $200 & Above
+                </p>
                 <div className="CustomPrice">
-                  <input type="text" placeholder="Min" />
-                  <input type="text" placeholder="Max" />
-                  <button className="Go">Go</button>
+                  <input type="text" placeholder="Min" ref={minInputRef} />
+                  <input type="text" placeholder="Max" ref={maxInputRef} />
+                  <button
+                    className="Go"
+                    onClick={() => {
+                      const minValue =
+                        parseInt(minInputRef.current.value) * 100;
+                      const maxValue =
+                        parseInt(maxInputRef.current.value) * 100;
+                      setPrice({ lower: minValue, upper: maxValue });
+                    }}
+                  >
+                    Go
+                  </button>
                 </div>
               </div>
               <div className="MiscSelection">
@@ -97,39 +147,38 @@ const CategoryView = () => {
               </div>
             </div>
             <div className="Right">
-              {products &&
-                products.map((x, i) => (
-                  <Link className="Link" key={i} to="/product">
-                    <div
-                      className="Product"
-                      key={i}
-                      onClick={() => dispatch(setCurrProduct(x))}
-                    >
-                      {x.image_filenames.map((c, j) => {
-                        if (c.main) {
-                          return (
-                            <img
-                              src={`api/product/image/${c.filename}`}
-                              alt="Product Image"
-                              key={j}
-                            />
-                          );
-                        }
-                      })}
-                      <div className="InfoBox">
-                        <h3 className="Title">{x.name}</h3>
-                        <div className="RatingLine">hrh</div>
-                        <div className="PriceLine">
-                          <p className="DollarSign">$</p>
-                          <p className="Price">{x.price / 100.0}</p>
-                        </div>
-                        <div className="SaleTag">15% off</div>
-                        <p className="Info">Free Delivery For Members</p>
-                        <p className="Info">Save By Combining Items</p>
+              {filteredProducts.map((x, i) => (
+                <Link className="Link" key={i} to="/product">
+                  <div
+                    className="Product"
+                    key={i}
+                    onClick={() => dispatch(setCurrProduct(x))}
+                  >
+                    {x.image_filenames.map((c, j) => {
+                      if (c.main) {
+                        return (
+                          <img
+                            src={`api/product/image/${c.filename}`}
+                            alt="Product Image"
+                            key={j}
+                          />
+                        );
+                      }
+                    })}
+                    <div className="InfoBox">
+                      <h3 className="Title">{x.name}</h3>
+                      <div className="RatingLine">hrh</div>
+                      <div className="PriceLine">
+                        <p className="DollarSign">$</p>
+                        <p className="Price">{x.price / 100.0}</p>
                       </div>
+                      <div className="SaleTag">15% off</div>
+                      <p className="Info">Free Delivery For Members</p>
+                      <p className="Info">Save By Combining Items</p>
                     </div>
-                  </Link>
-                ))}
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </>

@@ -312,7 +312,7 @@ router.post("/find-by-stripe-ids", async (req, res) => {
   }
 });
 // Get Product
-router.get("/:id", async (req, res) => {
+router.get("/product/:id", async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
     res.json(product);
@@ -348,15 +348,33 @@ router.get("/category/:categoryID", async (req, res) => {
 });
 
 // User search for products and categories
-router.get("/search/:search", async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
-    const res1 = await Product.find({
-      name: { $regex: req.params.search, $options: "i" },
-    });
+    const { search, lower, upper, categorySearch } = req.query;
+
+    const productQuery = {
+      $or: [
+        { name: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+      ],
+    };
+
+    console.log(search, lower, upper, categorySearch);
+
+    if (lower !== "false" && upper !== "false") {
+      productQuery.price = { $gte: parseFloat(lower), $lte: parseFloat(upper) };
+    } else if (lower !== "false") {
+      productQuery.price = { $gte: parseFloat(lower) };
+    } else if (upper !== "false") {
+      productQuery.price = { $lte: parseFloat(upper) };
+    }
+    console.log(productQuery.price);
+
+    const res1 = await Product.find(productQuery);
     const res2 = await Category.find({
-      category: { $regex: req.params.search, $options: "i" },
+      category: { $regex: search, $options: "i" },
     });
-    res.json({ products: res1, category: res2 });
+    res.json({ products: res1, category: res2, categorySearch });
   } catch (error) {
     console.log(error);
   }
