@@ -24,11 +24,12 @@ const CategoryView = () => {
   const [isDealChecked, setIsDealChecked] = useState(false);
   const [isStockChecked, setIsStockChecked] = useState(false);
   const [price, setPrice] = useState({ upper: null, lower: null });
+  const [categoryClicked, setCategoryClicked] = useState(false);
 
   useEffect(() => {
     setPrice({ upper: null, lower: null });
     console.log(price);
-  }, [category, categories]);
+  }, [category, categoryClicked]);
 
   const filteredProducts = () => {
     if (!products) {
@@ -64,7 +65,7 @@ const CategoryView = () => {
                     key={i}
                     onClick={() => {
                       dispatch(getProductsForCategory(x._id));
-                      dispatch(setCategory(x));
+                      setCategoryClicked(!categoryClicked);
                     }}
                   >
                     {x.category}
@@ -77,7 +78,7 @@ const CategoryView = () => {
                     key={i}
                     onClick={() => {
                       dispatch(getProductsForCategory(x._id));
-                      dispatch(setCategory(x));
+                      setCategoryClicked(!categoryClicked);
                     }}
                   >
                     {x.category}
