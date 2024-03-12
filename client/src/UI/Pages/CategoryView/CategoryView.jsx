@@ -1,6 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./CategoryView.scss";
-import { selectCategories, selectCategory } from "../../../Redux/categorySlice";
+import {
+  selectCategories,
+  selectCategory,
+  setCategory,
+} from "../../../Redux/categorySlice";
 import {
   selectProducts,
   getProductsForCategory,
@@ -15,11 +19,16 @@ const CategoryView = () => {
   const category = useSelector(selectCategory);
   const categories = useSelector(selectCategories);
   const products = useSelector(selectProducts);
-  const [price, setPrice] = useState({ upper: null, lower: null });
   const minInputRef = useRef(null);
   const maxInputRef = useRef(null);
   const [isDealChecked, setIsDealChecked] = useState(false);
   const [isStockChecked, setIsStockChecked] = useState(false);
+  const [price, setPrice] = useState({ upper: null, lower: null });
+
+  useEffect(() => {
+    setPrice({ upper: null, lower: null });
+    console.log(price);
+  }, [category, categories]);
 
   const filteredProducts = () => {
     if (!products) {
@@ -53,7 +62,10 @@ const CategoryView = () => {
                   <div
                     className="ItemFirst"
                     key={i}
-                    onClick={() => dispatch(getProductsForCategory(x._id))}
+                    onClick={() => {
+                      dispatch(getProductsForCategory(x._id));
+                      dispatch(setCategory(x));
+                    }}
                   >
                     {x.category}
                   </div>
@@ -63,7 +75,10 @@ const CategoryView = () => {
                   <div
                     className="Item"
                     key={i}
-                    onClick={() => dispatch(getProductsForCategory(x._id))}
+                    onClick={() => {
+                      dispatch(getProductsForCategory(x._id));
+                      dispatch(setCategory(x));
+                    }}
                   >
                     {x.category}
                   </div>
