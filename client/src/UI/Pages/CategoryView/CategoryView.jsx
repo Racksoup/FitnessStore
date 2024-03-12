@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./CategoryView.scss";
 import { selectCategories, selectCategory } from "../../../Redux/categorySlice";
 import {
@@ -19,8 +19,7 @@ const CategoryView = () => {
   const minInputRef = useRef(null);
   const maxInputRef = useRef(null);
 
-  // Memoize the filtered products based on the price state
-  const filteredProducts = useMemo(() => {
+  const filteredProducts = () => {
     if (!products) {
       return [];
     }
@@ -30,14 +29,12 @@ const CategoryView = () => {
         (x.price > price.lower || price.lower === null) &&
         (x.price < price.upper || price.upper === null)
     );
-  }, [products, price]);
+  };
 
   let maxProductsNum = 50;
   if (products && products.length > 0 && products.length < 50) {
     maxProductsNum = products.length;
   }
-
-  console.log(price);
 
   return (
     <div className="CategoryView">
@@ -147,7 +144,7 @@ const CategoryView = () => {
               </div>
             </div>
             <div className="Right">
-              {filteredProducts.map((x, i) => (
+              {filteredProducts().map((x, i) => (
                 <Link className="Link" key={i} to="/product">
                   <div
                     className="Product"
