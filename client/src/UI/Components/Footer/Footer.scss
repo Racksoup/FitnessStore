@@ -22,8 +22,14 @@
 
   .Content {
     display: flex;
-    width: 60%;
+    width: 60rem;
     justify-content: space-between;
+
+    p,
+    .Link {
+      color: rgb(134, 134, 134);
+      font-size: 1rem;
+    }
 
     .Half {
       width: 48%;
@@ -32,23 +38,35 @@
       .Col {
         display: flex;
         flex-direction: column;
-        width: 33%;
 
         .Title {
           font-size: 1.4rem;
           font-weight: 550;
+          color: rgb(179, 179, 179);
         }
 
         .Line {
           height: 0.15rem;
           margin: 0.5rem 0;
-          width: 7.5rem;
-          background-color: white;
+          width: 90%;
+          background-color: rgb(179, 179, 179);
+        }
+
+        .box {
+          height: 7rem;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
         }
 
         .Item {
-          font-size: 1rem;
           cursor: pointer;
+          text-decoration: none;
+          width: 10.5rem;
+
+          &:hover {
+            color: white;
+          }
         }
 
         .Input {
@@ -59,7 +77,7 @@
           border-radius: 0.2rem;
           border: solid 0.1rem grey;
           color: black;
-          background-color: white;
+          background-color: rgb(196, 196, 196);
         }
 
         .Btn {

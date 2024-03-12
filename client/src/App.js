@@ -18,6 +18,7 @@ import Wishlist from "./UI/Pages/UserDashboard/Wishlist/Wishlist.jsx";
 import Address from "./UI/Pages/UserDashboard/Address/Address.jsx";
 import Security from "./UI/Pages/UserDashboard/Security/Security.jsx";
 import Returns from "./UI/Pages/UserDashboard/Returns/Returns.jsx";
+import About from "./UI/Pages/About/About.jsx";
 import { loadUser } from "./Redux/userSlice";
 
 import { Route, Routes } from "react-router-dom";
@@ -52,6 +53,7 @@ const App = () => {
           <Route exact path="/address" element={<Address />} />
           <Route exact path="/security" element={<Security />} />
           <Route exact path="/returns" element={<Returns />} />
+          <Route exact path="/about" element={<About />} />
         </Routes>
         <Footer />
       </div>
