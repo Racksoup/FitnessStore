@@ -29,7 +29,7 @@ const CategoryView = () => {
   useEffect(() => {
     setPrice({ upper: null, lower: null });
     console.log(price);
-  }, [category, categoryClicked]);
+  }, [category, categories, categoryClicked]);
 
   const filteredProducts = () => {
     if (!products) {
