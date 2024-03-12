@@ -12,6 +12,7 @@ import {
   getCategories,
   selectCategories,
   setCategory,
+  categoryClicked,
 } from "../../../Redux/categorySlice";
 import { selectUser } from "../../../Redux/userSlice";
 import {
@@ -109,6 +110,7 @@ const Navbar = () => {
                       className="Button"
                       onClick={() => {
                         dispatch(setCategory(x));
+                        dispatch(categoryClicked());
                         dispatch(getProductsForCategory(x._id));
                       }}
                     >

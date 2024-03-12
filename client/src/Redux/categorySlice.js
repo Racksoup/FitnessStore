@@ -6,10 +6,12 @@ const catUnparsed = localStorage.getItem("category");
 const initialState = {
   categories: null,
   category: JSON.parse(catUnparsed),
+  categoryClicked: false,
 };
 
 export const selectCategories = (state) => state.category.categories;
 export const selectCategory = (state) => state.category.category;
+export const selectCategoryClicked = (state) => state.category.categoryClicked;
 
 export const categorySlice = createSlice({
   name: "category",
@@ -30,11 +32,19 @@ export const categorySlice = createSlice({
       localStorage.setItem("category", JSON.stringify(action.payload));
       state.category = action.payload;
     },
+    categoryClicked: (state) => {
+      state.categoryClicked = !state.categoryClicked;
+    },
   },
 });
 
-export const { categoryCreated, categoryDeleted, gotCategories, setCategory } =
-  categorySlice.actions;
+export const {
+  categoryCreated,
+  categoryDeleted,
+  gotCategories,
+  setCategory,
+  categoryClicked,
+} = categorySlice.actions;
 
 export const createCategory = (item) => async (dispatch) => {
   const config = {
