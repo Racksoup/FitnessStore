@@ -23,7 +23,15 @@ const ProductSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    requuired: true,
+    required: true,
+  },
+  stock: {
+    type: Number,
+    required: true,
+  },
+  deal: {
+    type: Boolean,
+    required: true,
   },
   image_filenames: {
     type: Array,

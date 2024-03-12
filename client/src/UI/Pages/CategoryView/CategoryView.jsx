@@ -18,6 +18,8 @@ const CategoryView = () => {
   const [price, setPrice] = useState({ upper: null, lower: null });
   const minInputRef = useRef(null);
   const maxInputRef = useRef(null);
+  const [isDealChecked, setIsDealChecked] = useState(false);
+  const [isStockChecked, setIsStockChecked] = useState(false);
 
   const filteredProducts = () => {
     if (!products) {
@@ -27,7 +29,9 @@ const CategoryView = () => {
     return products.filter(
       (x) =>
         (x.price > price.lower || price.lower === null) &&
-        (x.price < price.upper || price.upper === null)
+        (x.price < price.upper || price.upper === null) &&
+        (x.deal === true || !isDealChecked) &&
+        (x.stock > 0 || !isStockChecked)
     );
   };
 
@@ -133,12 +137,20 @@ const CategoryView = () => {
               <div className="MiscSelection">
                 <h4 className="Title">Deals</h4>
                 <div className="CheckLine">
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={isDealChecked}
+                    onChange={() => setIsDealChecked(!isDealChecked)}
+                  />
                   <p>Today's Deals</p>
                 </div>
                 <h4 className="Title">Availability</h4>
                 <div className="CheckLine">
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={isStockChecked}
+                    onChange={() => setIsStockChecked(!isStockChecked)}
+                  />
                   <p>Include out of stock</p>
                 </div>
               </div>

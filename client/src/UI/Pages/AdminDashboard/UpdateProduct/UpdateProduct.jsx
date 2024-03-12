@@ -205,10 +205,21 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
             <input
               className="MainInput"
               type="number"
+              value={product.price}
               onChange={(e) =>
                 setProduct({ ...product, price: e.target.value })
               }
-              value={product.price}
+            />
+          </div>
+          <div className="Row">
+            <label>Stock</label>
+            <input
+              className="MainInput"
+              type="number"
+              value={product.stock}
+              onChange={(e) =>
+                setProduct({ ...product, stock: parseInt(e.target.value) })
+              }
             />
           </div>
           <div className="Row">
@@ -221,6 +232,17 @@ const UpdateProduct = ({ toggleModal, currProduct }) => {
                 onChange={() =>
                   setProduct({ ...product, highlight: !product.highlight })
                 }
+              />
+            </div>
+          </div>
+          <div className="Row">
+            <label>Deal</label>
+            <div className="CheckboxHolder">
+              <input
+                className="Checkbox"
+                type="checkbox"
+                checked={product.deal}
+                onChange={() => setProduct({ ...product, deal: !product.deal })}
               />
             </div>
           </div>

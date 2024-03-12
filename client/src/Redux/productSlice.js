@@ -60,6 +60,8 @@ export const createProduct = (product, file, files) => async (dispatch) => {
   data.append("category", product.category);
   data.append("categoryID", product.categoryID);
   data.append("price", product.price);
+  data.append("stock", product.stock);
+  data.append("deal", product.deal);
   data.append("highlight", product.highlight);
   data.append("brand", product.brand);
   data.append("merchant", product.merchant);

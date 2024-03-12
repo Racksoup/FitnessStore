@@ -17,6 +17,8 @@ const CreateProduct = ({ toggleModal }) => {
     category: "",
     categoryID: "",
     price: "",
+    stock: 0,
+    deal: false,
     highlight: false,
     brand: "",
     merchant: "",
@@ -122,6 +124,16 @@ const CreateProduct = ({ toggleModal }) => {
           />
         </div>
         <div className="Row">
+          <label>Stock</label>
+          <input
+            className="MainInput"
+            type="number"
+            onChange={(e) =>
+              setProduct({ ...product, stock: parseInt(e.target.value) })
+            }
+          />
+        </div>
+        <div className="Row">
           <label>Highlight</label>
           <div className="CheckboxHolder">
             <input
@@ -131,6 +143,17 @@ const CreateProduct = ({ toggleModal }) => {
               onChange={() =>
                 setProduct({ ...product, highlight: !product.highlight })
               }
+            />
+          </div>
+        </div>
+        <div className="Row">
+          <label>Deal</label>
+          <div className="CheckboxHolder">
+            <input
+              className="Checkbox"
+              type="checkbox"
+              checked={product.deal}
+              onChange={() => setProduct({ ...product, deal: !product.deal })}
             />
           </div>
         </div>
