@@ -49,7 +49,10 @@ const UpdateCategories = () => {
               return (
                 <div className="CategoryGroup">
                   <div className="Category" key={i}>
-                    <img src={Car} alt="Category Image" />
+                    <img
+                      src={`/api/category/image/${cat.image_filename}`}
+                      alt="Category Image"
+                    />
                     <p>{cat.category}</p>
                     <div className="Buttons">
                       <FontAwesomeIcon
@@ -69,7 +72,10 @@ const UpdateCategories = () => {
                       if (!cat2.main && cat2.mainID === cat._id) {
                         return (
                           <div className="ChildCategory" key={j}>
-                            <img src={Car} alt="Category Image" />
+                            <img
+                              src={`/api/category/image/${cat2.image_filename}`}
+                              alt="Category Image"
+                            />
                             <p>{cat2.category}</p>
                             <div className="Buttons">
                               <FontAwesomeIcon

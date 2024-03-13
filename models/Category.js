@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const CategorySchema = new mongoose.Schema({
   category: {
@@ -12,6 +12,10 @@ const CategorySchema = new mongoose.Schema({
   mainID: {
     type: String,
   },
+  image_filename: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = Category = mongoose.model('category', CategorySchema);
+module.exports = Category = mongoose.model("category", CategorySchema);

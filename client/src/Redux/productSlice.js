@@ -74,14 +74,15 @@ export const createProduct = (product, file, files) => async (dispatch) => {
     data.append("file", v);
   });
 
+  const config = {
+    headers: {
+      accept: "application/json",
+      "Accept-Language": "en-US,en;q=0.8",
+      "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+    },
+  };
+
   try {
-    const config = {
-      headers: {
-        accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.8",
-        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-      },
-    };
     const res = await axios.post("api/product", data, config);
     dispatch(productCreated(res.data));
   } catch (err) {

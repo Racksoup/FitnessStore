@@ -47,20 +47,21 @@ export const {
 } = categorySlice.actions;
 
 export const createCategory = (item) => async (dispatch) => {
+  let body = new FormData();
+  body.append("category", item.category);
+  body.append("main", item.main);
+  if (item.mainID) {
+    body.append("mainID", item.mainID);
+  }
+  body.append("file", item.image);
+
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      accept: "application/json",
+      "Accept-Language": "en-US,en;q=0.8",
+      "Content-Type": `multipart/form-data; boundary=${body._boundary}`,
     },
   };
-  const postItem = {
-    category: item.category,
-    main: item.main,
-  };
-  if (item.mainID) {
-    postItem.mainID = item.mainID;
-  }
-
-  const body = JSON.stringify(postItem);
 
   try {
     const res = await axios.post("/api/category/", body, config);
