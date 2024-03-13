@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import "./Home.scss";
 import {
   getHighlightProducts,
+  getProductsForCategory,
   selectProducts,
   setCurrProduct,
 } from "../../../Redux/productSlice";
+import { selectCategories, setCategory } from "../../../Redux/categorySlice";
 import Car from "../../../images/car.jpg";
 
 import { Link } from "react-router-dom";
@@ -13,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Home = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
+  const categories = useSelector(selectCategories);
 
   useEffect(() => {
     dispatch(getHighlightProducts());
@@ -26,38 +29,27 @@ const Home = () => {
       <div className="header">
         <h1>GET FIT TODAY!</h1>
         <div className="store-categories">
-          <div className="category-widget">
-            <h2>Weights</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Gym Systems</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Plate Loaded</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Accessories</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Weights</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Gym Systems</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Plate Loaded</h2>
-            <img src={Car} alt="" />
-          </div>
-          <div className="category-widget">
-            <h2>Accessories</h2>
-            <img src={Car} alt="" />
-          </div>
+          {categories &&
+            categories
+              .filter((x) => x.main)
+              .slice(0, 8)
+              .map((x, i) => (
+                <Link
+                  to="/category"
+                  className="category-widget"
+                  key={i}
+                  onClick={() => {
+                    dispatch(setCategory(x));
+                    dispatch(getProductsForCategory(x._id));
+                  }}
+                >
+                  <h2>{x.category}</h2>
+                  <img
+                    src={`api/category/image/${x.image_filename}`}
+                    alt="Category Image"
+                  />
+                </Link>
+              ))}
         </div>
       </div>
       <div className="product-carousel">
@@ -85,20 +77,28 @@ const Home = () => {
       </div>
       <div className="section2">
         <img className="promo" src={Car} alt="" />
-        <div
-          className="category-widget"
-          style={{ marginTop: 0, height: "100%", width: "100%" }}
-        >
-          <h2>Accessories</h2>
-          <img src={Car} alt="" />
-        </div>
-        <div
-          className="category-widget"
-          style={{ marginTop: 0, height: "100%", width: "100%" }}
-        >
-          <h2>Plate Loaded</h2>
-          <img src={Car} alt="" />
-        </div>
+        {categories &&
+          categories
+            .filter((x) => x.main)
+            .slice(0, 2)
+            .map((x, i) => (
+              <Link
+                to="/category"
+                className="category-widget"
+                style={{ marginTop: 0, height: "100%", width: "100%" }}
+                key={i}
+                onClick={() => {
+                  dispatch(setCategory(x));
+                  dispatch(getProductsForCategory(x._id));
+                }}
+              >
+                <h2>{x.category}</h2>
+                <img
+                  src={`api/category/image/${x.image_filename}`}
+                  alt="Category Image"
+                />
+              </Link>
+            ))}
       </div>
     </div>
   );

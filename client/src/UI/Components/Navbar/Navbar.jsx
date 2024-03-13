@@ -59,16 +59,16 @@ const Navbar = () => {
             <h1 className="TopLeft">Fitness Store</h1>
           </Link>
           <div className="TopMiddle" style={TopMiddleStyle}>
-            {/* <button className="DropdownButton">
+            <button className="DropdownButton">
               <Link to="/categories">
                 <p>All</p>
               </Link>
-              <div className="DropdownBox">
+              {/* <div className="DropdownBox">
                 <div className="DropdownItem">123</div>
                 <div className="DropdownItem">abc</div>
                 <div className="DropdownItem">xyz</div>
-              </div>
-            </button> */}
+              </div> */}
+            </button>
             <input
               type="text"
               className="Search"
