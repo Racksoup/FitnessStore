@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./UpdateCategories.scss";
-import CreateModal from "../../../Components/Modals/CreateModal.jsx";
 import {
   deleteCategory,
   createCategory,
@@ -33,7 +32,7 @@ const UpdateCategories = () => {
   return (
     <div className="UpdateCategories">
       {createCategoryModal && (
-        <CreateModal
+        <CreateCategoryModal
           toggleModal={toggleCreateCategoryModal}
           func={createCategory}
           state={categoryInit}
@@ -90,6 +89,57 @@ const UpdateCategories = () => {
               );
             }
           })}
+      </div>
+    </div>
+  );
+};
+
+const CreateCategoryModal = ({ toggleModal, func, state, title }) => {
+  const [currState, setCurrState] = useState(state);
+  const dispatch = useDispatch();
+
+  const submitForm = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    dispatch(func(currState));
+    toggleModal(false);
+  };
+
+  return (
+    <div className="CreateCategoryModal" onClick={() => toggleModal(false)}>
+      <div className="Modal" onClick={(e) => e.stopPropagation()}>
+        <h2>{title}</h2>
+        <form onSubmit={(e) => submitForm(e)}>
+          <div className="Row">
+            <label>Category:</label>
+            <input
+              type="text"
+              name="category"
+              onChange={(e) =>
+                setCurrState({
+                  ...currState,
+                  [e.target.name]: e.target.value,
+                })
+              }
+              value={currState.category}
+            />
+          </div>
+          <div className="Row">
+            <label>Image:</label>
+            <input
+              type="file"
+              name="image"
+              onChange={(e) =>
+                setCurrState({
+                  ...currState,
+                  [e.target.name]: e.target.files[0],
+                })
+              }
+            />
+          </div>
+
+          <input type="submit" value="Submit" className="Btn-1" />
+        </form>
       </div>
     </div>
   );
