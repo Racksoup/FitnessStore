@@ -8,7 +8,7 @@
   align-items: center;
 
   .Btn-1 {
-    margin: 1rem 0;
+    margin: 4rem 0 2rem 0;
   }
 
   .CategoriesView {
@@ -19,7 +19,7 @@
 
     .CategoryGroup {
       margin: 0 0.2rem 0.4rem 0.2rem;
-      width: 14rem;
+      width: 18rem;
       display: flex;
       flex-direction: column;
       border: solid 0.1rem rgb(200, 200, 200);
@@ -37,12 +37,20 @@
       }
       .Buttons {
         display: flex;
+        margin-left: auto;
       }
+
+      img {
+        width: 2rem;
+        height: 2rem;
+        object-fit: cover;
+      }
+
       .Category {
         width: 100%;
         min-height: 1.5rem;
         display: flex;
-        justify-content: space-between;
+        justify-content: start;
         align-items: center;
 
         p {
@@ -55,11 +63,12 @@
 
         .ChildCategory {
           display: flex;
+          align-items: center;
           justify-content: space-between;
           border-top: solid 0.1rem rgba(100, 100, 100, 0.6);
 
           p {
-            margin-left: 1rem;
+            margin-left: 2rem;
           }
         }
       }

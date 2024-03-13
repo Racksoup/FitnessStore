@@ -1,72 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import './UpdateCategories.scss';
-import CreateModal from '../../../Components/Modals/CreateModal.jsx';
-import { deleteCategory, createCategory, selectCategories } from '../../../../Redux/categorySlice';
+import React, { useState, useEffect } from "react";
+import "./UpdateCategories.scss";
+import CreateModal from "../../../Components/Modals/CreateModal.jsx";
+import {
+  deleteCategory,
+  createCategory,
+  selectCategories,
+} from "../../../../Redux/categorySlice";
+import Car from "../../../../images/car.jpg";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
+import { useSelector, useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 
 const UpdateCategories = () => {
   const dispatch = useDispatch();
   const [createCategoryModal, toggleCreateCategoryModal] = useState(false);
-  const [categoryInit, setCategoryInit] = useState({ category: '', main: true });
+  const [categoryInit, setCategoryInit] = useState({
+    category: "",
+    main: true,
+  });
   const categories = useSelector(selectCategories);
 
   const createMainCategory = () => {
-    setCategoryInit({ category: '', main: true });
+    setCategoryInit({ category: "", main: true });
     toggleCreateCategoryModal(true);
   };
   const createChildCategory = (mainCat) => {
-    setCategoryInit({ category: '', main: false, mainID: mainCat._id });
+    setCategoryInit({ category: "", main: false, mainID: mainCat._id });
     toggleCreateCategoryModal(true);
   };
 
   return (
-    <div className='UpdateCategories'>
+    <div className="UpdateCategories">
       {createCategoryModal && (
         <CreateModal
           toggleModal={toggleCreateCategoryModal}
           func={createCategory}
           state={categoryInit}
-          title='Create Category'
+          title="Create Category"
         />
       )}
-      <button className='Btn-1' onClick={() => createMainCategory()}>
+      <button className="Btn-1" onClick={() => createMainCategory()}>
         Create Category
       </button>
-      <div className='CategoriesView'>
+      <div className="CategoriesView">
         {categories &&
           categories.map((cat, i) => {
             if (cat.main) {
               return (
-                <div className='CategoryGroup'>
-                  <div className='Category' key={i}>
+                <div className="CategoryGroup">
+                  <div className="Category" key={i}>
+                    <img src={Car} alt="Category Image" />
                     <p>{cat.category}</p>
-                    <div className='Buttons'>
+                    <div className="Buttons">
                       <FontAwesomeIcon
                         icon={faPlus}
-                        className='Btn-5 Icon'
+                        className="Btn-5 Icon"
                         onClick={() => createChildCategory(cat)}
                       />
                       <FontAwesomeIcon
                         icon={faX}
-                        className='Btn-4 Icon'
+                        className="Btn-4 Icon"
                         onClick={() => dispatch(deleteCategory(cat._id))}
                       />
                     </div>
                   </div>
-                  <div className='ChildCategories'>
+                  <div className="ChildCategories">
                     {categories.map((cat2, j) => {
                       if (!cat2.main && cat2.mainID === cat._id) {
                         return (
-                          <div className='ChildCategory' key={j}>
+                          <div className="ChildCategory" key={j}>
+                            <img src={Car} alt="Category Image" />
                             <p>{cat2.category}</p>
-                            <div className='Buttons'>
+                            <div className="Buttons">
                               <FontAwesomeIcon
                                 icon={faX}
-                                className='Btn-4 Icon'
-                                onClick={() => dispatch(deleteCategory(cat2._id))}
+                                className="Btn-4 Icon"
+                                onClick={() =>
+                                  dispatch(deleteCategory(cat2._id))
+                                }
                               />
                             </div>
                           </div>
