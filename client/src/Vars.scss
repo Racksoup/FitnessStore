@@ -1,4 +1,4 @@
-$upperBreak: 1150px;
+$upperBreak: 1439px;
 $lowerBreak: 767px;
 $bgColor: rgba(32, 32, 32, 1);
 $color-1: rgb(185, 126, 67);
@@ -13,18 +13,17 @@ $color-4-tran: rgb(107, 76, 55, 0.8);
 $color-5-tran: rgba(211, 163, 116, 0.8);
 
 @mixin Section {
-  width: 90rem;
+  width: 1440px;
   min-height: 39rem;
-  padding: 0 0 3rem 0;
+  padding: 0 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   @media (min-width: $lowerBreak) and (max-width: $upperBreak) {
-    width: 40rem;
+    width: 100%;
   }
   @media (max-width: $lowerBreak) {
     width: 100%;
-    padding: 0 1rem;
   }
 }

@@ -94,7 +94,7 @@
   .category-widget {
     margin-top: 1rem;
     height: 20rem;
-    width: 21.2rem;
+    width: 20.8rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -117,6 +117,25 @@
       height: 80%;
       object-fit: cover;
       border-radius: 0rem;
+    }
+  }
+
+  // Mobile styles
+  @media (min-width: $lowerBreak) and (max-width: $upperBreak) {
+    .category-widget {
+      width: 32%;
+    }
+  }
+
+  @media (max-width: $lowerBreak) {
+    .header {
+      h1 {
+        font-size: 3.5rem;
+      }
+    }
+
+    .category-widget {
+      width: 48%;
     }
   }
 }

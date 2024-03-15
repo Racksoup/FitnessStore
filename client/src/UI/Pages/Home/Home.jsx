@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import {
   getHighlightProducts,
@@ -14,11 +14,27 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [numCatReturn, setNumCatReturn] = useState(8);
   const products = useSelector(selectProducts);
   const categories = useSelector(selectCategories);
 
   useEffect(() => {
     dispatch(getHighlightProducts());
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newValue = window.innerWidth < 1440 ? 6 : 8;
+      setNumCatReturn(newValue);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -32,7 +48,7 @@ const Home = () => {
           {categories &&
             categories
               .filter((x) => x.main)
-              .slice(0, 8)
+              .slice(0, numCatReturn)
               .map((x, i) => (
                 <Link
                   to="/category"
