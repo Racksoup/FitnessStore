@@ -30,6 +30,7 @@
       font-size: 5.5rem;
       -webkit-text-stroke: 2px black;
       font-family: SSP11;
+      text-align: center;
     }
 
     .store-categories {
@@ -110,6 +111,7 @@
       margin-left: 0.5rem;
       font-size: 2rem;
       line-height: 2rem;
+      width: 0;
     }
 
     img {
@@ -129,17 +131,33 @@
 
   @media (max-width: $lowerBreak) {
     .header {
+      margin-top: -27rem;
       h1 {
         font-size: 3.5rem;
+        margin-bottom: 2rem;
       }
     }
 
     .store-categories {
       flex-direction: column;
+      padding: 0 1rem;
     }
 
     .category-widget {
       width: 100%;
+      height: 14rem;
+      h2 {
+        margin-left: 0;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+        width: 0;
+      }
+    }
+    .product-carousel {
+      height: 8rem;
+      .product {
+        width: 4rem;
+      }
     }
   }
 }

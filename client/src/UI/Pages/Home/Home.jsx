@@ -95,7 +95,7 @@ const Home = () => {
               );
           })}
       </div>
-      <div className="section2">
+      {/* <div className="section2">
         <img className="promo" src={Car} alt="" />
         {categories &&
           categories
@@ -119,7 +119,7 @@ const Home = () => {
                 />
               </Link>
             ))}
-      </div>
+      </div> */}
     </div>
   );
 };
