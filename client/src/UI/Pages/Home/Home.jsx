@@ -39,10 +39,10 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* <div className="headerImage">
+      <div className="headerImage">
         <img src={Car} alt="image" />
-      </div> */}
-      {/* <div className="header">
+      </div>
+      <div className="header">
         <h1>GET FIT TODAY!</h1>
         <div className="store-categories">
           {categories &&
@@ -67,8 +67,8 @@ const Home = () => {
                 </Link>
               ))}
         </div>
-      </div> */}
-      {/* <div className="product-carousel">
+      </div>
+      <div className="product-carousel">
         {products &&
           products.map((x, i) => {
             while (i < 6)
@@ -94,8 +94,8 @@ const Home = () => {
                 </>
               );
           })}
-      </div> */}
-      {/* <div className="section2">
+      </div>
+      <div className="section2">
         <img className="promo" src={Car} alt="" />
         {categories &&
           categories
@@ -119,7 +119,7 @@ const Home = () => {
                 />
               </Link>
             ))}
-      </div> */}
+      </div>
     </div>
   );
 };

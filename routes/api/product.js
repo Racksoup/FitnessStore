@@ -359,9 +359,9 @@ router.get("/category/:categoryID", async (req, res) => {
 });
 
 // User search for products and categories
-router.get("/search", async (req, res) => {
+router.get("/search/:search", async (req, res) => {
   try {
-    const { search, lower, upper, categorySearch } = req.query;
+    const search = req.params.search;
 
     const productQuery = {
       $or: [
@@ -370,22 +370,11 @@ router.get("/search", async (req, res) => {
       ],
     };
 
-    console.log(search, lower, upper, categorySearch);
-
-    if (lower !== "false" && upper !== "false") {
-      productQuery.price = { $gte: parseFloat(lower), $lte: parseFloat(upper) };
-    } else if (lower !== "false") {
-      productQuery.price = { $gte: parseFloat(lower) };
-    } else if (upper !== "false") {
-      productQuery.price = { $lte: parseFloat(upper) };
-    }
-    console.log(productQuery.price);
-
     const res1 = await Product.find(productQuery);
     const res2 = await Category.find({
       category: { $regex: search, $options: "i" },
     });
-    res.json({ products: res1, category: res2, categorySearch });
+    res.json({ products: res1, category: res2 });
   } catch (error) {
     console.log(error);
   }

@@ -129,7 +129,16 @@ const Navbar = () => {
         <div className="navbar-mobile">
           <div className="input-bar">
             <FontAwesomeIcon icon={faSearch} className="icon" />
-            <input type="text" />
+            <input
+              type="text"
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  console.log("hit");
+                  dispatch(searchProducts(e.target.value));
+                  navigate("/category");
+                }
+              }}
+            />
           </div>
         </div>
         <div className="footer-mobile">
