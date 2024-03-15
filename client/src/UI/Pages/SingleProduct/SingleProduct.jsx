@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ const SingleProduct = () => {
   const user = useSelector(selectUser);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const [currImage, setCurrImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [productAdded, setProductAdded] = useState(false);
+  const [model, setModel] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -49,6 +53,7 @@ const SingleProduct = () => {
   if (product) {
     return (
       <div className="SingleProduct">
+        {productAdded && <ProductAddedModal model={model} />}
         <div className="Top">
           <div className="Left">
             <div className="Images">
@@ -109,32 +114,110 @@ const SingleProduct = () => {
                   <div className="address-info">{user.address.address}</div>
                 )}
               </div>
-              <p className="Stock">In Stock / Out of Stock</p>
+              {product.stock > 0 ? (
+                <p className="stock">In Stock</p>
+              ) : (
+                <p className="stock-out">Out of Stock</p>
+              )}
               <div className="QuantityLine">
                 <p className="Label">Quantity</p>
-                <div className="QuantitySelector">
-                  <p className="Quantity">1</p>
-                  <FontAwesomeIcon className="Icon" icon={faChevronDown} />
+                <div className="Quantity">
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  />
+                  <div className="customButtons">
+                    <button
+                      onClick={() =>
+                        setQuantity((prevQuantity) => {
+                          if (prevQuantity + 1 <= product.stock) {
+                            return prevQuantity + 1;
+                          } else {
+                            return prevQuantity;
+                          }
+                        })
+                      }
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() =>
+                        setQuantity((prevQuantity) => {
+                          if (prevQuantity > 1) {
+                            return prevQuantity - 1;
+                          } else {
+                            return prevQuantity;
+                          }
+                        })
+                      }
+                    >
+                      -
+                    </button>
+                  </div>
                 </div>
+                {/* <FontAwesomeIcon className="Icon" icon={faChevronDown} /> */}
               </div>
-              <button className="Btn Add" onClick={() => addToCart()}>
+              <button
+                className="Btn Add"
+                onClick={() => {
+                  addToCart();
+                  setProductAdded(true);
+                  setModel("Cart");
+                  setTimeout(() => {
+                    setProductAdded(false);
+                  }, [700]);
+                }}
+              >
                 Add To Cart
               </button>
-              <button className="Btn Buy">Buy Now</button>
+              {user ? (
+                <Link
+                  to="/cart"
+                  className="Btn Buy"
+                  onClick={() => addToCart()}
+                >
+                  Buy Now
+                </Link>
+              ) : (
+                <Link to="/user-login" className="Btn Buy">
+                  Buy Now
+                </Link>
+              )}
               <div className="MerchantDetails">
                 Sold by <p className="BlueText">{product.merchant}</p>
                 and shipped by <p className="BlueText">FedEx</p>
               </div>
-              <div className="WishlistBox" onClick={() => addToWishlist()}>
-                <p>Add to Wishlist</p>
-                <FontAwesomeIcon className="Icon" icon={faChevronDown} />
-              </div>
+              <p
+                className="WishlistBox"
+                onClick={() => {
+                  addToWishlist();
+                  setProductAdded(true);
+                  setModel("Wishlist");
+                  setTimeout(() => {
+                    setProductAdded(false);
+                  }, [700]);
+                }}
+              >
+                Add to Wishlist
+                {/* <FontAwesomeIcon className="Icon" icon={faChevronDown} /> */}
+              </p>
             </div>
           </div>
         </div>
       </div>
     );
   }
+};
+
+const ProductAddedModal = ({ model }) => {
+  return (
+    <div className="product-added">
+      <div className="modal">
+        <p>Product Added to {model}</p>
+      </div>
+    </div>
+  );
 };
 
 export default SingleProduct;
