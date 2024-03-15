@@ -61,7 +61,11 @@ const Home = () => {
                   {x.image_filenames.map((c, j) => {
                     if (c.main) {
                       return (
-                        <Link key={i} className="product" to="/product">
+                        <Link
+                          key={i}
+                          className="product"
+                          to={`/product/${x._id}`}
+                        >
                           <img
                             src={`/api/product/image/${c.filename}`}
                             alt="image"

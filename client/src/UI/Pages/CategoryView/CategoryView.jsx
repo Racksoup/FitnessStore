@@ -174,7 +174,7 @@ const CategoryView = () => {
             </div>
             <div className="Right">
               {filteredProducts().map((x, i) => (
-                <Link className="Link" key={i} to="/product">
+                <Link className="Link" key={i} to={`/product/${x._id}`}>
                   <div
                     className="Product"
                     key={i}

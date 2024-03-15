@@ -22,6 +22,7 @@ export const productSlice = createSlice({
       state.product = action.payload;
     },
     gotOneProduct: (state, action) => {
+      localStorage.setItem("ProductID", action.payload._id);
       state.product = action.payload;
     },
     productCreated: (state, action) => {
@@ -169,17 +170,18 @@ export const getHighlightProducts = () => async (dispatch) => {
 
 export const getCurrProduct = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/product/${localStorage.ProductID}`);
+    const res = await axios.get(
+      `/api/product/product/${localStorage.ProductID}`
+    );
     dispatch(gotOneProduct(res.data));
   } catch (err) {
     console.log(err);
   }
 };
 
-export const getSingleProduct = (productID) => async (dispatch) => {
+export const getSingleProduct = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/product/${productID}`);
-    localStorage.setItem("productID", productID);
+    const res = await axios.get(`/api/product/product/${id}`);
     dispatch(gotOneProduct(res.data));
   } catch (err) {
     console.log(err);

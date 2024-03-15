@@ -43,7 +43,7 @@ const App = () => {
           <Route exact path="/admin-dashboard" element={<AdminDashboard2 />} />
           <Route exact path="/user-dashboard" element={<UserDashboard />} />
           <Route exact path="/create-user" element={<CreateUser />} />
-          <Route exact path="/product" element={<SingleProduct />} />
+          <Route exact path="/product/:id" element={<SingleProduct />} />
           <Route exact path="/category" element={<CategoryView />} />
           <Route exact path="/categories" element={<Categories />} />
           <Route exact path="/cart" element={<Cart />} />

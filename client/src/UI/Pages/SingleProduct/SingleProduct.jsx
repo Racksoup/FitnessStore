@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./SingleProduct.scss";
-import { selectProduct, getCurrProduct } from "../../../Redux/productSlice";
+import { selectProduct, getSingleProduct } from "../../../Redux/productSlice";
 import { selectCart, updateCart } from "../../../Redux/cartSlice";
 import { selectWishlist, updateWishlist } from "../../../Redux/wishlistSlice";
 import { selectIsAuthenticated } from "../../../Redux/userSlice";
 
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -16,12 +17,11 @@ const SingleProduct = () => {
   let wishlist = useSelector(selectWishlist);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const [currImage, setCurrImage] = useState("");
+  const { id } = useParams();
 
   useEffect(() => {
-    if (!product) {
-      dispatch(getCurrProduct());
-    }
-  }, []);
+    dispatch(getSingleProduct(id));
+  }, [id]);
 
   useEffect(() => {
     if (product) {

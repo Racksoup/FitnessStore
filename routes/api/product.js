@@ -294,6 +294,7 @@ router.get("/", async (req, res) => {
     res.status(500).send;
   }
 });
+
 // Get Highlight Products
 router.get("/highlight", async (req, res) => {
   try {
@@ -304,6 +305,7 @@ router.get("/highlight", async (req, res) => {
     res.status(500).send;
   }
 });
+
 // Get Products by Stripe IDs
 router.post("/find-by-stripe-ids", async (req, res) => {
   const { products } = req.body;
@@ -319,6 +321,7 @@ router.post("/find-by-stripe-ids", async (req, res) => {
     console.log(error.message);
   }
 });
+
 // Get Product
 router.get("/product/:id", async (req, res) => {
   try {
