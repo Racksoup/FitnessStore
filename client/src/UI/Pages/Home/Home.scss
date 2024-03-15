@@ -134,8 +134,12 @@
       }
     }
 
+    .store-categories {
+      flex-direction: column;
+    }
+
     .category-widget {
-      width: 48%;
+      width: 100%;
     }
   }
 }

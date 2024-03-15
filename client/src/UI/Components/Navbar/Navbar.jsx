@@ -53,75 +53,78 @@ const Navbar = () => {
 
   if (show) {
     return (
-      <div className="Navbar">
-        <div className="Top">
-          <Link to="/" className="Link">
-            <h1 className="TopLeft">Fitness Store</h1>
-          </Link>
-          <div className="TopMiddle" style={TopMiddleStyle}>
-            <Link to="/categories" className="all">
-              <Link to="/categories">
-                <p>All</p>
-              </Link>
-              {/* <div className="DropdownBox">
+      <>
+        <div className="navbar-desktop">
+          <div className="Top">
+            <Link to="/" className="Link">
+              <h1 className="TopLeft">Fitness Store</h1>
+            </Link>
+            <div className="TopMiddle" style={TopMiddleStyle}>
+              <Link to="/categories" className="all">
+                <Link to="/categories">
+                  <p>All</p>
+                </Link>
+                {/* <div className="DropdownBox">
                 <div className="DropdownItem">123</div>
                 <div className="DropdownItem">abc</div>
                 <div className="DropdownItem">xyz</div>
               </div> */}
-            </Link>
-            <input
-              type="text"
-              className="Search"
-              onClick={() => setSearchActive(true)}
-              onBlur={() => setSearchActive(false)}
-              onKeyDown={(e) => {
-                if (e.key == "Enter") {
-                  dispatch(searchProducts(e.target.value));
-                  navigate("/category");
-                }
-              }}
-            />
-            <button className="SearchButton">
-              <FontAwesomeIcon icon={faSearch} className="Icon" />
-            </button>
-          </div>
-          <div className="TopRight">
-            {user && (
-              <Link className="Link" to="/cart">
+              </Link>
+              <input
+                type="text"
+                className="Search"
+                onClick={() => setSearchActive(true)}
+                onBlur={() => setSearchActive(false)}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    dispatch(searchProducts(e.target.value));
+                    navigate("/category");
+                  }
+                }}
+              />
+              <button className="SearchButton">
+                <FontAwesomeIcon icon={faSearch} className="Icon" />
+              </button>
+            </div>
+            <div className="TopRight">
+              {user && (
+                <Link className="Link" to="/cart">
+                  <button className="Icon">
+                    <FontAwesomeIcon icon={faCartShopping} />
+                  </button>
+                </Link>
+              )}
+              <Link className="Link" to="/user-login">
                 <button className="Icon">
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <FontAwesomeIcon icon={faUser} />
                 </button>
               </Link>
-            )}
-            <Link className="Link" to="/user-login">
-              <button className="Icon">
-                <FontAwesomeIcon icon={faUser} />
-              </button>
-            </Link>
+            </div>
+          </div>
+          <div className="Bottom">
+            {categories &&
+              categories.map((x, i) => {
+                if (x.main) {
+                  return (
+                    <Link key={i} className="Link" to="/category">
+                      <button
+                        className="Button"
+                        onClick={() => {
+                          dispatch(setCategory(x));
+                          dispatch(categoryClicked());
+                          dispatch(getProductsForCategory(x._id));
+                        }}
+                      >
+                        {x.category}
+                      </button>
+                    </Link>
+                  );
+                }
+              })}
           </div>
         </div>
-        <div className="Bottom">
-          {categories &&
-            categories.map((x, i) => {
-              if (x.main) {
-                return (
-                  <Link key={i} className="Link" to="/category">
-                    <button
-                      className="Button"
-                      onClick={() => {
-                        dispatch(setCategory(x));
-                        dispatch(categoryClicked());
-                        dispatch(getProductsForCategory(x._id));
-                      }}
-                    >
-                      {x.category}
-                    </button>
-                  </Link>
-                );
-              }
-            })}
-        </div>
-      </div>
+        <div className="navbar-mobile">hi</div>
+      </>
     );
   }
 };

@@ -90,4 +90,11 @@
       }
     }
   }
+  // Mobile styles
+  @media (min-width: $lowerBreak) and (max-width: $upperBreak) {
+  }
+
+  @media (max-width: $lowerBreak) {
+    display: none;
+  }
 }
