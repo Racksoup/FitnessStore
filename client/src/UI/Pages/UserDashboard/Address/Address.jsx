@@ -468,7 +468,7 @@ const Address = () => {
             onChange={(e) => setAddress({ ...address, email: e.target.value })}
           />
         </div>
-        <button onClick={() => dispatch(updateUserAddress(address))}>
+        <button onClick={() => dispatch(updateUserAddress(user._id, address))}>
           Save Address
         </button>
       </div>

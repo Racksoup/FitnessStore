@@ -3,7 +3,7 @@ import "./SingleProduct.scss";
 import { selectProduct, getSingleProduct } from "../../../Redux/productSlice";
 import { selectCart, updateCart } from "../../../Redux/cartSlice";
 import { selectWishlist, updateWishlist } from "../../../Redux/wishlistSlice";
-import { selectIsAuthenticated } from "../../../Redux/userSlice";
+import { selectIsAuthenticated, selectUser } from "../../../Redux/userSlice";
 
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ const SingleProduct = () => {
   const product = useSelector(selectProduct);
   let cart = useSelector(selectCart);
   let wishlist = useSelector(selectWishlist);
+  const user = useSelector(selectUser);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const [currImage, setCurrImage] = useState("");
   const { id } = useParams();
@@ -104,7 +105,9 @@ const SingleProduct = () => {
               <p className="DeliveryDetails">Delivery Details</p>
               <div className="AddressLine">
                 <div className="Dot" />
-                <div className="address-info">User Address Goes Here</div>
+                {user && (
+                  <div className="address-info">{user.address.address}</div>
+                )}
               </div>
               <p className="Stock">In Stock / Out of Stock</p>
               <div className="QuantityLine">

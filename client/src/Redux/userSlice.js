@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { getCart } from './cartSlice';
-import { getWishlist } from './wishlistSlice';
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { getCart } from "./cartSlice";
+import { getWishlist } from "./wishlistSlice";
 
 const initialState = {
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -16,7 +16,7 @@ export const selectLoading = (state) => state.user.loading;
 export const selectUser = (state) => state.user.user;
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     userLoaded: (state, action) => {
@@ -25,13 +25,13 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     loginSuccess: (state, action) => {
-      localStorage.setItem('userToken', action.payload.token);
+      localStorage.setItem("userToken", action.payload.token);
       state.isAuthenticated = true;
       state.loading = false;
       state.token = action.payload.token;
     },
     logout: (state) => {
-      localStorage.removeItem('userToken');
+      localStorage.removeItem("userToken");
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
@@ -46,32 +46,40 @@ export const userSlice = createSlice({
   },
 });
 
-export const changeUserPassword = (newPassword, oldPassword) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  const body = JSON.stringify({ newPassword, oldPassword });
+export const changeUserPassword =
+  (newPassword, oldPassword) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({ newPassword, oldPassword });
 
-  try {
-    const res = await axios.post('/api/users/change-user-password', body, config);
-    dispatch(changedUserPassword(res.data));
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+    try {
+      const res = await axios.post(
+        "/api/users/change-user-password",
+        body,
+        config
+      );
+      dispatch(changedUserPassword(res.data));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 export const updateUserAddress = (id, address) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
-  const body = JSON.stringify({ id, address });
+  const body = JSON.stringify({
+    id,
+    address,
+  });
 
   try {
-    const res = await axios.post('/api/users/update-address', body, config);
+    const res = await axios.post("/api/users/update-address", body, config);
     dispatch(updatedUserAddress(res.data));
   } catch (error) {
     console.log(error.message);
@@ -85,7 +93,7 @@ export const loadUser = () => async (dispatch) => {
 
   try {
     if (localStorage.userToken) {
-      const res = await axios.get('/api/users');
+      const res = await axios.get("/api/users");
       dispatch(userLoaded(res.data));
       dispatch(getCart(res.data._id));
       dispatch(getWishlist(res.data._id));
@@ -99,13 +107,13 @@ export const loadUser = () => async (dispatch) => {
 export const login = (form) => async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
   const body = JSON.stringify({ name: form.username, password: form.password });
 
   try {
-    const res = await axios.post('/api/users/userAuth', body, config);
+    const res = await axios.post("/api/users/userAuth", body, config);
     dispatch(loginSuccess(res.data));
     dispatch(loadUser());
   } catch (error) {
@@ -117,7 +125,7 @@ export const login = (form) => async (dispatch, getState) => {
 export const createUser = (user) => async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
   const body = JSON.stringify({
@@ -127,7 +135,7 @@ export const createUser = (user) => async (dispatch, getState) => {
   });
 
   try {
-    const res = await axios.post('/api/users', body, config);
+    const res = await axios.post("/api/users", body, config);
     dispatch(loginSuccess(res.data));
     dispatch(loadUser());
   } catch (error) {
@@ -137,12 +145,17 @@ export const createUser = (user) => async (dispatch, getState) => {
 
 const setAuthToken = (token) => {
   if (token) {
-    axios.defaults.headers.common['x-auth-token'] = token;
+    axios.defaults.headers.common["x-auth-token"] = token;
   } else {
-    delete axios.defaults.headers.common['x-auth-token'];
+    delete axios.defaults.headers.common["x-auth-token"];
   }
 };
 
-export const { userLoaded, loginSuccess, logout, updatedUserAddress, changedUserPassword } =
-  userSlice.actions;
+export const {
+  userLoaded,
+  loginSuccess,
+  logout,
+  updatedUserAddress,
+  changedUserPassword,
+} = userSlice.actions;
 export default userSlice.reducer;
