@@ -107,6 +107,12 @@
       cursor: pointer;
     }
 
+    &-desktop {
+      margin-top: 0;
+      height: 100%;
+      width: 100%;
+    }
+
     h2 {
       margin-left: 0.5rem;
       font-size: 2rem;
@@ -157,6 +163,18 @@
       height: 8rem;
       .product {
         width: 4rem;
+      }
+    }
+
+    .section2 {
+      display: flex;
+      flex-direction: column;
+      height: 40rem;
+
+      padding: 0 1rem;
+
+      .promo {
+        height: 10rem;
       }
     }
   }

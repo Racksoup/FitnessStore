@@ -95,7 +95,7 @@ const Home = () => {
               );
           })}
       </div>
-      {/* <div className="section2">
+      <div className="section2">
         <img className="promo" src={Car} alt="" />
         {categories &&
           categories
@@ -104,8 +104,7 @@ const Home = () => {
             .map((x, i) => (
               <Link
                 to="/category"
-                className="category-widget"
-                style={{ marginTop: 0, height: "100%", width: "100%" }}
+                className="category-widget category-widget-desktop"
                 key={i}
                 onClick={() => {
                   dispatch(setCategory(x));
@@ -119,7 +118,7 @@ const Home = () => {
                 />
               </Link>
             ))}
-      </div> */}
+      </div>
     </div>
   );
 };
