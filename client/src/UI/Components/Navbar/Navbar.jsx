@@ -3,7 +3,10 @@ import "./Navbar.scss";
 
 import { Link } from "react-router-dom";
 import {
+  faBars,
   faCartShopping,
+  faHamburger,
+  faHome,
   faSearch,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -123,7 +126,26 @@ const Navbar = () => {
               })}
           </div>
         </div>
-        <div className="navbar-mobile">hi</div>
+        <div className="navbar-mobile">
+          <div className="input-bar">
+            <FontAwesomeIcon icon={faSearch} className="icon" />
+            <input type="text" />
+          </div>
+        </div>
+        <div className="footer-mobile">
+          <Link to="/" className="link">
+            <FontAwesomeIcon icon={faHome} className="icon" />
+          </Link>
+          <Link to="/user-login" className="link">
+            <FontAwesomeIcon icon={faUser} className="icon" />
+          </Link>
+          <Link to="/cart" className="link">
+            <FontAwesomeIcon icon={faCartShopping} className="icon" />
+          </Link>
+          <Link to="/categories" className="link">
+            <FontAwesomeIcon icon={faBars} className="icon" />
+          </Link>
+        </div>
       </>
     );
   }
