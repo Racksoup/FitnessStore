@@ -22,6 +22,7 @@ const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [productAdded, setProductAdded] = useState(false);
   const [model, setModel] = useState("");
+  const [windowWidth, setWindowWidth] = useState(1440);
   const { id } = useParams();
 
   useEffect(() => {
@@ -37,6 +38,17 @@ const SingleProduct = () => {
       });
     }
   }, [product]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const addToCart = () => {
     if (isAuthenticated) {
@@ -56,6 +68,13 @@ const SingleProduct = () => {
         {productAdded && <ProductAddedModal model={model} />}
         <div className="Top">
           <div className="Left">
+            {windowWidth <= 768 && (
+              <img
+                src={`/api/product/image/${currImage.filename}`}
+                alt="Curr Image"
+                className="CurrImage"
+              />
+            )}
             <div className="Images">
               {product.image_filenames.map((x, i) => (
                 <img
@@ -67,11 +86,13 @@ const SingleProduct = () => {
                 />
               ))}
             </div>
-            <img
-              src={`/api/product/image/${currImage.filename}`}
-              alt="Curr Image"
-              className="CurrImage"
-            />
+            {windowWidth > 768 && (
+              <img
+                src={`/api/product/image/${currImage.filename}`}
+                alt="Curr Image"
+                className="CurrImage"
+              />
+            )}
           </div>
           <div className="Right">
             <div className="Info">

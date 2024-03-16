@@ -1,5 +1,5 @@
-$upperBreak: 1439px;
-$lowerBreak: 767px;
+$upperBreak: 1440px;
+$lowerBreak: 768px;
 $midBreak: 1100px;
 $bgColor: rgba(32, 32, 32, 1);
 $color-1: rgb(185, 126, 67);
@@ -30,7 +30,10 @@ $color-5-tran: rgba(211, 163, 116, 0.8);
   }
 }
 
-@media (min-width: $lowerBreak) and (max-width: $upperBreak) {
+@media (max-width: $upperBreak) {
+}
+
+@media (max-width: $midBreak) {
 }
 
 @media (max-width: $lowerBreak) {

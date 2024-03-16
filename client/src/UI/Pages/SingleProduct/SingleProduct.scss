@@ -52,6 +52,7 @@
       .PriceLine {
         display: flex;
         margin-top: 0.7rem;
+        margin-bottom: 0.7rem;
 
         .DollarSign {
           font-size: 0.7rem;
@@ -286,6 +287,68 @@
       p {
         font-size: 1.1rem;
         color: black;
+      }
+    }
+  }
+
+  @media (max-width: $upperBreak) {
+  }
+
+  @media (max-width: $midBreak) {
+    .Top {
+      flex-direction: column;
+      .Left {
+        width: 100%;
+      }
+      .Right {
+        margin-top: 4rem;
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: $lowerBreak) {
+    .Top {
+      margin-top: -1rem;
+      .Left {
+        flex-direction: column;
+
+        .CurrImage {
+          margin: 0 0.9rem;
+          width: auto;
+        }
+
+        .Images {
+          margin: 0.9rem 0.7rem 0 0.7rem;
+          width: auto;
+          height: 3rem;
+          flex-direction: row;
+
+          .Img {
+            margin: 0 0.2rem;
+            height: 100%;
+            width: 4rem;
+          }
+        }
+      }
+
+      .Right {
+        flex-direction: column;
+        margin: 3rem 0 0 0;
+        padding: 1rem;
+        width: 100%;
+
+        .Info {
+          width: 100%;
+          margin-bottom: 5rem;
+
+          .HLine {
+            width: 100%;
+          }
+        }
+        .Purchase {
+          width: 100%;
+        }
       }
     }
   }
