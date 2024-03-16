@@ -133,7 +133,6 @@ const Navbar = () => {
               type="text"
               onKeyDown={(e) => {
                 if (e.key == "Enter") {
-                  console.log("hit");
                   dispatch(searchProducts(e.target.value));
                   navigate("/category");
                 }

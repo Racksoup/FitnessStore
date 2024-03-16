@@ -1,6 +1,6 @@
 @import "../../../Vars.scss";
 
-.CategoryView {
+.category-view-desktop {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,89 +48,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    .Left {
-      margin: 2rem 0 0 1rem;
-      width: 13rem;
-      display: flex;
-      flex-direction: column;
-
-      .CustomerReviews {
-        width: 100%;
-        height: 6rem;
-        margin-bottom: 1rem;
-
-        .Title {
-          font-size: 1rem;
-        }
-      }
-
-      .PriceModule {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1rem;
-
-        .Title {
-          font-size: 1rem;
-        }
-
-        .Item {
-          font-size: 0.7rem;
-          cursor: pointer;
-        }
-
-        .CustomPrice {
-          margin-top: 0.3rem;
-          width: 7rem;
-          display: flex;
-          justify-content: space-between;
-
-          input {
-            width: 2rem;
-            height: 1.2rem;
-            border: solid 0.05rem rgba(216, 216, 216, 0.4);
-            border-radius: 0.3rem;
-            padding-left: 0.2rem;
-            cursor: pointer;
-          }
-
-          .Go {
-            width: 1.5rem;
-            height: 1.2rem;
-            border: solid 0.05rem rgba(216, 216, 216, 0.4);
-            border-radius: 0.3rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-          }
-        }
-      }
-
-      .MiscSelection {
-        display: flex;
-        flex-direction: column;
-
-        .Title {
-          font-size: 1rem;
-        }
-
-        .CheckLine {
-          width: 100%;
-          margin: 0.1rem 0 0.3rem 0;
-          display: flex;
-
-          input {
-            margin-right: 0.4rem;
-            cursor: pointer;
-          }
-
-          p {
-            font-size: 0.8rem;
-          }
-        }
-      }
-    }
 
     .Right {
       margin: 7rem 2rem 2rem 2rem;
@@ -217,7 +134,7 @@
     }
   }
 
-  @media (max-width: 1072px) {
+  @media (max-width: $midBreak) {
     .Content {
       .Right {
         grid-template-columns: 1fr 1fr;
@@ -226,5 +143,216 @@
   }
 
   @media (max-width: $lowerBreak) {
+    display: none;
+  }
+}
+
+.category-view-mobile {
+  @include Section;
+  display: none;
+
+  .filter-bar {
+    position: fixed;
+    left: 0;
+    top: 4.5rem;
+    width: 100%;
+    height: 2rem;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: top 0.3s ease-in-out;
+    background-color: black;
+
+    .filter-button {
+      padding: 0.15rem 0.45rem;
+      border: solid 1px grey;
+      border-radius: 0.7rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .exit-button {
+      padding: 0.15rem 0.45rem;
+      font-size: 0.9rem;
+      border: solid 1px grey;
+      border-radius: 0.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .hidden {
+    top: -2rem;
+  }
+
+  .content {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .product {
+      margin: 0.2rem 0;
+      width: 98%;
+      padding: 0.4rem;
+      border: solid 1px grey;
+      border-radius: 0.1rem;
+      display: flex;
+      cursor: pointer;
+      * {
+        cursor: pointer;
+      }
+
+      img {
+        height: 8rem;
+        width: 12rem;
+        object-fit: cover;
+      }
+
+      .info {
+        margin-top: -0.2rem;
+        margin-left: 2rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .line {
+          width: 100%;
+          height: 1.4rem;
+          display: flex;
+          align-items: center;
+          margin: 0.1rem 0;
+
+          .large-text {
+            font-size: 1.3rem;
+          }
+
+          .dollar-sign {
+            margin-right: 0.05rem;
+            font-size: 0.6rem;
+          }
+
+          .sale-tag {
+            padding: 0.1rem 0.3rem;
+            background-color: rgb(57, 99, 15);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: $upperBreak) {
+  }
+
+  @media (max-width: $lowerBreak) {
+    display: flex;
+  }
+}
+
+.filter-modal {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: calc(
+    100vh - 6.5rem
+  ); /* Adjust 2rem according to the height of your filter bar */
+  background-color: white;
+
+  .filter-widget {
+    margin: 0 0 0 9rem;
+    transform: scale(2);
+
+    * {
+      color: black;
+    }
+  }
+}
+
+.filter-widget {
+  margin: 2rem 0 0 1rem;
+  width: 13rem;
+  display: flex;
+  flex-direction: column;
+
+  .CustomerReviews {
+    width: 100%;
+    height: 6rem;
+    margin-bottom: 1rem;
+
+    .Title {
+      font-size: 1rem;
+    }
+  }
+
+  .PriceModule {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    .Title {
+      font-size: 1rem;
+    }
+
+    .Item {
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .CustomPrice {
+      margin-top: 0.3rem;
+      width: 7rem;
+      display: flex;
+      justify-content: space-between;
+
+      input {
+        width: 2rem;
+        height: 1.2rem;
+        border: solid 0.05rem rgba(216, 216, 216, 0.4);
+        border-radius: 0.3rem;
+        padding-left: 0.2rem;
+        cursor: pointer;
+      }
+
+      .Go {
+        width: 1.5rem;
+        height: 1.2rem;
+        border: solid 0.05rem rgba(216, 216, 216, 0.4);
+        border-radius: 0.3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .MiscSelection {
+    display: flex;
+    flex-direction: column;
+
+    .Title {
+      font-size: 1rem;
+    }
+
+    .CheckLine {
+      width: 100%;
+      margin: 0.1rem 0 0.3rem 0;
+      display: flex;
+
+      input {
+        margin-right: 0.4rem;
+        cursor: pointer;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
   }
 }
