@@ -28,3 +28,9 @@ $color-5-tran: rgba(211, 163, 116, 0.8);
     width: 100%;
   }
 }
+
+@media (min-width: $lowerBreak) and (max-width: $upperBreak) {
+}
+
+@media (max-width: $lowerBreak) {
+}

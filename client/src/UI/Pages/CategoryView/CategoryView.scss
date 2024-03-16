@@ -1,7 +1,9 @@
 @import "../../../Vars.scss";
 
 .CategoryView {
-  @include Section;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 
   .Nav2 {
@@ -42,16 +44,16 @@
   }
 
   .Content {
+    width: 100%;
     display: flex;
-    width: 93rem;
     flex-direction: row;
     justify-content: space-between;
 
     .Left {
-      width: 19%;
+      margin: 2rem 0 0 1rem;
+      width: 13rem;
       display: flex;
       flex-direction: column;
-      margin-top: 2rem;
 
       .CustomerReviews {
         width: 100%;
@@ -131,11 +133,10 @@
     }
 
     .Right {
-      width: 81%;
-      margin-top: 7rem;
-      margin-bottom: 2rem;
+      margin: 7rem 2rem 2rem 2rem;
+      flex-grow: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
       gap: 0.6rem;
 
       .Product {
@@ -206,5 +207,24 @@
         }
       }
     }
+  }
+
+  @media (max-width: $upperBreak) {
+    .Content {
+      .Right {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  }
+
+  @media (max-width: 1072px) {
+    .Content {
+      .Right {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+
+  @media (max-width: $lowerBreak) {
   }
 }
