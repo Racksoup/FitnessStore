@@ -133,6 +133,12 @@
     .category-widget {
       width: 32%;
     }
+
+    .section2 {
+      .category-widget {
+        width: 100%;
+      }
+    }
   }
 
   @media (max-width: $lowerBreak) {
