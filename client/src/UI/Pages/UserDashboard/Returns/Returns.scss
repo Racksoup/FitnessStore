@@ -58,61 +58,61 @@
         justify-self: end;
       }
     }
+  }
+  .modal-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .modal-bg {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.4);
+    .modal {
+      width: 33rem;
+      height: 14rem;
+      background-color: white;
+      border: solid 4px rgb(105, 195, 224);
+      border-radius: 1rem;
+      color: black;
+      padding: 1rem 3rem;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
 
-      .modal {
-        width: 33rem;
+      .line {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-bottom: 0.3rem;
+
+        h4 {
+          color: black;
+          margin-left: 0.5rem;
+        }
+
+        button {
+          cursor: pointer;
+          padding: 0.3rem 0.5rem;
+          border: solid 1px black;
+          justify-self: center;
+          align-self: center;
+          color: black;
+          background-color: rgb(228, 228, 228);
+        }
+      }
+
+      textarea {
+        margin-top: 0.5rem;
+        width: 100%;
         height: 10rem;
-        background-color: white;
-        border: solid 4px rgb(105, 195, 224);
+        padding: 0.4rem;
+        border: solid black 1px;
         border-radius: 1rem;
         color: black;
-        padding: 1rem 3rem;
-        display: flex;
-        flex-direction: column;
-
-        .line {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: end;
-          margin-bottom: 0.3rem;
-
-          h4 {
-            color: black;
-            margin-left: 0.5rem;
-          }
-
-          button {
-            cursor: pointer;
-            padding: 0.3rem 0.5rem;
-            border: solid 1px black;
-            justify-self: center;
-            align-self: center;
-            color: black;
-            background-color: rgb(228, 228, 228);
-          }
-        }
-
-        textarea {
-          border: solid black 1px;
-          width: 100%;
-          height: 6rem;
-          border-radius: 1rem;
-          color: black;
-          padding: 0.4rem;
-          resize: none;
-        }
+        resize: none;
       }
     }
   }
@@ -124,5 +124,20 @@
   }
 
   @media (max-width: $lowerBreak) {
+    .table {
+      width: calc(100% - 2rem);
+      margin: 1rem 1rem;
+    }
+
+    .modal-bg {
+      .modal {
+        width: calc(100% - 2rem);
+        height: 60%;
+
+        textarea {
+          height: 80%;
+        }
+      }
+    }
   }
 }
