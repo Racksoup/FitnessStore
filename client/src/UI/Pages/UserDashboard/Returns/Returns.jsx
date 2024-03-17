@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Returns.scss";
-
-import { useDispatch, useSelector } from "react-redux";
 import { selectCustomerOrder } from "../../../../Redux/orderSlice";
 import {
   getCustomerRefund,
@@ -10,16 +8,18 @@ import {
 } from "../../../../Redux/refundSlice";
 import { selectUser } from "../../../../Redux/userSlice";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const Returns = () => {
   const dispatch = useDispatch();
   const order = useSelector(selectCustomerOrder);
   const refund = useSelector(selectRefund);
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [returnItems, setReturnItems] = useState([]);
   const [modal, toggleModal] = useState(false);
   const [reason, setReason] = useState("");
-
-  console.log(refund);
 
   useEffect(() => {
     dispatch(getCustomerRefund(order._id));
@@ -33,14 +33,18 @@ const Returns = () => {
     }
   };
 
-  if (!refund == null && refund.length == 0)
-    return <div>REfUnDeD ALLREADY!</div>;
-
   const sendRefund = () => {
     dispatch(
       createCustomerRefund(returnItems, order.invoice, order._id, reason)
     );
   };
+
+  if (order == null) {
+    navigate("/user-dashboard");
+  }
+
+  if (!refund == null && refund.length == 0)
+    return <div>REfUnDeD ALLREADY!</div>;
 
   return (
     <div className="returns">

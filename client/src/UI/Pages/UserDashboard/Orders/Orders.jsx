@@ -8,10 +8,11 @@ import {
 import { loadUser, selectUser } from "../../../../Redux/userSlice";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const orders = useSelector(selectCustomerOrders);
   const user = useSelector(selectUser);
   const [modal, setModal] = useState(false);
@@ -38,6 +39,12 @@ const Orders = () => {
       dispatch(getCustomerOrders(user.customer_stripe_id));
     }
   }, [user]);
+
+  // useEffect(() => {
+  //   if (!orders) {
+  //     navigate("/user-dashboard");
+  //   }
+  // }, [orders, navigate]);
 
   return (
     <div className="orders">

@@ -209,8 +209,24 @@
       .content {
         .buttons {
           .tabs {
-            width: 20rem;
+            width: 15rem;
             margin-left: 0rem;
+            button {
+              font-size: 0.8rem;
+              width: auto;
+              height: auto;
+              margin-top: 0.3rem;
+              padding: 0.4rem 0.8rem;
+            }
+          }
+
+          .return {
+            width: auto;
+            height: auto;
+            padding: 0.5rem;
+            p {
+              font-size: 0.8rem;
+            }
           }
         }
       }
