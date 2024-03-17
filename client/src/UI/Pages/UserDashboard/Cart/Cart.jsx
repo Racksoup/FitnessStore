@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Cart.scss";
 import {
   deleteCartItem,
@@ -22,6 +22,18 @@ const Cart = () => {
   const cart = useSelector(selectCart);
   const wishlist = useSelector(selectWishlist);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const [windowWidth, setWindowWidth] = useState(1440);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   if (!isAuthenticated) {
     return <Navigate to="/user-login" />;
@@ -42,6 +54,23 @@ const Cart = () => {
 
     return (
       <div className="Cart">
+        {windowWidth <= 768 && (
+          <div className="Right">
+            <div className="CheckoutModule">
+              <h4>
+                Subtotal ({numOfItems} items): ${cartTotal / 100}
+              </h4>
+
+              <Link
+                to="/checkout"
+                className="Btn"
+                onClick={() => dispatch(setCheckout(cart))}
+              >
+                Proceed to Checkout
+              </Link>
+            </div>
+          </div>
+        )}
         <div className="ShoppingCart">
           <div className="HeaderLine">
             <h1>Shopping Cart</h1>
@@ -80,7 +109,7 @@ const Cart = () => {
                   <p className="Size">Size: 1kg (Pack of 1)</p>
                   <div className="QuantityLine">
                     <div className="Quantity">
-                      <p>Qty: {product.quantity}</p>
+                      <p className="quantity-text">Qty: {product.quantity}</p>
                       <FontAwesomeIcon
                         className="Icon"
                         icon={faPlus}
@@ -122,21 +151,41 @@ const Cart = () => {
             );
           })}
         </div>
-        <div className="Right">
-          <div className="CheckoutModule">
-            <h4>
-              Subtotal ({numOfItems} items): ${cartTotal / 100}
-            </h4>
+        {windowWidth <= 768 && cart.cart.length > 3 ? (
+          <div className="Right">
+            <div className="CheckoutModule">
+              <h4>
+                Subtotal ({numOfItems} items): ${cartTotal / 100}
+              </h4>
 
-            <Link
-              to="/checkout"
-              className="Btn"
-              onClick={() => dispatch(setCheckout(cart))}
-            >
-              Proceed to Checkout
-            </Link>
+              <Link
+                to="/checkout"
+                className="Btn"
+                onClick={() => dispatch(setCheckout(cart))}
+              >
+                Proceed to Checkout
+              </Link>
+            </div>
           </div>
-        </div>
+        ) : (
+          windowWidth > 768 && (
+            <div className="Right">
+              <div className="CheckoutModule">
+                <h4>
+                  Subtotal ({numOfItems} items): ${cartTotal / 100}
+                </h4>
+
+                <Link
+                  to="/checkout"
+                  className="Btn"
+                  onClick={() => dispatch(setCheckout(cart))}
+                >
+                  Proceed to Checkout
+                </Link>
+              </div>
+            </div>
+          )
+        )}
       </div>
     );
   }

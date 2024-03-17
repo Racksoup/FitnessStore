@@ -99,9 +99,9 @@
         .QuantityLine {
           display: flex;
           align-items: center;
+          flex-wrap: wrap;
 
           p {
-            text-wrap: nowrap;
           }
 
           .VLine {
@@ -120,6 +120,10 @@
             justify-content: space-between;
             align-items: center;
 
+            .quantity-text {
+              text-wrap: nowrap;
+            }
+
             .Icon {
               path {
                 color: rgb(200, 200, 200);
@@ -133,7 +137,7 @@
 
   .Right {
     width: 15rem;
-    margin: 2rem 0;
+    margin: 2rem 0 2rem 1rem;
 
     .CheckoutModule {
       width: 100%;
@@ -154,11 +158,41 @@
   }
 
   @media (max-width: $upperBreak) {
+    .ShoppingCart {
+      width: 74%;
+    }
+
+    .Right {
+      width: 24%;
+    }
   }
 
   @media (max-width: $midBreak) {
   }
 
   @media (max-width: $lowerBreak) {
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+
+    .ShoppingCart {
+      width: calc(100% - 2rem);
+      margin: 0 1rem;
+    }
+    .Right {
+      width: 20rem;
+      margin: 1rem 1rem;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .ShoppingCart {
+      .Item {
+        img {
+          width: 5rem;
+          height: 5rem;
+        }
+      }
+    }
   }
 }
