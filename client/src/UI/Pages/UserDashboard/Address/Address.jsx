@@ -5,12 +5,14 @@ import {
   selectUser,
   updateUserAddress,
 } from "../../../../Redux/userSlice.js";
+import UserEventModal from "../../../Components/Modals/UserEventModal/UserEventModal.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
 
 const Address = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const [modal, toggleModal] = useState(false);
   const [address, setAddress] = useState({
     firstName: "",
     lastName: "",
@@ -330,6 +332,7 @@ const Address = () => {
 
   return (
     <div className="Address">
+      {modal && <UserEventModal text={"Address Saved"} toggle={toggleModal} />}
       <h2>Save Your Address</h2>
       <div className="shipping-address">
         <h3>Shipping Address</h3>
@@ -468,7 +471,12 @@ const Address = () => {
             onChange={(e) => setAddress({ ...address, email: e.target.value })}
           />
         </div>
-        <button onClick={() => dispatch(updateUserAddress(user._id, address))}>
+        <button
+          onClick={() => {
+            dispatch(updateUserAddress(user._id, address));
+            toggleModal(true);
+          }}
+        >
           Save Address
         </button>
       </div>

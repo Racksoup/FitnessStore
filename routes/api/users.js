@@ -190,7 +190,6 @@ router.post("/update-address", userAuth, async (req, res) => {
       { $set: { address: req.body.address } },
       { returnOriginal: false }
     ).select("-password");
-    console.log(user);
     res.json(user);
   } catch (error) {
     console.log(error);

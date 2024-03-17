@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import UserEventModal from "../../Components/Modals/UserEventModal/UserEventModal.jsx";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const [intentAmount, setIntentAmount] = useState(0);
+  const [modal, toggleModal] = useState(false);
   // const checkout = useSelector(selectCheckout);
   const user = useSelector(selectUser);
   const cart = useSelector(selectCart);
@@ -380,6 +382,7 @@ const Checkout = () => {
 
   return (
     <div className="Checkout">
+      {modal && <UserEventModal text={"Address Saved"} toggle={toggleModal} />}
       <h1>Checkout</h1>
       <div className="Content">
         <div className="Shipping-Address">
@@ -543,7 +546,12 @@ const Checkout = () => {
               }
             />
           </div>
-          <button onClick={() => dispatch(updateUserAddress(address))}>
+          <button
+            onClick={() => {
+              dispatch(updateUserAddress(user._id, address));
+              toggleModal(true);
+            }}
+          >
             Save Address
           </button>
         </div>
