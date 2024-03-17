@@ -134,5 +134,20 @@
   }
 
   @media (max-width: $lowerBreak) {
+    .ShoppingCart {
+      width: calc(100% - 2rem);
+      margin: 1rem 1rem;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .ShoppingCart {
+      .Item {
+        img {
+          width: 5rem;
+          height: 5rem;
+        }
+      }
+    }
   }
 }

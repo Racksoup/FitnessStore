@@ -39,7 +39,7 @@ const Wishlist = () => {
       <div className="Wishlist">
         <div className="ShoppingCart">
           <div className="HeaderLine">
-            <h1>Shopping Wishlist</h1>
+            <h1>Wishlist</h1>
             <div className="SecondLine">
               <p className="BlueText">Deselect all items</p>
               <p>Price</p>
