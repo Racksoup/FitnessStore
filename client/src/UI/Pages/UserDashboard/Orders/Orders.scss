@@ -38,6 +38,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-left: 1rem;
 
         p,
         a {
@@ -176,11 +177,29 @@
   }
 
   @media (max-width: $upperBreak) {
+    .table {
+      width: calc(100% - 2rem);
+      margin: 0 1rem;
+    }
   }
 
   @media (max-width: $midBreak) {
+    .table {
+      .order {
+        padding: 0 0.4rem;
+        p {
+          font-size: 0.9rem;
+        }
+      }
+    }
   }
 
   @media (max-width: $lowerBreak) {
+  }
+
+  @media (max-width: 450px) {
+    .hide {
+      display: none;
+    }
   }
 }
