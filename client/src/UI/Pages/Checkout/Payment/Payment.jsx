@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import './Payment.scss';
+import React, { useState } from "react";
+import "./Payment.scss";
 
-import { useElements, useStripe, PaymentElement } from '@stripe/react-stripe-js';
+import {
+  useElements,
+  useStripe,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
 
 const Payment = () => {
   const stripe = useStripe();
@@ -32,10 +36,10 @@ const Payment = () => {
     setIsProcessing(false);
   };
   return (
-    <form className='Payment' onSubmit={handleSubmit}>
+    <form className="Payment" onSubmit={handleSubmit}>
       <PaymentElement />
-      <button disabled={isProcessing} id='submit'>
-        <span>{isProcessing ? 'Processing ... ' : 'Pay now'}</span>
+      <button disabled={isProcessing} id="submit">
+        <span>{isProcessing ? "Processing ... " : "Pay now"}</span>
       </button>
     </form>
   );

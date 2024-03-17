@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import './Checkout.scss';
-import { selectCheckout } from '../../../Redux/cartSlice';
-import { selectUser, updateUserAddress } from '../../../Redux/userSlice';
-import { selectCart } from '../../../Redux/cartSlice';
-import Payment from './Payment/Payment.jsx';
+import React, { useState, useEffect } from "react";
+import "./Checkout.scss";
+import { selectCheckout } from "../../../Redux/cartSlice";
+import { selectUser, updateUserAddress } from "../../../Redux/userSlice";
+import { selectCart } from "../../../Redux/cartSlice";
+import Payment from "./Payment/Payment.jsx";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const [stripePromise, setStripePromise] = useState(null);
-  const [clientSecret, setClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState("");
   const [intentAmount, setIntentAmount] = useState(0);
   // const checkout = useSelector(selectCheckout);
   const user = useSelector(selectUser);
   const cart = useSelector(selectCart);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState("");
   const [address, setAddress] = useState({
-    firstName: '',
-    lastName: '',
-    country: '',
-    address: '',
-    appartment: '',
-    city: '',
-    province: '',
-    postalCode: '',
-    phone: '',
-    email: '',
+    firstName: "",
+    lastName: "",
+    country: "",
+    address: "",
+    appartment: "",
+    city: "",
+    province: "",
+    postalCode: "",
+    phone: "",
+    email: "",
   });
 
   // const [shipping, setShipping] = useState({
@@ -45,295 +45,295 @@ const Checkout = () => {
 
   const usaStates = [
     {
-      name: 'Alabama',
-      abbreviation: 'AL',
+      name: "Alabama",
+      abbreviation: "AL",
     },
     {
-      name: 'Alaska',
-      abbreviation: 'AK',
+      name: "Alaska",
+      abbreviation: "AK",
     },
     {
-      name: 'American Samoa',
-      abbreviation: 'AS',
+      name: "American Samoa",
+      abbreviation: "AS",
     },
     {
-      name: 'Arizona',
-      abbreviation: 'AZ',
+      name: "Arizona",
+      abbreviation: "AZ",
     },
     {
-      name: 'Arkansas',
-      abbreviation: 'AR',
+      name: "Arkansas",
+      abbreviation: "AR",
     },
     {
-      name: 'California',
-      abbreviation: 'CA',
+      name: "California",
+      abbreviation: "CA",
     },
     {
-      name: 'Colorado',
-      abbreviation: 'CO',
+      name: "Colorado",
+      abbreviation: "CO",
     },
     {
-      name: 'Connecticut',
-      abbreviation: 'CT',
+      name: "Connecticut",
+      abbreviation: "CT",
     },
     {
-      name: 'Delaware',
-      abbreviation: 'DE',
+      name: "Delaware",
+      abbreviation: "DE",
     },
     {
-      name: 'District Of Columbia',
-      abbreviation: 'DC',
+      name: "District Of Columbia",
+      abbreviation: "DC",
     },
     {
-      name: 'Federated States Of Micronesia',
-      abbreviation: 'FM',
+      name: "Federated States Of Micronesia",
+      abbreviation: "FM",
     },
     {
-      name: 'Florida',
-      abbreviation: 'FL',
+      name: "Florida",
+      abbreviation: "FL",
     },
     {
-      name: 'Georgia',
-      abbreviation: 'GA',
+      name: "Georgia",
+      abbreviation: "GA",
     },
     {
-      name: 'Guam',
-      abbreviation: 'GU',
+      name: "Guam",
+      abbreviation: "GU",
     },
     {
-      name: 'Hawaii',
-      abbreviation: 'HI',
+      name: "Hawaii",
+      abbreviation: "HI",
     },
     {
-      name: 'Idaho',
-      abbreviation: 'ID',
+      name: "Idaho",
+      abbreviation: "ID",
     },
     {
-      name: 'Illinois',
-      abbreviation: 'IL',
+      name: "Illinois",
+      abbreviation: "IL",
     },
     {
-      name: 'Indiana',
-      abbreviation: 'IN',
+      name: "Indiana",
+      abbreviation: "IN",
     },
     {
-      name: 'Iowa',
-      abbreviation: 'IA',
+      name: "Iowa",
+      abbreviation: "IA",
     },
     {
-      name: 'Kansas',
-      abbreviation: 'KS',
+      name: "Kansas",
+      abbreviation: "KS",
     },
     {
-      name: 'Kentucky',
-      abbreviation: 'KY',
+      name: "Kentucky",
+      abbreviation: "KY",
     },
     {
-      name: 'Louisiana',
-      abbreviation: 'LA',
+      name: "Louisiana",
+      abbreviation: "LA",
     },
     {
-      name: 'Maine',
-      abbreviation: 'ME',
+      name: "Maine",
+      abbreviation: "ME",
     },
     {
-      name: 'Marshall Islands',
-      abbreviation: 'MH',
+      name: "Marshall Islands",
+      abbreviation: "MH",
     },
     {
-      name: 'Maryland',
-      abbreviation: 'MD',
+      name: "Maryland",
+      abbreviation: "MD",
     },
     {
-      name: 'Massachusetts',
-      abbreviation: 'MA',
+      name: "Massachusetts",
+      abbreviation: "MA",
     },
     {
-      name: 'Michigan',
-      abbreviation: 'MI',
+      name: "Michigan",
+      abbreviation: "MI",
     },
     {
-      name: 'Minnesota',
-      abbreviation: 'MN',
+      name: "Minnesota",
+      abbreviation: "MN",
     },
     {
-      name: 'Mississippi',
-      abbreviation: 'MS',
+      name: "Mississippi",
+      abbreviation: "MS",
     },
     {
-      name: 'Missouri',
-      abbreviation: 'MO',
+      name: "Missouri",
+      abbreviation: "MO",
     },
     {
-      name: 'Montana',
-      abbreviation: 'MT',
+      name: "Montana",
+      abbreviation: "MT",
     },
     {
-      name: 'Nebraska',
-      abbreviation: 'NE',
+      name: "Nebraska",
+      abbreviation: "NE",
     },
     {
-      name: 'Nevada',
-      abbreviation: 'NV',
+      name: "Nevada",
+      abbreviation: "NV",
     },
     {
-      name: 'New Hampshire',
-      abbreviation: 'NH',
+      name: "New Hampshire",
+      abbreviation: "NH",
     },
     {
-      name: 'New Jersey',
-      abbreviation: 'NJ',
+      name: "New Jersey",
+      abbreviation: "NJ",
     },
     {
-      name: 'New Mexico',
-      abbreviation: 'NM',
+      name: "New Mexico",
+      abbreviation: "NM",
     },
     {
-      name: 'New York',
-      abbreviation: 'NY',
+      name: "New York",
+      abbreviation: "NY",
     },
     {
-      name: 'North Carolina',
-      abbreviation: 'NC',
+      name: "North Carolina",
+      abbreviation: "NC",
     },
     {
-      name: 'North Dakota',
-      abbreviation: 'ND',
+      name: "North Dakota",
+      abbreviation: "ND",
     },
     {
-      name: 'Northern Mariana Islands',
-      abbreviation: 'MP',
+      name: "Northern Mariana Islands",
+      abbreviation: "MP",
     },
     {
-      name: 'Ohio',
-      abbreviation: 'OH',
+      name: "Ohio",
+      abbreviation: "OH",
     },
     {
-      name: 'Oklahoma',
-      abbreviation: 'OK',
+      name: "Oklahoma",
+      abbreviation: "OK",
     },
     {
-      name: 'Oregon',
-      abbreviation: 'OR',
+      name: "Oregon",
+      abbreviation: "OR",
     },
     {
-      name: 'Palau',
-      abbreviation: 'PW',
+      name: "Palau",
+      abbreviation: "PW",
     },
     {
-      name: 'Pennsylvania',
-      abbreviation: 'PA',
+      name: "Pennsylvania",
+      abbreviation: "PA",
     },
     {
-      name: 'Puerto Rico',
-      abbreviation: 'PR',
+      name: "Puerto Rico",
+      abbreviation: "PR",
     },
     {
-      name: 'Rhode Island',
-      abbreviation: 'RI',
+      name: "Rhode Island",
+      abbreviation: "RI",
     },
     {
-      name: 'South Carolina',
-      abbreviation: 'SC',
+      name: "South Carolina",
+      abbreviation: "SC",
     },
     {
-      name: 'South Dakota',
-      abbreviation: 'SD',
+      name: "South Dakota",
+      abbreviation: "SD",
     },
     {
-      name: 'Tennessee',
-      abbreviation: 'TN',
+      name: "Tennessee",
+      abbreviation: "TN",
     },
     {
-      name: 'Texas',
-      abbreviation: 'TX',
+      name: "Texas",
+      abbreviation: "TX",
     },
     {
-      name: 'Utah',
-      abbreviation: 'UT',
+      name: "Utah",
+      abbreviation: "UT",
     },
     {
-      name: 'Vermont',
-      abbreviation: 'VT',
+      name: "Vermont",
+      abbreviation: "VT",
     },
     {
-      name: 'Virgin Islands',
-      abbreviation: 'VI',
+      name: "Virgin Islands",
+      abbreviation: "VI",
     },
     {
-      name: 'Virginia',
-      abbreviation: 'VA',
+      name: "Virginia",
+      abbreviation: "VA",
     },
     {
-      name: 'Washington',
-      abbreviation: 'WA',
+      name: "Washington",
+      abbreviation: "WA",
     },
     {
-      name: 'West Virginia',
-      abbreviation: 'WV',
+      name: "West Virginia",
+      abbreviation: "WV",
     },
     {
-      name: 'Wisconsin',
-      abbreviation: 'WI',
+      name: "Wisconsin",
+      abbreviation: "WI",
     },
     {
-      name: 'Wyoming',
-      abbreviation: 'WY',
+      name: "Wyoming",
+      abbreviation: "WY",
     },
   ];
 
   const provinces = [
     {
-      name: 'Alberta',
-      abbreviation: 'AB',
+      name: "Alberta",
+      abbreviation: "AB",
     },
     {
-      name: 'British Columbia',
-      abbreviation: 'BC',
+      name: "British Columbia",
+      abbreviation: "BC",
     },
     {
-      name: 'Manitoba',
-      abbreviation: 'MB',
+      name: "Manitoba",
+      abbreviation: "MB",
     },
     {
-      name: 'New Brunswick',
-      abbreviation: 'NB',
+      name: "New Brunswick",
+      abbreviation: "NB",
     },
     {
-      name: 'Newfoundland and Labrador',
-      abbreviation: 'NL',
+      name: "Newfoundland and Labrador",
+      abbreviation: "NL",
     },
     {
-      name: 'Northwest Territories',
-      abbreviation: 'NT',
+      name: "Northwest Territories",
+      abbreviation: "NT",
     },
     {
-      name: 'Nova Scotia',
-      abbreviation: 'NS',
+      name: "Nova Scotia",
+      abbreviation: "NS",
     },
     {
-      name: 'Nunavut',
-      abbreviation: 'NU',
+      name: "Nunavut",
+      abbreviation: "NU",
     },
     {
-      name: 'Ontario',
-      abbreviation: 'ON',
+      name: "Ontario",
+      abbreviation: "ON",
     },
     {
-      name: 'Prince Edward Island',
-      abbreviation: 'PE',
+      name: "Prince Edward Island",
+      abbreviation: "PE",
     },
     {
-      name: 'Quebec',
-      abbreviation: 'QC',
+      name: "Quebec",
+      abbreviation: "QC",
     },
     {
-      name: 'Saskatchewan',
-      abbreviation: 'SK',
+      name: "Saskatchewan",
+      abbreviation: "SK",
     },
     {
-      name: 'Yukon Territory',
-      abbreviation: 'YT',
+      name: "Yukon Territory",
+      abbreviation: "YT",
     },
   ];
 
@@ -345,7 +345,7 @@ const Checkout = () => {
 
   useEffect(() => {
     const fetchKey = async () => {
-      const res = await axios.get('/api/payment/config');
+      const res = await axios.get("/api/payment/config");
       setStripePromise(loadStripe(res.data.publishableKey));
     };
     fetchKey();
@@ -357,7 +357,7 @@ const Checkout = () => {
       if (user.customer_stripe_id) {
         customer_stripe_id = user.customer_stripe_id;
       }
-      const res = await axios.post('/api/payment/invoice', {
+      const res = await axios.post("/api/payment/invoice", {
         email: user.email,
         name: user.name,
         customer_stripe_id,
@@ -379,66 +379,70 @@ const Checkout = () => {
   };
 
   return (
-    <div className='Checkout'>
+    <div className="Checkout">
       <h1>Checkout</h1>
-      <div className='Content'>
-        <div className='Shipping-Address'>
-          <div className='Title'>
+      <div className="Content">
+        <div className="Shipping-Address">
+          <div className="Title">
             <h3>Shipping Address</h3>
             <p
               onClick={() =>
                 setAddress({
-                  firstName: '',
-                  lastName: '',
-                  country: '',
-                  address: '',
-                  appartment: '',
-                  city: '',
-                  province: '',
-                  postalCode: '',
-                  phone: '',
-                  email: '',
+                  firstName: "",
+                  lastName: "",
+                  country: "",
+                  address: "",
+                  appartment: "",
+                  city: "",
+                  province: "",
+                  postalCode: "",
+                  phone: "",
+                  email: "",
                 })
               }
             >
               Clear Address
             </p>
           </div>
-          <div className='HalfLine'>
-            <div className='HalfBox'>
+          <div className="HalfLine">
+            <div className="HalfBox">
               <p>First name</p>
               <input
                 value={address.firstName}
-                type='text'
-                onChange={(e) => setAddress({ ...address, firstName: e.target.value })}
+                type="text"
+                onChange={(e) =>
+                  setAddress({ ...address, firstName: e.target.value })
+                }
               />
             </div>
-            <div className='HalfBox'>
+            <div className="HalfBox">
               <p>Last name</p>
               <input
                 value={address.lastName}
-                type='text'
-                onChange={(e) => setAddress({ ...address, lastName: e.target.value })}
+                type="text"
+                onChange={(e) =>
+                  setAddress({ ...address, lastName: e.target.value })
+                }
               />
             </div>
           </div>
-          <div className='Line'>
+          <div className="Line">
             <p>Country / Region</p>
-            <div className='DropBox'>
-              {address.country !== '' && <p>{address.country}</p>}
-              <div className='DropItems'>
+            <div className="DropBox">
+              {address.country !== "" && <p>{address.country}</p>}
+              <div className="DropItems">
                 <p
                   onClick={() => {
-                    setCountry('canada');
-                    setAddress({ ...address, country: 'Canada' });
+                    setCountry("canada");
+                    setAddress({ ...address, country: "Canada" });
                   }}
                 >
                   Canada
                 </p>
                 <p
                   onClick={() => {
-                    setCountry('usa');
-                    setAddress({ ...address, country: 'United States' });
+                    setCountry("usa");
+                    setAddress({ ...address, country: "United States" });
                   }}
                 >
                   United States
@@ -446,50 +450,62 @@ const Checkout = () => {
               </div>
             </div>
           </div>
-          <div className='HalfLine'>
-            <div className='HalfBox'>
+          <div className="HalfLine">
+            <div className="HalfBox">
               <p>Street Address</p>
               <input
                 value={address.address}
-                type='text'
-                placeholder='House number and street name'
-                onChange={(e) => setAddress({ ...address, address: e.target.value })}
+                type="text"
+                placeholder="House number and street name"
+                onChange={(e) =>
+                  setAddress({ ...address, address: e.target.value })
+                }
               />
             </div>
-            <div className='HalfBox'>
+            <div className="HalfBox">
               <p>Apartment, suite, unit, ect. (Optional)</p>
               <input
                 value={address.appartment}
-                type='text'
-                placeholder='Optional'
-                onChange={(e) => setAddress({ ...address, appartment: e.target.value })}
+                type="text"
+                placeholder="Optional"
+                onChange={(e) =>
+                  setAddress({ ...address, appartment: e.target.value })
+                }
               />
             </div>
           </div>
-          <div className='Line'>
+          <div className="Line">
             <p>Town / City</p>
             <input
-              type='text'
+              type="text"
               value={address.city}
               onChange={(e) => setAddress({ ...address, city: e.target.value })}
             />
           </div>
-          <div className='Line'>
-            {country === 'usa' ? <p>State</p> : <p>Province</p>}
-            <div className='DropBox'>
-              {address.province !== '' && <p>{address.province}</p>}
-              {country === 'usa' ? (
-                <div className='DropItems'>
+          <div className="Line">
+            {country === "usa" ? <p>State</p> : <p>Province</p>}
+            <div className="DropBox">
+              {address.province !== "" && <p>{address.province}</p>}
+              {country === "usa" ? (
+                <div className="DropItems">
                   {usaStates.map((state) => (
-                    <p onClick={() => setAddress({ ...address, province: state.name })}>
+                    <p
+                      onClick={() =>
+                        setAddress({ ...address, province: state.name })
+                      }
+                    >
                       {state.name}
                     </p>
                   ))}
                 </div>
               ) : (
-                <div className='DropItems'>
+                <div className="DropItems">
                   {provinces.map((province) => (
-                    <p onClick={() => setAddress({ ...address, province: province.name })}>
+                    <p
+                      onClick={() =>
+                        setAddress({ ...address, province: province.name })
+                      }
+                    >
                       {province.name}
                     </p>
                   ))}
@@ -497,33 +513,41 @@ const Checkout = () => {
               )}
             </div>
           </div>
-          <div className='Line'>
+          <div className="Line">
             <p>Postal Code</p>
             <input
               value={address.postalCode}
-              type='text'
-              onChange={(e) => setAddress({ ...address, postalCode: e.target.value })}
+              type="text"
+              onChange={(e) =>
+                setAddress({ ...address, postalCode: e.target.value })
+              }
             />
           </div>
-          <div className='Line'>
+          <div className="Line">
             <p>Phone</p>
             <input
               value={address.phone}
-              type='text'
-              onChange={(e) => setAddress({ ...address, phone: e.target.value })}
+              type="text"
+              onChange={(e) =>
+                setAddress({ ...address, phone: e.target.value })
+              }
             />
           </div>
-          <div className='Line'>
+          <div className="Line">
             <p>Email Address</p>
             <input
               value={address.email}
-              type='text'
-              onChange={(e) => setAddress({ ...address, email: e.target.value })}
+              type="text"
+              onChange={(e) =>
+                setAddress({ ...address, email: e.target.value })
+              }
             />
           </div>
-          <button onClick={() => dispatch(updateUserAddress(address))}>Save Address</button>
+          <button onClick={() => dispatch(updateUserAddress(address))}>
+            Save Address
+          </button>
         </div>
-        <div className='Payment'>
+        <div className="payment-holder">
           {stripePromise && clientSecret && (
             <div>
               <h2>Purchase Total: ${intentAmount / 100}</h2>

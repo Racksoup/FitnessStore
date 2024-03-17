@@ -113,8 +113,39 @@
       }
     }
 
-    .Payment {
+    .payment-holder {
       width: 20rem;
+    }
+  }
+
+  @media (max-width: $upperBreak) {
+    .Content {
+      width: calc(100% - 2rem);
+      margin: 0 1rem;
+    }
+  }
+
+  @media (max-width: 1010px) {
+    h1 {
+      margin-top: 2rem;
+    }
+
+    .Content {
+      flex-direction: column;
+      align-items: center;
+
+      .payment-holder {
+        margin-top: 5rem;
+      }
+    }
+  }
+
+  @media (max-width: $lowerBreak) {
+    .Content {
+      .Shipping-Address {
+        width: calc(100% - 2rem);
+        margin: 0 1rem;
+      }
     }
   }
 }
