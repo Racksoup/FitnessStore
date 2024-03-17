@@ -331,7 +331,7 @@ const Address = () => {
   return (
     <div className="Address">
       <h2>Save Your Address</h2>
-      <div className="Shipping-Address">
+      <div className="shipping-address">
         <h3>Shipping Address</h3>
         <div className="HalfLine">
           <div className="HalfBox">

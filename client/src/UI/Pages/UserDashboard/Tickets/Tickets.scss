@@ -2,4 +2,13 @@
 
 .Tickets {
   @include Section;
+
+  @media (max-width: $upperBreak) {
+  }
+
+  @media (max-width: $midBreak) {
+  }
+
+  @media (max-width: $lowerBreak) {
+  }
 }
