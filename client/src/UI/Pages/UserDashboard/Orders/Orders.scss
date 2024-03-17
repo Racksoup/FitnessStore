@@ -49,9 +49,11 @@
   }
 
   .ordersModal {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     position: fixed;
+    top: 0;
+    right: 0;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
@@ -181,6 +183,12 @@
       width: calc(100% - 2rem);
       margin: 0 1rem;
     }
+    .ordersModal {
+      .content {
+        max-height: calc(100% - 2rem);
+        max-width: calc(100% - 2rem);
+      }
+    }
   }
 
   @media (max-width: $midBreak) {
@@ -195,6 +203,18 @@
   }
 
   @media (max-width: $lowerBreak) {
+    .ordersModal {
+      z-index: 10;
+
+      .content {
+        .buttons {
+          .tabs {
+            width: 20rem;
+            margin-left: 0rem;
+          }
+        }
+      }
+    }
   }
 
   @media (max-width: 450px) {
