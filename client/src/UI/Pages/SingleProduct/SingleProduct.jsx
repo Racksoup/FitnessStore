@@ -101,6 +101,7 @@ const SingleProduct = () => {
               {/* <div className='Rating'></div> */}
               <div className="HLine" />
               <div className="PriceLine">
+                <p className="price">Price: </p>
                 <p className="DollarSign">$</p>
                 <p className="Dollars">{Math.floor(product.price / 100)}</p>
                 <p className="Cents">{product.price % 100}</p>
