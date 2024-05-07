@@ -7,7 +7,8 @@ import {
   setCurrProduct,
 } from "../../../Redux/productSlice";
 import { selectCategories, setCategory } from "../../../Redux/categorySlice";
-import Car from "../../../images/car.jpg";
+import YogaSunset from "../../../images/YogaSunset.jpg";
+import Unstoppable from "../../../images/Unstoppable.jpeg";
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +41,7 @@ const Home = () => {
   return (
     <div className="home">
       <div className="headerImage">
-        <img src={Car} alt="image" />
+        <img src={YogaSunset} alt="image" />
       </div>
       <div className="header">
         <h1>GET FIT TODAY!</h1>
@@ -96,7 +97,7 @@ const Home = () => {
           })}
       </div>
       <div className="section2">
-        <img className="promo" src={Car} alt="" />
+        <img className="promo" src={Unstoppable} alt="" />
         {categories &&
           categories
             .filter((x) => x.main)
