@@ -7,8 +7,6 @@ import { selectIsAuthenticated, selectUser } from "../../../Redux/userSlice";
 
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const SingleProduct = () => {
@@ -101,12 +99,24 @@ const SingleProduct = () => {
               {/* <div className='Rating'></div> */}
               <div className="HLine" />
               <div className="PriceLine">
-                <p className="price">Price: </p>
-                <p className="DollarSign">$</p>
-                <p className="Dollars">{Math.floor(product.price / 100)}</p>
-                <p className="Cents">{product.price % 100}</p>
+                <p className="priceLabel">Price: </p>
+                <div className="priceValue">
+                  <p className="DollarSign">$</p>
+                  <p className="Dollars">{Math.floor(product.price / 100)}</p>
+                  <p className="Cents">{product.price % 100}</p>
+                </div>
               </div>
+              <h3 className="details-label">Details</h3>
               {product.details.map((x, i) => {
+                return (
+                  <div className="DetailLine" key={i}>
+                    <div className="Key">{x.key}</div>
+                    <div className="Value">{x.value}</div>
+                  </div>
+                );
+              })}
+              <h3 className="details-label">Technical Details</h3>
+              {product.tech_details.map((x, i) => {
                 return (
                   <div className="DetailLine" key={i}>
                     <div className="Key">{x.key}</div>

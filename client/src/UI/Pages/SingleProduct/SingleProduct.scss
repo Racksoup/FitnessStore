@@ -16,7 +16,7 @@
     justify-content: space-between;
 
     .Left {
-      width: 49%;
+      width: 37%;
       display: flex;
       flex-direction: space-between;
       margin-right: 1%;
@@ -44,7 +44,7 @@
     }
 
     .Right {
-      width: 49%;
+      width: 62%;
       margin-left: 1%;
       display: flex;
       justify-content: space-between;
@@ -52,27 +52,33 @@
       .PriceLine {
         display: flex;
         margin-top: 0.7rem;
-        margin-bottom: 0.7rem;
         align-items: end;
 
-        .price {
+        .priceLabel {
           font-size: 1.5rem;
           margin-right: 0.3rem;
         }
 
-        .DollarSign {
-          font-size: 0.7rem;
-          margin-right: 0.1rem;
-        }
+        .priceValue {
+          display: flex;
+          margin-bottom: 0.15rem;
 
-        .Dollars {
-          font-size: 1.5rem;
-          line-height: 1.6rem;
-          margin-right: 0.1rem;
-        }
+          .DollarSign {
+            font-size: 0.7rem;
+            margin-right: 0.1rem;
+            margin-top: 0.15rem;
+          }
 
-        .Cents {
-          font-size: 0.7rem;
+          .Dollars {
+            font-size: 1.5rem;
+            line-height: 1.6rem;
+            margin-right: 0.1rem;
+          }
+
+          .Cents {
+            margin-top: 0.15rem;
+            font-size: 0.7rem;
+          }
         }
       }
 
@@ -86,11 +92,16 @@
       }
 
       .Info {
-        width: 60%;
+        width: 70%;
         display: flex;
         flex-direction: column;
 
         .Title {
+        }
+
+        .details-label {
+          margin: 1.1rem 0 0.2rem 0;
+          font-size: 2rem;
         }
 
         .DetailLine {
@@ -98,10 +109,12 @@
           display: flex;
 
           .Key {
-            margin-right: 7.5rem;
+            width: 25%;
+            margin-right: 1%;
           }
 
           .Value {
+            width: 74%;
           }
         }
 
@@ -121,7 +134,7 @@
       }
 
       .Purchase {
-        width: 40%;
+        width: 30%;
 
         display: flex;
         flex-direction: column;
