@@ -199,7 +199,11 @@ const CategoryView = () => {
                           <p className="DollarSign">$</p>
                           <p className="Price">{x.price / 100.0}</p>
                         </div>
-                        <div className="SaleTag">15% off</div>
+                        {x.deal ? (
+                          <div className="SaleTag">15% off</div>
+                        ) : (
+                          <div className="SaleTagEmpty"></div>
+                        )}
                         <p className="Info">Free Delivery For Members</p>
                         <p className="Info">Save By Combining Items</p>
                       </div>
